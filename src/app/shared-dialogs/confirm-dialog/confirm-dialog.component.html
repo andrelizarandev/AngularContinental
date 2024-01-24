@@ -1,0 +1,31 @@
+<p-dialog 
+  [header]="confirmDeletePayload?.title" 
+  [visible]="(confirmDeletePayload !== null)" 
+  [modal]="true"
+  [closable]="false"
+>
+
+  <div class="v-flex">
+
+    <p class="w-12">{{ confirmDeletePayload?.message }}</p>
+
+    <div class="h-flex">
+
+      <p-button 
+        label="Cancelar" 
+        size="small" 
+        severity="secondary"
+        (onClick)="confirmDeletePayload?.cancelAction()" 
+      />
+
+      <p-button 
+        [label]="confirmDeletePayload?.actionLabel" 
+        size="small" 
+        (onClick)="confirmDeletePayload?.cancelAction()" 
+      />
+
+    </div>
+
+  </div>
+  
+</p-dialog>

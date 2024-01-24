@@ -3,42 +3,71 @@
   <div class="h-flex-justify-between">
     
     <h3 class="title-color">Periodos</h3>
+
     <p-button
       label="Registar Periodo"
       icon="pi pi-plus"
       size="small"
       (onClick)="toggleOpenRegister()"
-    ></p-button>
+    />
 
   </div>
 
   <p-table [value]="periodosList">
+
     <ng-template pTemplate="header">
+
       <tr>
+
         <th>ID</th>
+
         <th>NOMBRE</th>
+
         <th>ACCIONES</th>
+
       </tr>
+
     </ng-template>
+
     <ng-template pTemplate="body" let-periodo>
+
       <tr>
+
         <td>{{ periodo.id }}</td>
+
         <td>{{ periodo.nombre }}</td>
+
         <td>
+
           <div class="h-flex">
-            <p-button icon="pi pi-pencil" size="small"></p-button>
-            <p-button icon="pi pi-trash" size="small"></p-button>
+
+            <p-button 
+              icon="pi pi-pencil" 
+              size="small"
+              (onClick)="toggleOpenRegister()"
+            />
+
+            <p-button 
+              icon="pi pi-trash" 
+              size="small"
+              (onClick)="toggleOpenDelete()"
+            />
+
           </div>
+
         </td>
+
       </tr>
+
     </ng-template>
+
   </p-table>
 
 </app-navigation-container>
 
-<app-register-periodo-dialog 
+<app-confirm-dialog [confirmDeletePayload]="confirmDeletePayload"/>
 
+<app-register-periodo-dialog 
   [isRegisterOpen]="isRegisterOpen" 
   (toggleOpenRegister)="toggleOpenRegister()"
-
-></app-register-periodo-dialog>
+/>

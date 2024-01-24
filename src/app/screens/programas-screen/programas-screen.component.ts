@@ -11,11 +11,12 @@ import { RegisterProgramaComponentDialog } from '../../dialogs/register-programa
 
 // Types
 import { GetPrograma } from '../../../api/programas/types';
+import { ConfirmDialogComponent, ConfirmDialogPayload } from '../../shared-dialogs/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-programas-screen',
   standalone: true,
-  imports: [ButtonModule, TableModule, NavigationContainerComponent, RegisterProgramaComponentDialog],
+  imports: [ButtonModule, TableModule, NavigationContainerComponent, RegisterProgramaComponentDialog, ConfirmDialogComponent],
   templateUrl: './programas-screen.component.html',
   styleUrl: './programas-screen.component.scss'
 })
@@ -23,6 +24,8 @@ import { GetPrograma } from '../../../api/programas/types';
 export class ProgramasScreenComponent {
 
   isRegisterOpen = false;
+
+  confirmDeletePayload:ConfirmDialogPayload | null = null;
 
   programasList:GetPrograma[] = [
     { id: '1', nombre: 'Programa 1' },
@@ -34,6 +37,16 @@ export class ProgramasScreenComponent {
 
   toggleOpenRegister () {
     this.isRegisterOpen = !this.isRegisterOpen;
+  }
+
+  toggleOpenDelete () {
+    this.confirmDeletePayload = {
+      title: 'Eliminar programa',
+      message: `¿Estás seguro de eliminar el programa`,
+      actionLabel: 'Eliminar',
+      action: () => {},
+      cancelAction: () => this.confirmDeletePayload = null
+    };
   }
 
 }
