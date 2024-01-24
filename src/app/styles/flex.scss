@@ -1,0 +1,24 @@
+.v-flex {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+}
+
+.h-flex {
+  display: flex;
+  flex-direction: row;
+  column-gap: 12px;
+}
+
+.h-flex-justify-between {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.h-flex-justify-end {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
