@@ -6,6 +6,7 @@
       label="Registrar Programa"
       icon="pi pi-plus"
       size="small"
+      (onClick)="toggleOpenRegister()"
     ></p-button>
   </div>
 
@@ -33,3 +34,8 @@
   </p-table>
   
 </app-navigation-container>
+
+<app-register-programa-dialog 
+  (toggleOpenRegister)="toggleOpenRegister()"
+  [isRegisterOpen]="isRegisterOpen"
+/>

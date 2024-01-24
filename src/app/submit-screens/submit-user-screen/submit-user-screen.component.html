@@ -4,25 +4,58 @@
 
     <div class="sm:col-12 md:col-8 lg:col-6">
 
-      <div class="v-flex">
+      <form class="v-flex" [formGroup]="registerUserForm">
 
         <h3 class="title-color">Registro de Usuarios</h3>
 
-        <input type="text" placeholder="Nombres" pInputText />
+        <input 
+          type="text" 
+          placeholder="Nombres" 
+          pInputText 
+          formControlName="nombres"
+        />
 
-        <input type="text" placeholder="Apellidos" pInputText />
+        <input 
+          type="text" 
+          placeholder="Apellidos" 
+          pInputText 
+          formControlName="apellidos"
+        />
 
-        <input type="text" placeholder="Correo Institucional" pInputText />
+        <input 
+          type="text" 
+          placeholder="Correo Institucional" 
+          pInputText 
+          formControlName="correoInst"
+        />
 
-        <input type="text" placeholder="Correo Personal" pInputText />
+        <input 
+          type="text" 
+          placeholder="Correo Personal" 
+          pInputText 
+          formControlName="correoPers"
+        />
 
-        <input type="text" placeholder="Número de Contacto" pInputText />
+        <input 
+          type="text" 
+          placeholder="Número de Contacto" 
+          pInputText 
+          formControlName="telefono"
+        />
 
-        <input type="text" placeholder="Rol" pInputText />
+        <input 
+          type="text" 
+          placeholder="Rol" 
+          pInputText 
+          formControlName="rol"
+        />
 
-        <p-button label="Registrar" size="small"></p-button>
+        <p-button 
+          label="Registrar" 
+          size="small"
+        ></p-button>
 
-      </div>
+      </form>
 
     </div>
 

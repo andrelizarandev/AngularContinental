@@ -1,12 +1,15 @@
 <app-navigation-container>
   
   <div class="h-flex-justify-between">
+    
     <h3 class="title-color">Periodos</h3>
     <p-button
       label="Registar Periodo"
       icon="pi pi-plus"
       size="small"
+      (onClick)="toggleOpenRegister()"
     ></p-button>
+
   </div>
 
   <p-table [value]="periodosList">
@@ -32,3 +35,10 @@
   </p-table>
 
 </app-navigation-container>
+
+<app-register-periodo-dialog 
+
+  [isRegisterOpen]="isRegisterOpen" 
+  (toggleOpenRegister)="toggleOpenRegister()"
+
+></app-register-periodo-dialog>

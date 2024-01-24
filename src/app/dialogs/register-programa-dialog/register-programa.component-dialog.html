@@ -1,0 +1,25 @@
+<p-dialog 
+  class="sm:w-12" 
+  header="Registrar Nuevo Programa" 
+  [style]="{width: '600px'}"
+  [visible]="isRegisterOpen" 
+  [modal]="true" 
+  [closable]="false"
+>
+
+  <div class="v-flex mt-1">
+
+    <input 
+      type="text" 
+      placeholder="Nombre del Programa"
+      pInputText 
+    />
+
+    <div class="h-flex">
+      <p-button label="Cancelar" size="small" severity="secondary" (onClick)="closeRegisterDialog()"/>
+      <p-button label="Registrar" size="small"/>
+    </div>
+
+  </div>
+  
+</p-dialog>

@@ -4,7 +4,12 @@
 
     <h3 class="title-color">Roles</h3>
 
-    <p-button size="small" icon="pi pi-plus" label="Crear Rol"></p-button>
+    <p-button 
+      size="small" 
+      icon="pi pi-plus" 
+      label="Crear Rol"
+      (onClick)="toggleOpenRegister()"
+    />
 
   </div>
 
@@ -37,3 +42,8 @@
   </p-table>
 
 </app-navigation-container>
+
+<app-register-rol-dialog
+  [isRegisterOpen]="isRegisterOpen"
+  (toggleOpenRegister)="toggleOpenRegister()"
+/>

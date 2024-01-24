@@ -5,8 +5,10 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 
 // Components
-import { CreateUserDialogComponent } from '../../dialogs/create-user-dialog/create-user-dialog.component';
 import { NavigationContainerComponent } from '../../components/navigation-container/navigation-container.component';
+
+// Dialogs
+import { RegisterProgramaComponentDialog } from '../../dialogs/register-programa-dialog/register-programa.component-dialog';
 
 // Types
 import { GetUser } from '../../../api/users/types';
@@ -14,7 +16,7 @@ import { GetUser } from '../../../api/users/types';
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [NavigationContainerComponent, TableModule, ButtonModule, CreateUserDialogComponent],
+  imports: [NavigationContainerComponent, TableModule, ButtonModule, RegisterProgramaComponentDialog],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
