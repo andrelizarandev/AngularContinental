@@ -1,6 +1,6 @@
 // Modules
-import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 
 @Component({

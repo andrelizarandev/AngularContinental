@@ -8,6 +8,7 @@ import { RolesComponent } from './screens/roles/roles.component';
 import { PeriodosScreenComponent } from './screens/periodos-screen/periodos-screen.component';
 import { ProgramasScreenComponent } from './screens/programas-screen/programas-screen.component';
 import { SubmitUserScreenComponent } from './submit-screens/submit-user-screen/submit-user-screen.component';
+import { SubmitSolicitudDisenoCursoComponent } from './submit-screens/submit-solicitud-diseno-curso/submit-solicitud-diseno-curso.component';
 
 export const routes: Routes = [
   { path:'login', component:LoginComponent },
@@ -16,5 +17,6 @@ export const routes: Routes = [
   { path:'periodos', component:PeriodosScreenComponent },
   { path:'programas', component:ProgramasScreenComponent },
   { path:'submit-user', component:SubmitUserScreenComponent },
+  { path:'submit-solicitud-diseno-curso', component:SubmitSolicitudDisenoCursoComponent },
   { path:'', redirectTo:'/login', pathMatch:'full' }
 ];

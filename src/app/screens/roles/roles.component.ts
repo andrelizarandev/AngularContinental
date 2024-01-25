@@ -10,7 +10,7 @@ import { NavigationContainerComponent } from '../../components/navigation-contai
 import { RegisterRolDialogComponent } from '../../dialogs/register-rol-dialog/register-rol-dialog.component';
 
 // Types
-import { GetRole } from '../../../api/roles/types';
+import { GetRole } from '../../api/roles/types';
 import { ConfirmDialogComponent, ConfirmDialogPayload } from '../../shared-dialogs/confirm-dialog/confirm-dialog.component';
 
 @Component({

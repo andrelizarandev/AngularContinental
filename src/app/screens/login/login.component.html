@@ -4,7 +4,7 @@
 
     <div class="grid">
 
-      <div class="sm:hidden md:flex md:col-6">
+      <div class="hidden md:flex md:col-6">
         
         <div class="logo-container">
 
@@ -14,23 +14,40 @@
 
       </div>
 
-      <div class="sm:col-12 md:col-6">
+      <div class="col-12 md:col-6">
         
         <div class="grid v-flex-justify-center-align-center">
 
-          <p-card class="sm:col-12 lg:col-8 p-0">
+          <p-card class="col-12 lg:col-8 p-0">
 
-            <div class="v-flex p-0">
+            <form class="v-flex p-0" [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
   
               <h2 class="title-color align-self-center">Iniciar Sesión</h2>
       
-              <input pInputText type="text" class="p-inputtext-sm" placeholder="Correo"/>
+              <input 
+                pInputText 
+                type="text" 
+                class="p-inputtext-sm" 
+                placeholder="Correo"
+                formControlName="correo" 
+              />
             
-              <input pInputText type="password" class="p-inputtext-sm" placeholder="Contraseña" />
+              <input 
+                pInputText 
+                type="password"
+                class="p-inputtext-sm" 
+                placeholder="Contraseña"
+                formControlName="contrasena"  
+              />
       
-              <p-button label="Iniciar Sesión" size="small" class="align-self-center"/>
+              <p-button 
+                label="Iniciar Sesión" 
+                size="small" 
+                class="align-self-center"
+                type="submit"
+              />
   
-            </div>
+            </form>
             
           </p-card>
 

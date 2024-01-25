@@ -10,7 +10,7 @@ import { NavigationContainerComponent } from '../../components/navigation-contai
 import { RegisterProgramaComponentDialog } from '../../dialogs/register-programa-dialog/register-programa.component-dialog';
 
 // Types
-import { GetPrograma } from '../../../api/programas/types';
+import { GetPrograma } from '../../api/programas/types';
 import { ConfirmDialogComponent, ConfirmDialogPayload } from '../../shared-dialogs/confirm-dialog/confirm-dialog.component';
 
 @Component({

@@ -43,11 +43,11 @@
           formControlName="telefono"
         />
 
-        <input 
-          type="text" 
-          placeholder="Rol" 
-          pInputText 
-          formControlName="rol"
+        <p-dropdown 
+          formControlName="rol" 
+          [options]="rolOptions"
+          placeholder="Selecciona un Rol"
+          [style]="{'width':'100%'}"
         />
 
         <p-button 

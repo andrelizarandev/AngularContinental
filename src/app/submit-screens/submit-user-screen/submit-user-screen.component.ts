@@ -1,6 +1,7 @@
 // Modules
 import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -11,7 +12,13 @@ import { NavigationContainerComponent } from '../../components/navigation-contai
 @Component({
   selector: 'app-submit-user-screen',
   standalone: true,
-  imports: [ButtonModule, InputTextModule, NavigationContainerComponent, ReactiveFormsModule],
+  imports: [
+    ButtonModule, 
+    InputTextModule, 
+    NavigationContainerComponent, 
+    ReactiveFormsModule, 
+    DropdownModule
+  ],
   templateUrl: './submit-user-screen.component.html',
   styleUrl: './submit-user-screen.component.scss'
 })
@@ -19,6 +26,8 @@ import { NavigationContainerComponent } from '../../components/navigation-contai
 export class SubmitUserScreenComponent {
 
   registerUserForm: FormGroup;
+
+  rolOptions = []
 
   constructor (private fb:FormBuilder) {
 

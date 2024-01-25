@@ -7,7 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { NavigationContainerComponent } from '../../components/navigation-container/navigation-container.component';
 
 // Types
-import { GetPeriodo } from '../../../api/periodos/types';
+import { GetPeriodo } from '../../api/periodos/types';
 import { RegisterPeriodoDialogComponent } from '../../dialogs/register-periodo-dialog/register-periodo-dialog.component';
 import { ConfirmDialogComponent, ConfirmDialogPayload } from '../../shared-dialogs/confirm-dialog/confirm-dialog.component';
 

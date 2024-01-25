@@ -1,0 +1,94 @@
+<app-navigation-container>
+
+  <div class="v-flex">
+
+    <h3 class="title-color">Registro de Solicitud de Diseño de Curso</h3>
+
+    <form [formGroup]="registerRequestForm" class="grid">
+
+      <div class="col-12 md:col-6 v-flex">
+  
+        <input 
+          pInputText 
+          type="text"  
+          placeholder="Código"
+          formControlName="codigo" 
+        />
+  
+        <input 
+          pInputText 
+          type="text" 
+          placeholder="Asignatura"
+          formControlName="asignatura" 
+        />
+  
+        <p-dropdown 
+          formControlName="eap" 
+          placeholder="Eap"
+          [style]="{'width':'100%'}"
+        />
+  
+        <p-dropdown 
+          formControlName="plan" 
+          placeholder="Plan"
+          [style]="{'width':'100%'}"
+        />
+  
+        <p-dropdown 
+          formControlName="tipo_asignatura" 
+          placeholder="Tipo de Asignatura"
+          [style]="{'width':'100%'}"
+        />
+  
+        <p-dropdown 
+          formControlName="tipo_diseno" 
+          placeholder="Tipo de Diseño"
+          [style]="{'width':'100%'}"
+        />
+  
+        <p-button 
+          label="Registrar"
+          size="small"
+        />
+  
+      </div>
+
+      <div class="col-12 md:col-6 v-flex">
+
+        <p-dropdown 
+          formControlName="facultad" 
+          placeholder="Facultad"
+          [style]="{'width':'100%'}"
+        />
+  
+        <p-dropdown 
+          formControlName="ciclo" 
+          placeholder="Ciclo"
+          [style]="{'width':'100%'}"
+        />
+  
+        <p-dropdown 
+          formControlName="docente_diseñador" 
+          placeholder="Docente Diseñador"
+          [style]="{'width':'100%'}"
+        />
+  
+        <p-dropdown 
+          formControlName="modalidad" 
+          placeholder="Modalidad"
+          [style]="{'width':'100%'}"
+        />
+  
+        <p-dropdown 
+          formControlName="formato" 
+          placeholder="Formato"
+          [style]="{'width':'100%'}"
+        />
+
+      </div>
+
+    </form>
+    
+  </div>
+
+</app-navigation-container>
