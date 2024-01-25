@@ -3,7 +3,7 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: var(--primary-600);
+  background-color: var(--bluegray-500);
 }
 
 .login-background-padding {
@@ -25,14 +25,4 @@
 .login-logo {
   width: 240px;
   height: 240px;
-}
-
-.form-container {
-  row-gap: 20px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
 }
