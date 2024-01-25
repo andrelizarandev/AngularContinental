@@ -9,6 +9,7 @@ import { PeriodosScreenComponent } from './screens/periodos-screen/periodos-scre
 import { ProgramasScreenComponent } from './screens/programas-screen/programas-screen.component';
 import { SubmitUserScreenComponent } from './submit-screens/submit-user-screen/submit-user-screen.component';
 import { SubmitSolicitudDisenoCursoComponent } from './submit-screens/submit-solicitud-diseno-curso/submit-solicitud-diseno-curso.component';
+import { SubmitCarpetaComponent } from './submit-screens/submit-carpeta/submit-carpeta.component';
 
 export const routes: Routes = [
   { path:'login', component:LoginComponent },
@@ -18,5 +19,6 @@ export const routes: Routes = [
   { path:'programas', component:ProgramasScreenComponent },
   { path:'submit-user', component:SubmitUserScreenComponent },
   { path:'submit-solicitud-diseno-curso', component:SubmitSolicitudDisenoCursoComponent },
+  { path:'submit-carpeta', component:SubmitCarpetaComponent },
   { path:'', redirectTo:'/login', pathMatch:'full' }
 ];

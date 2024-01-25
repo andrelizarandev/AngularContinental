@@ -16,7 +16,6 @@ import { LoginService } from '../../api/login/login.service';
 // Types
 import { GetUser, PostLoginResponse } from '../../api/login/types';
 
-
 @Component({
   selector: 'app-login',
   standalone: true,

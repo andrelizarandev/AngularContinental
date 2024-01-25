@@ -1,0 +1,52 @@
+<app-navigation-container>
+
+  <h3 class="title-color">Creación de Carpetas</h3>
+
+  <form class="grid" [formGroup]="registerCarpetaForm">
+
+    <div class="sm:col-12 md:col-6 v-flex">
+
+      <p-dropdown 
+        formControlName="modalidad" 
+        [options]="modalidadOptions"
+        placeholder="Modalidad"
+        [style]="{'width':'100%'}"
+      />
+
+    </div>
+
+    <div class="sm:col-12 md:col-6 v-flex">
+
+      <p-dropdown 
+        formControlName="formato_presencial" 
+        [options]="modalidadOptions"
+        placeholder="Presencial"
+        [style]="{'width':'100%'}"
+      />
+
+      <p-dropdown 
+        formControlName="formato_semipresencial" 
+        [options]="modalidadOptions"
+        placeholder="Semiresencial"
+        [style]="{'width':'100%'}"
+      />
+
+      <p-dropdown 
+        formControlName="form_distancia" 
+        [options]="modalidadOptions"
+        placeholder="A Distancia"
+        [style]="{'width':'100%'}"
+      />
+
+    </div>
+
+  </form>
+
+  <p-button size="small" label="Registrar"/>
+
+</app-navigation-container>
+
+formato_presencial
+formato_semipresencial
+form_distancia
+
