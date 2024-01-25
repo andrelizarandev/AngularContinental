@@ -1,13 +1,21 @@
 // Modules
-import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
+import { Component, inject } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+// Actions
+import { setUserDataAction } from '../../state/actions/login.actions';
+
 // Services
 import { LoginService } from '../../api/login/login.service';
+
+// Types
+import { GetUser, PostLoginResponse } from '../../api/login/types';
+
 
 @Component({
   selector: 'app-login',
@@ -26,9 +34,11 @@ export class LoginComponent {
 
   loginForm: FormGroup;
 
+  private store = inject(Store);
+
   constructor (
     private fb:FormBuilder,
-    private loginService:LoginService
+    private loginService:LoginService,
   ) {
 
     this.loginForm = this.fb.group({
@@ -37,15 +47,35 @@ export class LoginComponent {
     });
 
   }
+  
 
   onSubmitLogin () {
 
     this.loginForm.disable();
 
-    this.loginService.createPost(this.loginForm.value).subscribe((result) => {})
+    this.loginService
+      .createPost(this.loginForm.value)
+      .subscribe({ 
+        next:(response) => this.onSuccessSubmitLogin(response),
+        error:(err) => this.onErrorSubmitLogin(err)
+    })
 
     this.loginForm.enable();
 
   }
 
+  onSuccessSubmitLogin (response:PostLoginResponse) {
+    this.store.dispatch(setUserDataAction({ user:demoUserData }));
+    localStorage.setItem('continental-token', response.token);
+  }
+
+  onErrorSubmitLogin (error:any) {}
+
+}
+
+const demoUserData:GetUser = {
+  id:'1',
+  nombre:'Demo',
+  apellido:'Demo demo',
+  correo:'demo@gmail.com',
 }

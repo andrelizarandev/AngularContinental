@@ -22,9 +22,10 @@ export class NavigationContainerComponent  {
 
   routeList:RouteElement[] = [
     { name: "Usuarios", icon: "pi pi-users", route: "/users" },
-    { name: "Programas", icon: "pi pi-users", route: "/programas" },
-    { name: "Periodos", icon: "pi pi-users", route: "/periodos" },
-    { name: "Roles", icon: "pi pi-users", route: "/roles" },
+    { name: "Programas", icon: "pi pi-book", route: "/programas" },
+    { name: "Periodos", icon: "pi pi-calendar", route: "/periodos" },
+    { name: "Roles", icon: "pi pi-list", route: "/roles" },
+    { name: "Diseño de Curso", icon: "pi pi-plus", route: "/submit-solicitud-diseno-curso" },
   ];
 
 }
