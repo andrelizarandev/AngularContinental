@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // Components
 import { NavigationContainerComponent } from '../../components/navigation-container/navigation-container.component';
+import { DisenoCursoService } from '../../api/diseno-curso/diseno-curso.service';
 
 @Component({
   selector: 'app-submit-solicitud-diseno-curso',
@@ -27,7 +28,10 @@ export class SubmitSolicitudDisenoCursoComponent {
 
   registerRequestForm: FormGroup;
 
-  constructor (private fb:FormBuilder) {
+  constructor (
+    private fb:FormBuilder,
+    private disenoCursoService:DisenoCursoService
+  ) {
 
     this.registerRequestForm = this.fb.group({
       codigo: ['', Validators.required],

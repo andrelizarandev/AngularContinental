@@ -1,5 +1,6 @@
 // Modules
 import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { Component, inject } from '@angular/core';
@@ -14,7 +15,7 @@ import { setUserDataAction } from '../../state/actions/login.actions';
 import { LoginService } from '../../api/login/login.service';
 
 // Types
-import { GetUser, PostLoginResponse } from '../../api/login/types';
+import { GetUser, PostLoginResponse } from '../../api/login/login.types';
 
 @Component({
   selector: 'app-login',
@@ -38,6 +39,7 @@ export class LoginComponent {
   constructor (
     private fb:FormBuilder,
     private loginService:LoginService,
+    private router:Router
   ) {
 
     this.loginForm = this.fb.group({
@@ -57,18 +59,20 @@ export class LoginComponent {
       .subscribe({ 
         next:(response) => this.onSuccessSubmitLogin(response),
         error:(err) => this.onErrorSubmitLogin(err)
-    })
+    });
 
-    this.loginForm.enable();
 
   }
 
   onSuccessSubmitLogin (response:PostLoginResponse) {
     this.store.dispatch(setUserDataAction({ user:demoUserData }));
     localStorage.setItem('continental-token', response.token);
+    this.router.navigate(['/users']);
   }
 
-  onErrorSubmitLogin (error:any) {}
+  onErrorSubmitLogin (error:any) {
+    this.loginForm.enable();
+  }
 
 }
 

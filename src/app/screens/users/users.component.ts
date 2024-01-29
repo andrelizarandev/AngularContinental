@@ -11,7 +11,7 @@ import { NavigationContainerComponent } from '../../components/navigation-contai
 import { RegisterProgramaComponentDialog } from '../../dialogs/register-programa-dialog/register-programa.component-dialog';
 
 // Types
-import { GetUser } from '../../api/login/types';
+import { GetUser } from '../../api/login/login.types';
 
 @Component({
   selector: 'app-users',

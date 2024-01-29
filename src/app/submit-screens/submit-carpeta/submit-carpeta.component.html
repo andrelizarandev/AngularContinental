@@ -5,15 +5,18 @@
   <form class="grid" [formGroup]="registerCarpetaForm">
 
     <div class="sm:col-12 md:col-6 v-flex">
-
-      <h4 class="title-color">Modalidad</h4>
       
+      <label for="sc-modalidad">Modalidad</label>
+
       <p-dropdown
+        id="sc-modalidad"
         formControlName="modalidad"
         [options]="modalidadOptions"
         placeholder="Modalidad"
         [style]="{ width: '100%' }"
       />
+
+      <hr/>
 
       <h4 class="title-color">Formato</h4>
 
@@ -23,10 +26,13 @@
         this.registerCarpetaForm.value.modalidad.id === 6 ||
         this.registerCarpetaForm.value.modalidad.id === 7 
       ) {
+
+        <label for="sc-formato-presencial">Presencial</label>
+
         <p-dropdown
+          id="sc-formato-presencial"
           formControlName="formato_presencial"
           [options]="presencialOptions"
-          placeholder="Presencial"
           [style]="{ width: '100%' }"
         />
       } 
@@ -37,12 +43,16 @@
         this.registerCarpetaForm.value.modalidad.id === 6 ||
         this.registerCarpetaForm.value.modalidad.id === 7 
       ) {
+
+        <label for="sc-formato-semipresencial">Semipresencial</label>
+
         <p-dropdown
+          id="sc-formato-presencial"
           formControlName="formato_semipresencial"
           [options]="semipresencialOptions"
-          placeholder="Semipresencial"
           [style]="{ width: '100%' }"
         />
+
       } 
       
       @if ( 
@@ -51,10 +61,13 @@
         this.registerCarpetaForm.value.modalidad.id === 5 ||
         this.registerCarpetaForm.value.modalidad.id === 7 
       ) {
+
+        <label for="sc-formato-a-distancia">A Distancia</label>
+
         <p-dropdown
+          id="sc-formato-a-distancia"
           formControlName="form_distancia"
           [options]="aDistanciaOptions"
-          placeholder="A Distancia"
           [style]="{ width: '100%' }"
         />
       }

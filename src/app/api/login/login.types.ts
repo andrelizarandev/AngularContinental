@@ -1,6 +1,3 @@
-// Types
-import { GetRole } from '../roles/types';
-
 export type PostLogin = {
   correo: string;
   contrasena: string;

@@ -9,8 +9,11 @@ import { NavigationContainerComponent } from '../../components/navigation-contai
 // Dialogs
 import { RegisterRolDialogComponent } from '../../dialogs/register-rol-dialog/register-rol-dialog.component';
 
+// Service
+import { RolesService } from '../../api/roles/roles.service';
+
 // Types
-import { GetRole } from '../../api/roles/types';
+import { GetRoleData } from '../../api/roles/roles.types';
 import { ConfirmDialogComponent, ConfirmDialogPayload } from '../../shared-dialogs/confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -33,11 +36,13 @@ export class RolesComponent {
 
   confirmDeletePayload:ConfirmDialogPayload | null = null;
 
-  roleList:GetRole[] = [
+  roleList:GetRoleData[] = [
     { id: '1', name: 'Admin', description: 'Admin' },
     { id: '2', name: 'User',  description: 'User' },
     { id: '3', name: 'Guest', description: 'Guest' },
-  ]
+  ];
+
+  constructor (private rolesService:RolesService) {}
 
   toggleOpenRegister() {
     this.isRegisterOpen = !this.isRegisterOpen;
@@ -52,5 +57,16 @@ export class RolesComponent {
       cancelAction: () => this.confirmDeletePayload = null
     };
   }
+
+  submitRol () {
+    this.rolesService.postRol({ description:'', name:'' }).subscribe({
+      next:(response) => this.onSuccessSubmitRol(response.data),
+      error:() => this.onErrorSubmitRol()
+    });
+  }
+
+  onSuccessSubmitRol (data:GetRoleData) {}
+
+  onErrorSubmitRol () {}
 
 }

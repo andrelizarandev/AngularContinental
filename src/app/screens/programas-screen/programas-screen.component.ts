@@ -9,8 +9,11 @@ import { NavigationContainerComponent } from '../../components/navigation-contai
 // Dialogs
 import { RegisterProgramaComponentDialog } from '../../dialogs/register-programa-dialog/register-programa.component-dialog';
 
+// Service
+import { ProgramasService } from '../../api/programas/programas.service';
+
 // Types
-import { GetPrograma } from '../../api/programas/types';
+import { GetProgramaData } from '../../api/programas/programas.types';
 import { ConfirmDialogComponent, ConfirmDialogPayload } from '../../shared-dialogs/confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -27,7 +30,11 @@ export class ProgramasScreenComponent {
 
   confirmDeletePayload:ConfirmDialogPayload | null = null;
 
-  programasList:GetPrograma[] = [
+  constructor (
+    private programasService:ProgramasService
+  ) {}
+
+  programasList:GetProgramaData[] = [
     { id: '1', nombre: 'Programa 1' },
     { id: '2', nombre: 'Programa 2' },
     { id: '3', nombre: 'Programa 3' },
@@ -48,5 +55,16 @@ export class ProgramasScreenComponent {
       cancelAction: () => this.confirmDeletePayload = null
     };
   }
+
+  onSubmitPrograma () {
+    this.programasService.postPrograma({ nombre:'' }).subscribe({
+      next:(response) => this.onSuccessSubmitPrograma(response.data),
+      error:() => this.onErrorSubmitPrograma()
+    });
+  }
+
+  onSuccessSubmitPrograma (response:GetProgramaData) {}
+
+  onErrorSubmitPrograma () {}
 
 }

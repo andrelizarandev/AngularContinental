@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 // Types
-import { PostLogin, PostLoginResponse } from './types';
+import { PostLogin, PostLoginResponse } from './login.types';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class LoginService {
   constructor (private http:HttpClient) {}
 
   createPost(form:PostLogin): Observable<PostLoginResponse> {
-    return this.http.post<PostLoginResponse>(apiUrl, form);
+    return this.http.post<PostLoginResponse>(`${apiUrl}/login`, form);
   }
 
 }

@@ -5,7 +5,7 @@ import { createReducer, on } from '@ngrx/store';
 import { setUserDataAction } from '../actions/login.actions';
 
 // Types
-import { GetUser } from '../../api/login/types'
+import { GetUser } from '../../api/login/login.types'
 
 export const initialStateLoginReducer:InitialStateLoginReducer = {
   user:null

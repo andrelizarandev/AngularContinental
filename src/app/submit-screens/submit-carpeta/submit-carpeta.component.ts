@@ -75,9 +75,52 @@ export class SubmitCarpetaComponent {
   }
 
   onSubmit () {
-
+    const modalidad = this.registerCarpetaForm.get('modalidad')?.value;
+    switch (modalidad) {
+      case 1: return this.evaluateCase1();
+      case 2: return this.evaluateCase2();
+      case 3: return this.evaluateCase3();
+      default: return console.log('IDK');
+    }
   }
 
+  evaluateCase1 () {
+    const formato_presencial = this.registerCarpetaForm.get('formato_presencial')?.value;
+    switch (formato_presencial) {
+      case 1: return console.log('Presencial con carpeta presencial');
+      case 2: return console.log('Presencial con carpeta virtual 16 semanas');
+      case 3: return console.log('Presencial con carpeta virtual 8 semanas');
+      case 4: return console.log('Presencial con carpeta blended 16 semanas');
+      case 5: return console.log('Presencial con carpeta blended 8 semanas');
+      default: return console.log('Presencial con carpeta presencial');
+    }
+  }
+
+  evaluateCase2 () {
+    const formato_semipresencial = this.registerCarpetaForm.get('formato_semipresencial')?.value;
+    switch (formato_semipresencial) {
+      case 1: return console.log('Semipresencial con carpeta presencial 16 semanas');
+      case 2: return console.log('Semipresencial con carpeta presencial 8 semanas');
+      case 3: return console.log('Semipresencial con carpeta virtual 16 semanas');
+      case 4: return console.log('Semipresencial con carpeta virtual 8 semanas');
+      case 5: return console.log('Semipresencial con carpeta blended 16 semanas');
+      default: return console.log('Semipresencial con carpeta presencial 16 semanas');
+    } 
+  }
+
+  evaluateCase3 () {
+    const form_distancia = this.registerCarpetaForm.get('form_distancia')?.value;
+    switch (form_distancia) {
+      case 1: return console.log('A Distancia con carpeta presencial 16 semanas');
+      case 2: return console.log('A Distancia con carpeta presencial 8 semanas');
+      case 3: return console.log('A Distancia con carpeta virtual 16 semanas');
+      case 4: return console.log('A Distancia con carpeta virtual 8 semanas');
+      case 5: return console.log('A Distancia con carpeta blended 16 semanas');
+      default: return console.log('A Distancia con carpeta presencial 16 semanas');
+    }
+  }
+
+  evaluateCase4 () {}
 
 }
 

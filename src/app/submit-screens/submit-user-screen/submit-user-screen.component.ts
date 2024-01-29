@@ -9,6 +9,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // Components
 import { NavigationContainerComponent } from '../../components/navigation-container/navigation-container.component';
 
+// Services
+import { UsersService } from '../../api/users/users.service';
+
+// Types
+import { PostUserResponse } from '../../api/users/users.types';
+
 @Component({
   selector: 'app-submit-user-screen',
   standalone: true,
@@ -29,7 +35,10 @@ export class SubmitUserScreenComponent {
 
   rolOptions = []
 
-  constructor (private fb:FormBuilder) {
+  constructor (
+    private fb:FormBuilder,
+    private userService:UsersService
+  ) {
 
     this.registerUserForm = this.fb.group({
       nombres: ['', Validators.required],
@@ -41,5 +50,16 @@ export class SubmitUserScreenComponent {
     });
 
   }
+
+  onSubmitUser () {
+    this.userService.createUser(this.registerUserForm.value).subscribe({
+      next:(response) => this.onSuccessSubmitUser(response),
+      error:() => this.onErrorSubmit()
+    });
+  }
+
+  onSuccessSubmitUser (response:PostUserResponse) {}
+
+  onErrorSubmit () {}
 
 }
