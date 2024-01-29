@@ -17,26 +17,47 @@
 
     <div class="sm:col-12 md:col-6 v-flex">
 
-      <p-dropdown 
-        formControlName="formato_presencial" 
-        [options]="modalidadOptions"
-        placeholder="Presencial"
-        [style]="{'width':'100%'}"
-      />
+      @if (
+        this.registerCarpetaForm.value.modalidad.id === 1 ||
+        this.registerCarpetaForm.value.modalidad.id === 4 ||
+        this.registerCarpetaForm.value.modalidad.id === 6 ||
+        this.registerCarpetaForm.value.modalidad.id === 7
+      ) {
+        <p-dropdown 
+          formControlName="formato_presencial" 
+          [options]="presencialOptions"
+          placeholder="Presencial"
+          [style]="{'width':'100%'}"
+        />
+      }
 
-      <p-dropdown 
-        formControlName="formato_semipresencial" 
-        [options]="modalidadOptions"
-        placeholder="Semiresencial"
-        [style]="{'width':'100%'}"
-      />
+      @if (
+        this.registerCarpetaForm.value.modalidad.id === 2 ||
+        this.registerCarpetaForm.value.modalidad.id === 5 ||
+        this.registerCarpetaForm.value.modalidad.id === 6 ||
+        this.registerCarpetaForm.value.modalidad.id === 7
+      ) {
+        <p-dropdown 
+          formControlName="formato_semipresencial" 
+          [options]="semipresencialOptions"
+          placeholder="Semiresencial"
+          [style]="{'width':'100%'}"
+        />
+      }
 
-      <p-dropdown 
-        formControlName="form_distancia" 
-        [options]="modalidadOptions"
-        placeholder="A Distancia"
-        [style]="{'width':'100%'}"
-      />
+      @if (
+        this.registerCarpetaForm.value.modalidad.id === 3 ||
+        this.registerCarpetaForm.value.modalidad.id === 4 ||
+        this.registerCarpetaForm.value.modalidad.id === 5 ||
+        this.registerCarpetaForm.value.modalidad.id === 7
+      ) {
+        <p-dropdown 
+          formControlName="form_distancia" 
+          [options]="aDistanciaOptions"
+          placeholder="A Distancia"
+          [style]="{'width':'100%'}"
+        />
+      }
 
     </div>
 
@@ -45,8 +66,3 @@
   <p-button size="small" label="Registrar"/>
 
 </app-navigation-container>
-
-formato_presencial
-formato_semipresencial
-form_distancia
-
