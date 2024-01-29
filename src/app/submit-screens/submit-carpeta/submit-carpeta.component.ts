@@ -37,22 +37,28 @@ export class SubmitCarpetaComponent {
     { id:7, label:'Presencial, Semipresencial y a Distancia' },
   ];
 
-  semipresencialOptions:OptionData[] = [
+  presencialOptions:OptionData[] = [
     { id:1, label:'Presencial' },
-    { id:2, label:'Virtual' },
-    { id:3, label:'Blended' },
+    { id:2, label:'Virtual 16 Semanas' },
+    { id:3, label:'Virtual 8 Semanas' },
+    { id:4, label:'Blended 16 Semanas' },
+    { id:5, label:'Blended 8 Semanas' },
+  ];
+
+  semipresencialOptions:OptionData[] = [
+    { id:1, label:'Presencial 16 Semanas' },
+    { id:2, label:'Presencial 8 Semanas' },
+    { id:3, label:'Virtual 16 Semanas' },
+    { id:4, label:'Virtual 8 Semanas' },
+    { id:5, label:'Blended 16 Semanas' },
   ];
 
   aDistanciaOptions:OptionData[] = [
-    { id:1, label:'Presencial' },
-    { id:2, label:'Virtual' },
-    { id:3, label:'Blended' },
-  ]
-
-  presencialOptions:OptionData[] = [
-    { id:1, label:'Presencial' },
-    { id:2, label:'Virtual' },
-    { id:3, label:'Blended' },
+    { id:1, label:'Presencial 16 Semanas' },
+    { id:2, label:'Presencial 8 Semanas' },
+    { id:3, label:'Virtual 16 Semanas' },
+    { id:4, label:'Virtual 8 Semanas' },
+    { id:5, label:'Blended 16 Semanas' },
   ];
 
   constructor (private fb:FormBuilder) {

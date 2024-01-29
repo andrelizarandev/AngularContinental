@@ -6,63 +6,61 @@
 
     <div class="sm:col-12 md:col-6 v-flex">
 
-      <p-dropdown 
-        formControlName="modalidad" 
+      <h4 class="title-color">Modalidad</h4>
+      
+      <p-dropdown
+        formControlName="modalidad"
         [options]="modalidadOptions"
         placeholder="Modalidad"
-        [style]="{'width':'100%'}"
+        [style]="{ width: '100%' }"
       />
 
-    </div>
+      <h4 class="title-color">Formato</h4>
 
-    <div class="sm:col-12 md:col-6 v-flex">
-
-      @if (
+      @if ( 
         this.registerCarpetaForm.value.modalidad.id === 1 ||
         this.registerCarpetaForm.value.modalidad.id === 4 ||
         this.registerCarpetaForm.value.modalidad.id === 6 ||
-        this.registerCarpetaForm.value.modalidad.id === 7
+        this.registerCarpetaForm.value.modalidad.id === 7 
       ) {
-        <p-dropdown 
-          formControlName="formato_presencial" 
+        <p-dropdown
+          formControlName="formato_presencial"
           [options]="presencialOptions"
           placeholder="Presencial"
-          [style]="{'width':'100%'}"
+          [style]="{ width: '100%' }"
         />
-      }
-
-      @if (
+      } 
+      
+      @if ( 
         this.registerCarpetaForm.value.modalidad.id === 2 ||
         this.registerCarpetaForm.value.modalidad.id === 5 ||
         this.registerCarpetaForm.value.modalidad.id === 6 ||
-        this.registerCarpetaForm.value.modalidad.id === 7
+        this.registerCarpetaForm.value.modalidad.id === 7 
       ) {
-        <p-dropdown 
-          formControlName="formato_semipresencial" 
+        <p-dropdown
+          formControlName="formato_semipresencial"
           [options]="semipresencialOptions"
-          placeholder="Semiresencial"
-          [style]="{'width':'100%'}"
+          placeholder="Semipresencial"
+          [style]="{ width: '100%' }"
         />
-      }
-
-      @if (
+      } 
+      
+      @if ( 
         this.registerCarpetaForm.value.modalidad.id === 3 ||
         this.registerCarpetaForm.value.modalidad.id === 4 ||
         this.registerCarpetaForm.value.modalidad.id === 5 ||
-        this.registerCarpetaForm.value.modalidad.id === 7
+        this.registerCarpetaForm.value.modalidad.id === 7 
       ) {
-        <p-dropdown 
-          formControlName="form_distancia" 
+        <p-dropdown
+          formControlName="form_distancia"
           [options]="aDistanciaOptions"
           placeholder="A Distancia"
-          [style]="{'width':'100%'}"
+          [style]="{ width: '100%' }"
         />
       }
 
     </div>
-
   </form>
 
-  <p-button size="small" label="Registrar"/>
-
+  <p-button size="small" label="Registrar" />
 </app-navigation-container>
