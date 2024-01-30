@@ -26,7 +26,6 @@ export class NavigationContainerComponent  {
     { name: "Periodos", icon: "pi pi-calendar", route: "/periodos" },
     { name: "Roles", icon: "pi pi-list", route: "/roles" },
     { name: "Diseño de Curso", icon: "pi pi-plus", route: "/submit-solicitud-diseno-curso" },
-    { name: "Creación Carpetas", icon: "pi pi-folder", route: "/submit-carpeta" },
   ];
 
 }

@@ -39,12 +39,7 @@
           placeholder="Tipo de Asignatura"
           [style]="{'width':'100%'}"
         />
-  
-        <p-dropdown 
-          formControlName="tipo_diseno" 
-          placeholder="Tipo de Diseño"
-          [style]="{'width':'100%'}"
-        />
+
   
         <p-button 
           label="Registrar"
@@ -54,6 +49,12 @@
       </div>
 
       <div class="col-12 md:col-6 v-flex">
+
+        <p-dropdown 
+          formControlName="tipo_diseno" 
+          placeholder="Tipo de Diseño"
+          [style]="{'width':'100%'}"
+        />
 
         <p-dropdown 
           formControlName="facultad" 
@@ -72,19 +73,79 @@
           placeholder="Docente Diseñador"
           [style]="{'width':'100%'}"
         />
-  
+
         <p-dropdown 
           formControlName="modalidad" 
           placeholder="Modalidad"
-          [style]="{'width':'100%'}"
-        />
-  
-        <p-dropdown 
-          formControlName="formato" 
-          placeholder="Formato"
+          [options]="modalidadOptions"
           [style]="{'width':'100%'}"
         />
 
+        <h3 class="title-color">Formato</h3>
+
+        @if (this.registerRequestForm.value.modalidad === 0) {
+
+          <p-message 
+            severity="warn"
+            text="Seleccione el formato de acuerdo a la modalidad"
+            [style]="{'width':'100%'}"
+          />
+
+        }
+
+        @if ( 
+          this.registerRequestForm.value.modalidad.id === 1 ||
+          this.registerRequestForm.value.modalidad.id === 4 ||
+          this.registerRequestForm.value.modalidad.id === 6 ||
+          this.registerRequestForm.value.modalidad.id === 7 
+        ) {
+
+          <label for="sc-formato-presencial">Presencial</label>
+
+          <p-dropdown
+            id="sc-formato-presencial"
+            formControlName="formato_presencial"
+            [options]="presencialOptions"
+            [style]="{ width: '100%' }"
+          />
+        } 
+        
+        @if ( 
+          this.registerRequestForm.value.modalidad.id === 2 ||
+          this.registerRequestForm.value.modalidad.id === 5 ||
+          this.registerRequestForm.value.modalidad.id === 6 ||
+          this.registerRequestForm.value.modalidad.id === 7 
+        ) {
+
+          <label for="sc-formato-semipresencial">Semipresencial</label>
+
+          <p-dropdown
+            id="sc-formato-presencial"
+            formControlName="formato_semipresencial"
+            [options]="semipresencialOptions"
+            [style]="{ width: '100%' }"
+          />
+
+        } 
+        
+        @if ( 
+          this.registerRequestForm.value.modalidad.id === 3 ||
+          this.registerRequestForm.value.modalidad.id === 4 ||
+          this.registerRequestForm.value.modalidad.id === 5 ||
+          this.registerRequestForm.value.modalidad.id === 7 
+        ) {
+
+          <label for="sc-formato-a-distancia">A Distancia</label>
+
+          <p-dropdown
+            id="sc-formato-a-distancia"
+            formControlName="form_distancia"
+            [options]="aDistanciaOptions"
+            [style]="{ width: '100%' }"
+          />
+          
+        }
+  
       </div>
 
     </form>
