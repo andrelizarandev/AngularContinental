@@ -17,6 +17,12 @@
   justify-content: space-between;
 }
 
+.h-flex-align-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .h-flex-justify-end {
   display: flex;
   flex-direction: row;

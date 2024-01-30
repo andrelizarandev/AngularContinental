@@ -1,14 +1,18 @@
 // Modules
+import { CardModule } from 'primeng/card';
 import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // Components
 import { NavigationContainerComponent } from '../../components/navigation-container/navigation-container.component';
+
+// Service
 import { DisenoCursoService } from '../../api/diseno-curso/diseno-curso.service';
 
 @Component({
@@ -20,7 +24,9 @@ import { DisenoCursoService } from '../../api/diseno-curso/diseno-curso.service'
     InputTextModule, 
     DropdownModule,
     ReactiveFormsModule,
-    MessageModule
+    MessageModule,
+    CardModule,
+    BreadcrumbModule
   ],
   templateUrl: './submit-solicitud-diseno-curso.component.html',
   styleUrl: './submit-solicitud-diseno-curso.component.scss',
@@ -30,6 +36,10 @@ export class SubmitSolicitudDisenoCursoComponent {
 
   registerRequestForm: FormGroup;
   registerCarpetaForm: FormGroup;
+  shouldShowCarpetas:boolean = false;
+
+  firstOptionSelected:FirstPossibleOptions = null;
+  secondOptionSelected:SecondPossibleOptions = null;
 
   modalidadOptions:OptionData[] = [
     { id:0, label:'-' },
@@ -61,6 +71,7 @@ export class SubmitSolicitudDisenoCursoComponent {
   ];
 
   aDistanciaOptions:OptionData[] = [
+    { id:0, label:'-' },
     { id:1, label:'Presencial 16 Semanas' },
     { id:2, label:'Presencial 8 Semanas' },
     { id:3, label:'Virtual 16 Semanas' },
@@ -95,9 +106,28 @@ export class SubmitSolicitudDisenoCursoComponent {
 
   }
 
+  selectFirstOption (opt:FirstPossibleOptions) {
+    this.firstOptionSelected = opt
+  }
+
+  selectSecondOption (opt:SecondPossibleOptions) {
+    this.secondOptionSelected = opt
+  }
+   
+  toggleShouldShowCarpetas () {
+    this.shouldShowCarpetas = !this.shouldShowCarpetas;
+  }
+
+  cleanFirstOption () {
+    this.firstOptionSelected = null;
+  }
+
 }
 
 export type OptionData = {
   id:number;
   label:string;
 }
+
+export type FirstPossibleOptions = null | 'Presencial' | 'SemipresencialDistancia';
+export type SecondPossibleOptions = null | 'Presencial' | 'Presencial16Semanas';

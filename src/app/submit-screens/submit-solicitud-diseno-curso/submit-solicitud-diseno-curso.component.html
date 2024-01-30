@@ -44,6 +44,7 @@
         <p-button 
           label="Registrar"
           size="small"
+          (onClick)="toggleShouldShowCarpetas()"
         />
   
       </div>
@@ -149,6 +150,96 @@
       </div>
 
     </form>
+
+    @if (shouldShowCarpetas) { 
+      
+      <div class="h-flex-align-center">
+
+        <h3 class="title-color">Carpetas</h3>
+
+        @if (firstOptionSelected != null) { 
+
+          <p-button 
+            label="Volver"
+            size="small"
+            (onClick)="cleanFirstOption()"
+            [style]="{ 'margin-left': '40px' }"
+
+          />
+
+        }
+
+      </div>
+
+    }
+
+    @if (shouldShowCarpetas && firstOptionSelected === null) {
+
+      <div class="h-flex">
+
+        <p-card>
+
+          <div class="v-flex">
+
+            <h4>Presencial</h4>
+
+            <p-button label="Acceder" size="small" (onClick)="selectFirstOption('Presencial')"/>
+
+          </div>
+
+        </p-card>
+
+        <p-card>
+
+          <div class="v-flex">
+
+            <h4>Semipresencial y a Distanca</h4>
+
+            <p-button label="Acceder" size="small" (onClick)="selectFirstOption('SemipresencialDistancia')"/>
+            
+          </div>
+
+        </p-card>
+
+      </div>
+
+    } @else if (shouldShowCarpetas && firstOptionSelected === 'Presencial') {
+
+      <div class="h-flex">
+
+        <p-card>
+
+          <div class="v-flex">
+  
+            <h4>Presencial</h4>
+  
+            <p-button label="Acceder" size="small" (onClick)="selectFirstOption('Presencial')"/>
+  
+          </div>
+  
+        </p-card>
+
+      </div>
+
+    } @else if (shouldShowCarpetas && firstOptionSelected === 'SemipresencialDistancia') {
+
+      <div class="h-flex">
+
+        <p-card>
+
+          <div class="v-flex">
+  
+            <h4>Virtual 16 Semanas</h4>
+  
+            <p-button label="Acceder" size="small" (onClick)="selectFirstOption('Presencial')"/>
+  
+          </div>
+  
+        </p-card>
+
+      </div>
+
+    }
     
   </div>
 
