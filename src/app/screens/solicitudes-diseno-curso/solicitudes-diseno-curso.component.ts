@@ -1,14 +1,14 @@
 // Modules
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
 
 // Components
 import { NavigationContainerComponent } from '../../components/navigation-container/navigation-container.component';
 
 // Types
 import { GetDisenoCursoData } from '../../api/diseno-curso/diseno-curso.types';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-solicitudes-diseno-curso',
@@ -20,9 +20,7 @@ import { Router } from '@angular/router';
 
 export class SolicitudesDisenoCursoComponent {
 
-  constructor (private router:Router) { 
-    
-  }
+  constructor (private router:Router) { }
 
   requestList:GetDisenoCursoData[] = [
     dummyRequest,
