@@ -11,6 +11,7 @@ import { ProgramasScreenComponent } from './screens/programas-screen/programas-s
 import { SubmitUserScreenComponent } from './submit-screens/submit-user-screen/submit-user-screen.component';
 import { SolicitudesDisenoCursoComponent } from './screens/solicitudes-diseno-curso/solicitudes-diseno-curso.component';
 import { SubmitSolicitudDisenoCursoComponent } from './submit-screens/submit-solicitud-diseno-curso/submit-solicitud-diseno-curso.component';
+import { SubmitProduccionGeneralComponent } from './submit-screens/submit-produccion-general/submit-produccion-general.component';
 
 export const routes: Routes = [
   { path:'login', component:LoginComponent },
@@ -22,5 +23,6 @@ export const routes: Routes = [
   { path:'solicitud-diseno-curso', component:SolicitudesDisenoCursoComponent },
   { path:'produccion', component:ProduccionComponent },
   { path:'submit-solicitud-diseno-curso', component:SubmitSolicitudDisenoCursoComponent },
+  { path:'submit-produccion-general', component:SubmitProduccionGeneralComponent },
   { path:'', redirectTo:'/login', pathMatch:'full' }
 ];

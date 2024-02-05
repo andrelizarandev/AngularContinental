@@ -16,11 +16,17 @@ import { NavigationContainerComponent } from '../../components/navigation-contai
 })
 export class ProduccionComponent {
 
+  constructor(private router: Router) {}
+
   productionList = [
     dummyElement,
     dummyElement,
     dummyElement,
-  ]
+  ];
+
+  public redirectToProductionForm() {
+    this.router.navigate(['/submit-produccion-general']);
+  }
 
 }
 

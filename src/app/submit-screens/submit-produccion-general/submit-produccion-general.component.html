@@ -1,0 +1,385 @@
+<app-navigation-container>
+
+  <div class="v-flex">
+
+    <h3 class="title-color">Registro de Solicitud de Diseño de Curso</h3>
+
+    <form class="grid">
+
+      <div class="md:col-6 v-flex">
+
+
+        <label for="codigo">Código</label>
+
+        <input 
+          pInputText  
+          formControlName="codigo" 
+          [style]="{'width':'100%'}"
+        />
+
+        <label>Nombre</label>
+
+        <p-dropdown 
+          formControlName="plan" 
+          [style]="{'width':'100%'}"
+        />
+
+        <label>Eap</label>
+
+        <p-dropdown 
+          formControlName="eap" 
+          [style]="{'width':'100%'}"
+        />
+
+        <label>Tipo Asignatura</label>
+
+        <p-dropdown 
+          formControlName="tipo_asignatura" 
+          [style]="{'width':'100%'}"
+        />
+
+        <label>Número Formatos</label>
+
+        <p-dropdown 
+          formControlName="numero_formatos" 
+          [style]="{'width':'100%'}"
+        />
+
+        <label>Situación de la Asignatura</label>
+
+        <p-dropdown 
+          formControlName="situacion_asignatura" 
+          [style]="{'width':'100%'}"
+        />
+
+        <p-divider/>
+
+
+        <div class="grid">
+
+          <div class="md:col-6 v-flex">
+
+            <label>Fecha de Inicio</label>
+
+            <input 
+              pInputText  
+              formControlName="fecha_inicio" 
+              [style]="{'width':'100%'}"
+              type="date"
+            />
+
+            <label>Fecha Programada de Finalización</label>
+
+            <input 
+              pInputText 
+              formControlName="fecha_finalizacion" 
+              [style]="{'width':'100%'}"
+              type="date"
+            />
+
+          </div>
+
+          <div class="md:col-6 v-flex">
+
+            <label>Tiempo Programado de Diseño</label>
+    
+            <input 
+              pInputText  
+              formControlName="tiempo_programado" 
+              [style]="{'width':'100%'}"
+              type="date"
+            />
+    
+          </div>
+
+        </div>
+
+        <p-divider/>
+
+       <div class="grid">
+
+        <div class="md:col-6 v-flex">
+
+          <label>Asesor Didáctico</label>
+
+          <input 
+            pInputText
+            formControlName="asesor_didactico" 
+          />
+
+          <label>Correo Asesor Didactico</label>
+
+          <input
+            pInputText
+            formControlName="correo_asesor" 
+          />
+
+        </div>
+
+        <div class="md:col-6 v-flex">
+
+          <label>Teléfono Asesor Didactico</label>
+
+          <input 
+            pInputText 
+            type="text"  
+            formControlName="telefono_asesor_didactico" 
+            [style]="{'width':'100%'}"
+          />
+
+        </div>
+
+       </div>
+
+        <p-divider/>
+
+        <label>Decano Director Cámara</label>
+
+        <input 
+          pInputText
+          formControlName="decano_director_camara" 
+        />
+
+        <label>Correo Decano Director Cámara</label>
+
+        <input
+          pInputText
+          formControlName="correo_decano_director_camara"
+        />
+
+        <p-divider/>
+
+        <div class="grid">
+
+          <div class="md:col-6 v-flex">
+
+            <label>Docente Diseñador</label>
+
+            <input
+              pInputText
+              formControlName="docente_disenador" 
+            />
+
+            <label>Email Docente Diseñador</label>
+
+            <input
+              pInputText
+              formControlName="email_docente_disenador" 
+            />
+
+            <label>Procedencia Docente Diseñador</label>
+
+            <input
+              pInputText
+              formControlName="procedencia_docente_disenador" 
+            />
+
+          </div>
+
+          <div class="md:col-6 v-flex">
+
+            <label>Observaciones de Designación Diseñador</label>
+
+            <input
+              pInputText
+              formControlName="observaciones_designacion_docente" 
+            />
+
+            <label>Teléfono Docente Diseñador</label>
+
+            <input
+              pInputText
+              formControlName="telefono_docente_disenador" 
+            />
+
+            <label>Designación Docente</label>
+
+            <p-dropdown 
+              formControlName="designacion_docente" 
+              [style]="{'width':'100%'}"
+            />
+
+          </div>
+
+        </div>
+
+        <p-divider/>
+
+        <div class="grid">
+
+          <div class="md:col-6 v-flex">
+
+            <label>Diseñador Instruccional</label>
+
+            <input
+              pInputText
+              formControlName="disenador_instruccional" 
+            />
+
+            <label>Correo Diseñador Instruccional</label>
+
+            <input
+              pInputText
+              formControlName="correo_disenador_instruccional" 
+            />
+
+          </div>
+
+          <div class="md:col-6 v-flex">
+
+            <label>Teléfono Diseñador Instruccional</label>
+  
+            <input
+              pInputText
+              formControlName="telefono_disenador_instruccional" 
+            />
+  
+          </div>
+
+        </div>
+
+        <p-divider/>
+
+        <div class="grid">
+
+          <div class="md:col-6 v-flex">
+
+            <label>Responsable de Seguimiento</label>
+
+            <input
+              pInputText
+              formControlName="responsable_seguimiento" 
+            />
+
+            <label>Carpeta Entregable</label>
+
+            <input
+              pInputText
+              formControlName="carpeta_entregable" 
+            />
+
+          </div>
+
+          <div class="md:col-6 v-flex">
+
+            <label>Video Presentación</label>
+
+            <input
+              pInputText
+              formControlName="video_presentacion" 
+            />
+
+          </div>
+
+        </div>
+        
+        <p-divider/>
+
+        <h4 class="title-color">Método por Unidad</h4>
+
+        <div class="grid">
+
+          <div class="md:col-6 v-flex">
+
+            <label>Producto Académico Colaborativo</label>
+
+            <p-dropdown 
+              formControlName="producto_academico" 
+              [style]="{'width':'100%'}"
+            />
+
+            <label>Simulador</label>
+
+            <p-dropdown 
+              formControlName="simulador" 
+              [style]="{'width':'100%'}"
+            />
+
+            <label>Unidad 1</label>
+
+            <p-dropdown 
+              formControlName="unidad_1" 
+              [style]="{'width':'100%'}"
+            />
+
+          </div>
+
+          <div class="md:col-6 v-flex">
+
+            <label>Unidad 2</label>
+
+            <p-dropdown 
+              formControlName="unidad_2" 
+              [style]="{'width':'100%'}"
+            />
+
+            <label>Unidad 3</label>
+
+            <p-dropdown 
+              formControlName="unidad_3" 
+              [style]="{'width':'100%'}"
+            />
+
+            <label>Unidad 4</label>
+
+            <p-dropdown 
+              formControlName="unidad_4" 
+              [style]="{'width':'100%'}"
+            />
+
+          </div>
+
+        </div>
+
+        <p-divider/>
+
+        <div class="grid">
+
+          <div class="md:col-6 v-flex">
+
+            <label>Fecha de Presentación de DI</label>
+
+            <input
+              pInputText
+              formControlName="fecha_presentacion_di" 
+              type="date"
+            />
+
+            <label>Fecha de Finalización</label>
+
+            <input
+              pInputText
+              formControlName="fecha_presentacion" 
+              type="date"
+            />
+
+          </div>
+
+          <div class="md:col-6 v-flex">
+
+            <label>Observaciones</label>
+
+            <input
+              pInputText
+              formControlName="observaciones" 
+              type="date"
+            />
+
+            <label>Correo de Finalización del Diseño</label>
+
+            <p-dropdown 
+              formControlName="correo_finalizacion" 
+              [style]="{'width':'100%'}"
+            />
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</app-navigation-container>
