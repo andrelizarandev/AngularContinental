@@ -37,7 +37,6 @@ export class SubmitSolicitudDisenoCursoComponent {
   registerRequestForm: FormGroup;
   registerCarpetaForm: FormGroup;
   shouldShowCarpetas:boolean = false;
-
   firstOptionSelected:FirstPossibleOptions = null;
   secondOptionSelected:SecondPossibleOptions = null;
 

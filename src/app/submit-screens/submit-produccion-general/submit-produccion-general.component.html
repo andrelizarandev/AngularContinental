@@ -4,10 +4,9 @@
 
     <h3 class="title-color">Registro de Solicitud de Diseño de Curso</h3>
 
-    <form class="grid">
+    <form class="grid" [formGroup]="registerProduccionGeneralForm">
 
       <div class="md:col-6 v-flex">
-
 
         <label for="codigo">Código</label>
 
@@ -17,7 +16,7 @@
           [style]="{'width':'100%'}"
         />
 
-        <label>Nombre</label>
+        <label>Plan</label>
 
         <p-dropdown 
           formControlName="plan" 
@@ -53,7 +52,6 @@
         />
 
         <p-divider/>
-
 
         <div class="grid">
 
@@ -111,7 +109,7 @@
 
           <input
             pInputText
-            formControlName="correo_asesor" 
+            formControlName="correo_asesor_didactico" 
           />
 
         </div>
@@ -367,7 +365,8 @@
 
             <label>Correo de Finalización del Diseño</label>
 
-            <p-dropdown 
+            <input
+              pInputText
               formControlName="correo_finalizacion" 
               [style]="{'width':'100%'}"
             />
