@@ -381,4 +381,11 @@
 
   </div>
 
+  <p-button label="Guardar" size="small" (onClick)="toggleIsRegisterOpen()"/>
+
 </app-navigation-container>
+
+<app-register-periodo-general-dialog 
+  [isRegisterOpen]="isRegisterOpen"
+  (toggleIsRegisterOpen)="toggleIsRegisterOpen()"
+/>

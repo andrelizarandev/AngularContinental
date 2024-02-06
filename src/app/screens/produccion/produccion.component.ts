@@ -7,10 +7,18 @@ import { ButtonModule } from 'primeng/button';
 // Components
 import { NavigationContainerComponent } from '../../components/navigation-container/navigation-container.component';
 
+// Dialogs
+import { RegisterPeriodoGeneralDialogComponent } from '../../dialogs/register-periodo-general-dialog/register-periodo-general-dialog.component';
+
 @Component({
   selector: 'app-produccion',
   standalone: true,
-  imports: [NavigationContainerComponent, ButtonModule, TableModule],
+  imports: [
+    NavigationContainerComponent, 
+    ButtonModule, 
+    TableModule,
+    RegisterPeriodoGeneralDialogComponent
+  ],
   templateUrl: './produccion.component.html',
   styleUrl: './produccion.component.scss'
 })
@@ -18,13 +26,15 @@ export class ProduccionComponent {
 
   constructor(private router: Router) {}
 
+  isRegisterOpen = false;
+  
   productionList = [
     dummyElement,
     dummyElement,
     dummyElement,
   ];
 
-  public redirectToProductionForm() {
+  public redirectToProductionForm () {
     this.router.navigate(['/submit-produccion-general']);
   }
 

@@ -9,6 +9,9 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 // Components
 import { NavigationContainerComponent } from '../../components/navigation-container/navigation-container.component';
 
+// Dialogs
+import { RegisterPeriodoGeneralDialogComponent } from '../../dialogs/register-periodo-general-dialog/register-periodo-general-dialog.component';
+
 @Component({
   selector: 'app-submit-produccion-general',
   standalone: true,
@@ -18,7 +21,8 @@ import { NavigationContainerComponent } from '../../components/navigation-contai
     DropdownModule, 
     InputTextModule, 
     DividerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RegisterPeriodoGeneralDialogComponent
   ],
   templateUrl: './submit-produccion-general.component.html',
   styleUrl: './submit-produccion-general.component.scss'
@@ -26,10 +30,9 @@ import { NavigationContainerComponent } from '../../components/navigation-contai
 export class SubmitProduccionGeneralComponent {
 
   registerProduccionGeneralForm: FormGroup;
+  isRegisterOpen = true;
 
-  constructor (
-    private fb:FormBuilder,
-  ) {
+  constructor (private fb:FormBuilder) {
     this.registerProduccionGeneralForm = this.fb.group({
 
       codigo:['', Validators.required],
@@ -80,5 +83,8 @@ export class SubmitProduccionGeneralComponent {
     });
   }
 
+  public toggleIsRegisterOpen () {
+    this.isRegisterOpen = !this.isRegisterOpen;
+  }
 
 }

@@ -1,0 +1,164 @@
+<p-dialog 
+  class="sm:w-12"
+  header="Registrar Nuevo Periodo"
+  [style]="{width: '600px'}"
+  [visible]="isRegisterOpen"
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+>
+
+  <div class="v-flex">
+
+    <h3 class="title-color">Presencial</h3>
+
+    <label>Horas Asíncronas</label>
+
+    <input pInputText/>
+
+    <label>Horas Síncronas</label>
+
+    <input class="mb-2" pInputText/>
+
+    <h4>Introducción</h4>
+
+    <label>Evaluación de Entrada</label>
+
+    <p-dropdown 
+      [options]="[]" 
+      placeholder="Seleccione" 
+      optionLabel="name" 
+      [style]="{'width':'100%'}"
+    />
+
+    <label>Hoja Calendario</label>
+
+    <p-dropdown 
+      [options]="[]" 
+      placeholder="Seleccione" 
+      optionLabel="name" 
+      [style]="{'width':'100%'}"
+      class="mb-2"
+    />
+
+    <h4>Unidad 1</h4>
+
+    <label>Autoevaluaciones</label>
+
+    <p-dropdown 
+      [options]="[]" 
+      placeholder="Seleccione" 
+      optionLabel="name" 
+      [style]="{'width':'100%'}"
+    />
+
+    <label>PPT-Objecto de Aprendizaje / Tutorial</label>
+
+    <p-dropdown 
+      [options]="[]" 
+      placeholder="Seleccione" 
+      optionLabel="name" 
+      [style]="{'width':'100%'}"
+    />
+
+    <label>Guía</label>
+
+    <p-dropdown 
+      [options]="[]" 
+      placeholder="Seleccione" 
+      optionLabel="name" 
+      [style]="{'width':'100%'}"
+    />
+
+    <label>PA2</label>
+
+    <p-dropdown 
+      [options]="[]" 
+      placeholder="Seleccione" 
+      optionLabel="name" 
+      [style]="{'width':'100%'}"
+      class="mb-2"
+    />
+
+    <h4>Unidad 2</h4>
+
+    <label>Autoevaluaciones</label>
+
+    <p-dropdown 
+      [options]="[]" 
+      placeholder="Seleccione" 
+      optionLabel="name" 
+      [style]="{'width':'100%'}"
+    />
+
+    <label>PPT-Objecto de Aprendizaje / Tutorial</label>
+
+    <p-dropdown 
+      [options]="[]" 
+      placeholder="Seleccione" 
+      optionLabel="name" 
+      [style]="{'width':'100%'}"
+    />
+
+    <label>Guía</label>
+
+    <p-dropdown 
+      [options]="[]" 
+      placeholder="Seleccione" 
+      optionLabel="name" 
+      [style]="{'width':'100%'}"
+    />
+
+    <label>PA2</label>
+
+    <p-dropdown 
+      [options]="[]" 
+      placeholder="Seleccione" 
+      optionLabel="name" 
+      [style]="{'width':'100%'}"
+      class="mb-2"
+    />
+
+    <h4>Unidad 3</h4>
+
+    <label>Autoevaluaciones</label>
+
+    <p-dropdown 
+      [options]="[]" 
+      placeholder="Seleccione" 
+      optionLabel="name" 
+      [style]="{'width':'100%'}"
+    />
+
+    <label>PPT-Objecto de Aprendizaje / Tutorial</label>
+
+    <p-dropdown 
+      [options]="[]" 
+      placeholder="Seleccione" 
+      optionLabel="name" 
+      [style]="{'width':'100%'}"
+    />
+
+    <label>Guía</label>
+
+    <p-dropdown 
+      [options]="[]" 
+      placeholder="Seleccione" 
+      optionLabel="name"
+      [style]="{'width':'100%'}"
+    />
+
+    <label>PA2</label>
+
+    <p-dropdown 
+      [options]="[]" 
+      placeholder="Seleccione" 
+      optionLabel="name" 
+      [style]="{'width':'100%'}"
+    />
+
+    <p-button label="Guardar" (onClick)="closeRegister()"/>
+
+  </div>
+
+</p-dialog>
