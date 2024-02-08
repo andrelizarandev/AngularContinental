@@ -1,0 +1,25 @@
+<div class="p-2 card-container">
+  
+  <div class="v-flex p-2">
+    
+    @if(!isLoading) { <ng-content/> } 
+
+    @else { 
+
+      <div class="v-flex">
+
+        <p-skeleton width="10rem" styleClass="mb-2"></p-skeleton>
+        
+        <p-skeleton width="5rem" styleClass="mb-2"></p-skeleton>
+        
+        <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+        
+        <p-skeleton width="10rem" height="4rem"></p-skeleton>
+
+      </div>
+
+    }
+    
+  </div>
+  
+</div>

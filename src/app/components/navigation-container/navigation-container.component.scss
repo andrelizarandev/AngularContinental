@@ -41,12 +41,11 @@
   width: 100%;
   min-height: 94vh;
   overflow-y: auto;
-  // background-color: var(--bluegray-50);
+  background-color: var(--bluegray-50);
 }
 
 .main-content-padding-container {
   height: 100%;
-  padding: 20px;
   display: flex;
   flex-direction: column;
   row-gap: 20px;

@@ -1,9 +1,12 @@
 // Modules
-import { Injectable } from '@angular/core';
+import { injectQuery } from '@ngneat/query';
 import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
 
 // Api
 import { apiUrl } from '..';
+
+// Types
 import { GetPeriodoResponse } from './periodo.types';
 
 @Injectable({
@@ -11,10 +14,14 @@ import { GetPeriodoResponse } from './periodo.types';
 })
 export class PeriodoService {
 
-  constructor (private http:HttpClient) {}
+  #http = inject(HttpClient);
+  #query = injectQuery();
 
   getPeriodoList () {
-    return this.http.get<GetPeriodoResponse>(`${apiUrl}periodos`);
+    return this.#query({
+      queryKey: ['get-periodos'] as const,
+      queryFn: () => this.#http.get<GetPeriodoResponse>(`${apiUrl}periodos`)
+    });
   }
 
 }
