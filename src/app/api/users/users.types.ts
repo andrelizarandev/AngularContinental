@@ -1,12 +1,14 @@
 export type PostUserData = {
   nombres:string;
   apellidos:string;
-  correoInst:string;
-  correoPers:string;
-  telefono:string;
+  email:string;
+  password:string;
+  email_personal:string;
   rol:string;
 }
 
 export type GetUserData = { id:number; } & PostUserData;
 
 export type PostUserResponse = { data:GetUserData; };
+
+export type GetUserResponse = GetUserData[];

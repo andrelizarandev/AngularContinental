@@ -1,4 +1,5 @@
 // Modules
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
@@ -13,7 +14,7 @@ import { NavigationContainerComponent } from '../../components/navigation-contai
 import { UsersService } from '../../api/users/users.service';
 
 // Types
-import { PostUserResponse } from '../../api/users/users.types';
+import { PostUserData, PostUserResponse } from '../../api/users/users.types';
 
 @Component({
   selector: 'app-submit-user-screen',
@@ -31,34 +32,61 @@ import { PostUserResponse } from '../../api/users/users.types';
 
 export class SubmitUserScreenComponent {
 
-  registerUserForm: FormGroup;
+  registerUserForm: FormGroup
 
   rolOptions = []
 
   constructor (
     private fb:FormBuilder,
-    private userService:UsersService
+    private userService:UsersService,
+    private router:Router
   ) {
 
     this.registerUserForm = this.fb.group({
-      nombres: ['', Validators.required],
-      apellidos: ['', Validators.required],
-      correoInst: ['', Validators.required],
-      correoPers: ['', Validators.required],
-      telefono: ['', Validators.required],
-      rol: ['', Validators.required],
+      nombres: ['Andre', Validators.required],
+      apellidos: ['Lizaran', Validators.required],
+      correoInst: ['andrelizaran@continental.com', Validators.required],
+      correoPers: ['andrelizaran@gmail.com', Validators.required],
+      contrasena: ['1234567890', Validators.required],
+      rol: ['1', Validators.required],
     });
 
+  }
+
+  onRedirectToUsersTable () {
+    this.router.navigate(['/users']);
   }
 
   onSubmitUser () {
-    this.userService.createUser(this.registerUserForm.value).subscribe({
+
+    const { 
+      nombres, 
+      apellidos, 
+      correoInst, 
+      correoPers, 
+      contrasena, 
+      rol 
+    } = this.registerUserForm.value;
+
+    const userPayload:PostUserData = {
+      apellidos,
+      email:correoInst,
+      email_personal:correoPers,
+      nombres,
+      password:contrasena,
+      rol
+    }
+    
+    this.userService.createUser(userPayload).subscribe({
       next:(response) => this.onSuccessSubmitUser(response),
       error:() => this.onErrorSubmit()
     });
+
   }
 
-  onSuccessSubmitUser (response:PostUserResponse) {}
+  onSuccessSubmitUser (response:PostUserResponse) {
+    this.onRedirectToUsersTable();
+  }
 
   onErrorSubmit () {}
 

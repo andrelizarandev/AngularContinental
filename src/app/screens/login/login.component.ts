@@ -61,7 +61,6 @@ export class LoginComponent {
         error:(err) => this.onErrorSubmitLogin(err)
     });
 
-
   }
 
   onSuccessSubmitLogin (response:PostLoginResponse) {

@@ -10,8 +10,12 @@ import { NavigationContainerComponent } from '../../components/navigation-contai
 // Dialogs
 import { RegisterProgramaComponentDialog } from '../../dialogs/register-programa-dialog/register-programa.component-dialog';
 
+// Services
+import { UsersService } from '../../api/users/users.service';
+
 // Types
 import { GetUser } from '../../api/login/login.types';
+import { GetUserData } from '../../api/users/users.types';
 
 @Component({
   selector: 'app-users',
@@ -23,19 +27,33 @@ import { GetUser } from '../../api/login/login.types';
 
 export class UsersComponent {
 
-  constructor (private router:Router) {}
+  userList:GetUserData[] = [];
 
+  constructor (
+    private router:Router,
+    private usersService:UsersService
+  ) {}
+
+  ngOnInit () {
+    this.getUserList();
+  }
+
+  // Redirect
   redirectToRegisterUser () {
     this.router.navigate(["/submit-user"]);
   }
 
-  userList:GetUser[] = [
-    { id: "1", nombre: "Juan", apellido: "Perez", correo: "" },
-    { id: "2", nombre: "Maria", apellido: "Perez", correo: "" },
-    { id: "3", nombre: "Jose", apellido: "Perez", correo: "" },
-    { id: "4", nombre: "Pedro", apellido: "Perez", correo: "" },
-    { id: "5", nombre: "Luis", apellido: "Perez", correo: "" },
-    { id: "6", nombre: "Carlos", apellido: "Perez", correo: "" },
-  ];
+  // Get
+  getUserList () {
+    this.usersService.getUserList().subscribe({
+      next: (response) => this.onSuccessGetUserList(response),
+      error: (error) => console.error(error)
+    });
+  }
+
+  // Get
+  onSuccessGetUserList (data:GetUserData[]) {
+    this.userList = data;
+  }
 
 }

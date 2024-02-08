@@ -17,7 +17,11 @@ export class ProgramasService {
   constructor (private http:HttpClient) {}
 
   postPrograma (data:PostProgramaData) {
-    return this.http.post<GetProgramaResponse>(`${apiUrl}/programas`, data);
+    return this.http.post<GetProgramaResponse>(`${apiUrl}programas`, data);
+  }
+
+  getProgramasList () {
+    return this.http.get<GetProgramaResponse>(`${apiUrl}programas`);
   }
   
 }

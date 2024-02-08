@@ -4,7 +4,7 @@
 
     <div class="sm:col-12 md:col-8 lg:col-6">
 
-      <form class="v-flex" [formGroup]="registerUserForm">
+      <form class="v-flex" [formGroup]="registerUserForm" (ngSubmit)="onSubmitUser()">
 
         <h3 class="title-color">Registro de Usuarios</h3>
 
@@ -38,9 +38,9 @@
 
         <input 
           type="text" 
-          placeholder="Número de Contacto" 
+          placeholder="Contraseña" 
           pInputText 
-          formControlName="telefono"
+          formControlName="contrasena"
         />
 
         <p-dropdown 
@@ -50,10 +50,23 @@
           [style]="{'width':'100%'}"
         />
 
-        <p-button 
-          label="Registrar" 
-          size="small"
-        ></p-button>
+        <div class="h-flex">
+
+          <p-button 
+            label="Cancelar" 
+            size="small" 
+            severity="secondary"
+            (onClick)="onRedirectToUsersTable()"
+          />
+            
+            <p-button 
+            label="Registrar" 
+            size="small"
+            type="submit"
+          />
+
+
+        </div>
 
       </form>
 

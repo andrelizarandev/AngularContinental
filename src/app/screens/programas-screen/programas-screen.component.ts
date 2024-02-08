@@ -19,7 +19,13 @@ import { ConfirmDialogComponent, ConfirmDialogPayload } from '../../shared-dialo
 @Component({
   selector: 'app-programas-screen',
   standalone: true,
-  imports: [ButtonModule, TableModule, NavigationContainerComponent, RegisterProgramaComponentDialog, ConfirmDialogComponent],
+  imports: [
+    ButtonModule, 
+    TableModule, 
+    NavigationContainerComponent, 
+    RegisterProgramaComponentDialog, 
+    ConfirmDialogComponent
+  ],
   templateUrl: './programas-screen.component.html',
   styleUrl: './programas-screen.component.scss'
 })
@@ -34,14 +40,22 @@ export class ProgramasScreenComponent {
     private programasService:ProgramasService
   ) {}
 
-  programasList:GetProgramaData[] = [
-    { id: '1', nombre: 'Programa 1' },
-    { id: '2', nombre: 'Programa 2' },
-    { id: '3', nombre: 'Programa 3' },
-    { id: '4', nombre: 'Programa 4' },
-    { id: '5', nombre: 'Programa 5' },
-  ];
+  ngOnInit () {
+    console.log('ProgramasScreenComponent');
+    this.getProgramasList();
+  }
 
+  programasList:GetProgramaData[] = [];
+
+  // Get
+  getProgramasList () {
+    this.programasService.getProgramasList().subscribe({
+      next: (response) => this.onSuccessGetProgramasList(response),
+      error: (error) => console.error(error)
+    });
+  }
+
+  // Toggle
   toggleOpenRegister () {
     this.isRegisterOpen = !this.isRegisterOpen;
   }
@@ -56,15 +70,23 @@ export class ProgramasScreenComponent {
     };
   }
 
+  // On Submit
   onSubmitPrograma () {
-    this.programasService.postPrograma({ nombre:'' }).subscribe({
-      next:(response) => this.onSuccessSubmitPrograma(response.data),
-      error:() => this.onErrorSubmitPrograma()
-    });
+    // this.programasService.postPrograma({ nombre:'' }).subscribe({
+    //   next:(response) => this.onSuccessSubmitPrograma(response.data),
+    //   error:() => this.onErrorSubmitPrograma()
+    // });
+  }
+
+  // On Success
+  onSuccessGetProgramasList (response:GetProgramaData[]) {
+    console.log(response);
+    this.programasList = response;
   }
 
   onSuccessSubmitPrograma (response:GetProgramaData) {}
 
+  // On Error
   onErrorSubmitPrograma () {}
 
 }

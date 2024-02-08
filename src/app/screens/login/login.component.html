@@ -4,7 +4,7 @@
 
     <div class="grid">
 
-      <div class="hidden md:flex md:col-6">
+      <!-- <div class="hidden md:flex md:col-6">
         
         <div class="logo-container">
 
@@ -12,13 +12,13 @@
 
         </div>
 
-      </div>
+      </div> -->
 
-      <div class="col-12 md:col-6">
+      <div class="col-12 md:col-12">
         
         <div class="grid v-flex-justify-center-align-center">
 
-          <p-card class="col-12 lg:col-8 p-0">
+          <p-card class="col-12 md:col-8 lg:col-6 xl:col-4 p-0">
 
             <form class="v-flex p-0" [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
   
@@ -41,7 +41,7 @@
               />
       
               <p-button 
-                label="Iniciar Sesión" 
+                label="Entrar" 
                 size="small" 
                 class="align-self-center"
                 type="submit"
@@ -52,6 +52,7 @@
           </p-card>
 
         </div>
+
 
       </div>
 
