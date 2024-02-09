@@ -8,7 +8,7 @@
         Registro de Solicitud de Diseño de Curso
       </h3>
 
-      <form [formGroup]="registerRequestForm" (onSubmit)="onSubmitSolicitudDiseno()" class="grid">
+      <form [formGroup]="registerRequestForm" (ngSubmit)="onSubmitSolicitudDiseno()" class="grid">
 
         <div class="col-12 md:col-6 v-flex">
     
@@ -87,7 +87,6 @@
             label="Registrar"
             size="small"
             type="submit"
-            (onClick)="onSubmitSolicitudDiseno()"
           />
 
         </div>

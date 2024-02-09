@@ -1,6 +1,6 @@
 // Modules
 import { Router } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
@@ -11,8 +11,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CardWithSkeletonComponent } from '../../../components/card-with-skeleton/card-with-skeleton.component';
 import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
 
+// Services
+import { UsersService } from '../../../api/users/users.service';
+
 // Types
-import { PostUserData, PostUserResponse } from '../../../api/users/users.types';
+import { PostUserData } from '../../../api/users/users.types';
 
 @Component({
   selector: 'app-submit-user-screen',
@@ -31,6 +34,8 @@ import { PostUserData, PostUserResponse } from '../../../api/users/users.types';
 
 export class SubmitUserScreenComponent {
 
+  submitUserService = inject(UsersService).submitUser();
+
   registerUserForm: FormGroup
 
   constructor (
@@ -44,7 +49,7 @@ export class SubmitUserScreenComponent {
       correoInst: ['andrelizaran@continental.com', Validators.required],
       correoPers: ['andrelizaran@gmail.com', Validators.required],
       contrasena: ['1234567890', Validators.required],
-      rol: ['1', Validators.required],
+      rol: ['2', Validators.required],
     });
 
   }
@@ -53,7 +58,7 @@ export class SubmitUserScreenComponent {
     this.router.navigate(['/users']);
   }
 
-  onSubmitUser () {
+  async onSubmitUser () {
 
     const { 
       nombres, 
@@ -73,9 +78,16 @@ export class SubmitUserScreenComponent {
       rol
     }
 
+    try {
+      const response = await this.submitUserService.mutateAsync(userPayload);
+      this.onSuccessSubmitUser();
+    } catch (err:any) {
+      console.log(err);
+    }
+
   }
 
-  onSuccessSubmitUser (response:PostUserResponse) {
+  onSuccessSubmitUser () {
     this.onRedirectToUsersTable();
   }
 
