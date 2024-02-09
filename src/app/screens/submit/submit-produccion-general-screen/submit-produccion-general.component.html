@@ -10,7 +10,7 @@
 
           <h3 class="title-color fw-400">Registro de Producción General</h3>
       
-|          <form [formGroup]="registerProduccionGeneralForm">
+          <form [formGroup]="registerProduccionGeneralForm">
       
             <div class="v-flex">
       
@@ -36,6 +36,8 @@
                     formControlName="plan" 
                     [style]="{'width':'100%'}"
                     [options]="planListOptions"
+                    optionLabel="label"
+                    optionValue="id"
                   />
   
                 </div>
@@ -48,6 +50,8 @@
                     formControlName="eap" 
                     [style]="{'width':'100%'}"
                     [options]="eapListOptions"
+                    optionLabel="label"
+                    optionValue="id"
                   />
   
                 </div>
@@ -68,10 +72,10 @@
   
                   <label>Tipo Asignatura</label>
         
-                  <p-dropdown 
+                  <input
+                    pInputText 
                     formControlName="tipo_asignatura" 
                     [style]="{'width':'100%'}"
-                    [options]="tipoAsignaturaListOptions"
                   />
   
                 </div>
@@ -333,6 +337,7 @@
                   <p-dropdown 
                     formControlName="producto_academico" 
                     [style]="{'width':'100%'}"
+                    [options]="colaborativoListOptions"
                   />
       
                   <label>Simulador</label>
@@ -340,6 +345,7 @@
                   <p-dropdown 
                     formControlName="simulador" 
                     [style]="{'width':'100%'}"
+                    [options]="simuladorListOptions"
                   />
       
                   <label>Unidad 1</label>
@@ -347,6 +353,7 @@
                   <p-dropdown 
                     formControlName="unidad_1" 
                     [style]="{'width':'100%'}"
+                    [options]="realidadAumentadaListOptions"
                   />
       
                 </div>
@@ -358,6 +365,7 @@
                   <p-dropdown 
                     formControlName="unidad_2" 
                     [style]="{'width':'100%'}"
+                    [options]="realidadAumentadaListOptions"
                   />
       
                   <label>Unidad 3</label>
@@ -365,6 +373,7 @@
                   <p-dropdown 
                     formControlName="unidad_3" 
                     [style]="{'width':'100%'}"
+                    [options]="realidadAumentadaListOptions"
                   />
       
                   <label>Unidad 4</label>
@@ -372,6 +381,7 @@
                   <p-dropdown 
                     formControlName="unidad_4" 
                     [style]="{'width':'100%'}"
+                    [options]="realidadAumentadaListOptions"
                   />
       
                 </div>
@@ -436,10 +446,15 @@
 
     </div>
 
+    <div class="md:col-6 v-flex p-2">
+      {{ registerProduccionGeneralForm.value | json }}
+    </div>
+
   </div>
 
-
 </app-navigation-container>
+
+
 
 <app-register-periodo-general-dialog 
   [isRegisterOpen]="isRegisterOpen"

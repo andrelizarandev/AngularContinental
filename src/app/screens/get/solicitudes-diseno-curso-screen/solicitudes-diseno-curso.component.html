@@ -1,6 +1,6 @@
 <app-navigation-container>
 
-  <app-card-with-skeleton>
+  <app-card-with-skeleton [isLoading]="getSolicitudesDisenoCursoService().isLoading">
 
     <div class="h-flex-justify-between">
 
@@ -15,22 +15,14 @@
   
     </div>
 
-    <p-table [value]="requestList">
+    <p-table [value]="getSolicitudesDisenoCursoService().data || []">
   
       <ng-template pTemplate="header">
   
         <tr>
-          <th>CODIGO</th>
-          <th>ASIGNATURA</th>
-          <th>EAP</th>
-          <th>PLAN</th>
-          <th>TIPO_ASIGNATURA</th>
-          <th>TIPO_DISENO</th>
-          <th>FACULTAD</th>
-          <th>CICLO</th>
-          <th>DOCENTE_DISENADOR</th>
-          <th>MODALIDAD</th>
-          <th>FORMATO</th>
+          <th>Código</th>
+          <th>Asignatura</th>
+          <th>Acciones</th>
         </tr>
   
       </ng-template>
@@ -40,15 +32,9 @@
         <tr>
           <td>{{ user.codigo }}</td>
           <td>{{ user.asignatura }}</td>
-          <td>{{ user.eap }}</td>
-          <td>{{ user.plan }}</td>
-          <td>{{ user.tipo_asignatura }}</td>
-          <td>{{ user.tipo_diseno }}</td>
-          <td>{{ user.facultad }}</td>
-          <td>{{ user.ciclo }}</td>
-          <td>{{ user.docente_disenador }}</td>
-          <td>{{ user.modalidad }}</td>
-          <td>{{ user.formato }}</td>
+          <td>
+            <p-button icon="pi pi-eye" size="small" label="Ver Detalle"/>
+          </td>
         </tr>
         
       </ng-template>

@@ -1,12 +1,15 @@
 // Modules
 import { Router } from '@angular/router';
-import { Component } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
+import { Component, inject } from '@angular/core';
 
 // Components
 import { CardWithSkeletonComponent } from '../../../components/card-with-skeleton/card-with-skeleton.component';
 import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
+
+// Services
+import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-curso/diseno-curso.service';
 
 // Types
 import { GetSolicitudDisenoCursoData } from '../../../api/solicitudes-diseno-curso/diseno-curso.types';
@@ -26,9 +29,11 @@ import { GetSolicitudDisenoCursoData } from '../../../api/solicitudes-diseno-cur
 
 export class SolicitudesDisenoCursoComponent {
 
-  constructor (private router:Router) { }
-
   requestList:GetSolicitudDisenoCursoData[] = []
+
+  getSolicitudesDisenoCursoService = inject(SolicitudDisenoCursoService).getDisenoCursoList().result
+  
+  constructor (private router:Router) { }
 
   redirectToSubmitRequest() {
     this.router.navigate(['/submit-solicitud-diseno-curso'])

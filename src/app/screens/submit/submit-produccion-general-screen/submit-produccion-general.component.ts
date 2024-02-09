@@ -1,5 +1,6 @@
 // Modules
 import { ButtonModule } from 'primeng/button';
+import { CommonModule } from '@angular/common';
 import { DividerModule } from 'primeng/divider';
 import { ActivatedRoute } from '@angular/router';
 import { Component, inject } from '@angular/core';
@@ -29,20 +30,50 @@ import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-cur
     DividerModule,
     ReactiveFormsModule,
     RegisterPeriodoGeneralDialogComponent,
-    CardWithSkeletonComponent
+    CardWithSkeletonComponent,
+    CommonModule
   ],
   templateUrl: './submit-produccion-general.component.html',
   styleUrl: './submit-produccion-general.component.scss'
 })
+
 export class SubmitProduccionGeneralComponent {
 
   isRegisterOpen = false;
   registerProduccionGeneralForm: FormGroup;
 
-  // Options 
-  planListOptions:OptionData[] = [];
+  // Dynamic options
   eapListOptions:OptionData[] = [];
+  planListOptions:OptionData[] = [];
   tipoAsignaturaListOptions:OptionData[] = [];
+
+  // Static options
+  simuladorListOptions:OptionData[] = [
+    { id:'1', label:'U1' },
+    { id:'2', label:'U2' },
+    { id:'3', label:'U3' },
+    { id:'4', label:'U4' },
+    { id:'5', label:'U 1, 2, 3, 4' },
+    { id:'6', label:'No' },
+  ];
+
+  colaborativoListOptions:OptionData[] = [
+    { id:'1', label:'C1' },
+    { id:'2', label:'C2' },
+    { id:'3', label:'C1 y C2' },
+    { id:'4', label:'C1 - EP y 2' },
+    { id:'5', label:'No' },
+    { id:'6', label:'Ep' },
+  ];
+
+  realidadAumentadaListOptions:OptionData[] = [
+    { id:'1', label:'U1' },
+    { id:'2', label:'U2' },
+    { id:'3', label:'U3' },
+    { id:'4', label:'U4' },
+    { id:'5', label:'U 1, 2, 3, 4' },
+    { id:'6', label:'No' },
+  ];
 
   constructor (private fb:FormBuilder, private route: ActivatedRoute) {
 
@@ -98,14 +129,15 @@ export class SubmitProduccionGeneralComponent {
 
   }
 
+  // Get
   disenoCursoByIdService = inject(SolicitudDisenoCursoService)
     .getDisenoCursoById(this.route.snapshot.params['id'])
     .result$
     .subscribe((result) => {
       if (result.isSuccess) {
         if (result.data.data === null) return;
-        const { codigo, eap, plan, tipo_asignatura, asignatura } =  result.data.data;
-        this.registerProduccionGeneralForm.patchValue({ codigo, asignatura });
+        const { codigo, eap, tipo_asignatura, asignatura } =  result.data.data;
+        this.registerProduccionGeneralForm.patchValue({ codigo, asignatura, plan:'1', eap, tipo_asignatura });
       } 
     });
 
@@ -136,6 +168,7 @@ export class SubmitProduccionGeneralComponent {
       } 
     });
 
+  // Toggle
   public toggleIsRegisterOpen () {
     this.isRegisterOpen = !this.isRegisterOpen;
   }
