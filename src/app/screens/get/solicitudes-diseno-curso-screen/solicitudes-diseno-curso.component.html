@@ -6,12 +6,31 @@
 
       <h3 class="title-color fw-400">Solicitudes de Diseño de Curso</h3>
   
-      <p-button 
-        label="Registrar Solicitud"
-        size="small"
-        icon="pi pi-plus" 
-        (onClick)="redirectToSubmitRequest()"
-      />
+      <div class="h-flex">
+
+        <p-button 
+          label="Registrar Solicitud"
+          size="small"
+          icon="pi pi-plus" 
+          (onClick)="redirectToSubmitRequest()"
+        />
+
+        <input 
+          #fileInput 
+          type="file" 
+          (change)="onFileSelected($event)" 
+          style="display:none"
+          accept=".xlsx"
+        >
+
+        <p-button 
+          icon="pi pi-file-excel"
+          (onClick)="fileInput.click()" 
+          label="Seleccionar Archivo" 
+          size="small"
+        />
+
+      </div>
   
     </div>
 

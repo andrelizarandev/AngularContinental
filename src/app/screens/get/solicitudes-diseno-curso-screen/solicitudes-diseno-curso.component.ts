@@ -39,4 +39,8 @@ export class SolicitudesDisenoCursoComponent {
     this.router.navigate(['/submit-solicitud-diseno-curso'])
   }
 
+  onFileSelected (event:any) {
+    console.log(event)
+  }
+
 }
