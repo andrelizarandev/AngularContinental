@@ -1,49 +1,50 @@
 <app-navigation-container>
 
-  <app-card-with-skeleton>
+  <app-card-with-skeleton [isLoading]="getSolicitudDisenoCursoListService().isLoading">
 
     <div class="h-flex-justify-between">
 
       <h3 class="title-color fw-400">Producción General</h3>
   
-      <p-button label="Registrar" icon="pi pi-plus" size="small" (onClick)="redirectToProductionForm()"></p-button>
-  
     </div>
   
-    <p-table [value]="productionList">
+    <p-table [value]="getSolicitudDisenoCursoListService().data || []">
   
       <ng-template pTemplate="header">
   
         <tr>
           <th>PLAN</th>
           <th>EAP</th>
-          <th>TIPO_ASIGNATURA</th>
           <th>FACULTAD</th>
           <th>MODALIDAD</th>
-          <th>FORMATO P</th>
-          <th>FORMATO_SP</th>
-          <th>FORMATO_D</th>
-          <th>TIPO_DISENO</th>
-          <th>CICLO</th>
-          <th>DURACION_SEMANAS</th>
+          <th>ASIGNATURA</th>
+          <th>ACCIONES</th>
         </tr>
   
       </ng-template>
   
-      <ng-template pTemplate="body" let-user>
+      <ng-template pTemplate="body" let-solicitud>
   
         <tr>
-          <td>{{ user.plan }}</td>
-          <td>{{ user.eap }}</td>
-          <td>{{ user.tipo_asignatura }}</td>
-          <td>{{ user.facultad }}</td>
-          <td>{{ user.modalidad }}</td>
-          <td>{{ user.formato_p }}</td>
-          <td>{{ user.formato_sp }}</td>
-          <td>{{ user.formato_d }}</td>
-          <td>{{ user.tipo_diseno }}</td>
-          <td>{{ user.ciclo }}</td>
-          <td>{{ user.duracion_semanas }}</td>
+
+          <td>{{ solicitud.plan }}</td>
+
+          <td>{{ matchEapName(solicitud.eap) }}</td>
+
+          <td>{{ matchFacultadName(solicitud.facultad) }}</td>
+
+          <td>{{ solicitud.modalidad }}</td>
+
+          <td>{{ solicitud.asignatura }}</td>
+
+          <td>
+            <p-button 
+              label="Ver" 
+              size="small" 
+              icon="pi pi-eye" 
+              (onClick)="redirectToProductionForm(solicitud.id)"
+            />
+          </td>
         </tr>
         
       </ng-template>

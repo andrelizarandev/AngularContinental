@@ -1,21 +1,23 @@
-export type GetDisenoCursoData = { id: string; } & PostDisenoCursoData;
+export type GetSolicitudDisenoCursoByIdResponse = {
+  data: GetSolicitudDisenoCursoData | null;
+}
 
-export type PostDisenoCursoData = {
+export type GetSolicitudDisenoCursoData = { id: string; } & PostSolicitudDisenoCursoData;
+
+export type PostSolicitudDisenoCursoData = {
   codigo: string;
   asignatura: string;
-  eap: string;
   plan: string;
+  eap: string;
   tipo_asignatura: string;
   tipo_diseno: string;
   facultad: string;
-  ciclo: string;
-  docente_disenador: string;
+  docente: string;
   modalidad: string;
   formato: string;
-}
-
-export type PostDisenoCursoResponse = {
-  data: GetDisenoCursoData;
+  presencial: string;
+  semipresencial: string;
+  adistancia: string;
 }
 
 export type GetEapData = {
@@ -34,6 +36,11 @@ export type GetTipoDisenoData = {
 }
 
 export type GetFacultadData = {
+  id:number;
+  nombre:string;
+}
+
+export type GetPlanData = {
   id:number;
   nombre:string;
 }

@@ -4,9 +4,11 @@
 
     <div class="v-flex">
 
-      <h3 class="title-color">Registro de Solicitud de Diseño de Curso</h3>
+      <h3 class="title-color fw-400">
+        Registro de Solicitud de Diseño de Curso
+      </h3>
 
-      <form [formGroup]="registerRequestForm" class="grid">
+      <form [formGroup]="registerRequestForm" (onSubmit)="onSubmitSolicitudDiseno()" class="grid">
 
         <div class="col-12 md:col-6 v-flex">
     
@@ -35,6 +37,7 @@
             formControlName="plan" 
             placeholder="Plan"
             [style]="{'width':'100%'}"
+            [options]="planOptions"
           />
     
           <p-dropdown 
@@ -42,12 +45,6 @@
             placeholder="Tipo de Asignatura"
             [style]="{'width':'100%'}"
             [options]="tipoAsignaturaOptions"
-          />
-    
-          <p-button 
-            label="Registrar"
-            size="small"
-            (onClick)="toggleShouldShowCarpetas()"
           />
     
         </div>
@@ -68,13 +65,8 @@
             [options]="facultadOptions"
           />
     
-          <p-dropdown 
-            formControlName="ciclo" 
-            placeholder="Ciclo"
-            [style]="{'width':'100%'}"
-          />
-    
-          <p-dropdown 
+          <input
+            pInputText 
             formControlName="docente_diseñador" 
             placeholder="Docente Diseñador"
             [style]="{'width':'100%'}"
@@ -86,168 +78,203 @@
             [options]="modalidadOptions"
             [style]="{'width':'100%'}"
           />
-
-          <h3 class="title-color">Formato</h3>
-
-          @if (this.registerRequestForm.value.modalidad === 0) {
-
-            <p-message 
-              severity="warn"
-              text="Seleccione el formato de acuerdo a la modalidad"
-              [style]="{'width':'100%'}"
-            />
-
-          }
-
-          @if ( 
-            this.registerRequestForm.value.modalidad.id === 1 ||
-            this.registerRequestForm.value.modalidad.id === 4 ||
-            this.registerRequestForm.value.modalidad.id === 6 ||
-            this.registerRequestForm.value.modalidad.id === 7 
-          ) {
-
-            <label for="sc-formato-presencial">Presencial</label>
-
-            <p-dropdown
-              id="sc-formato-presencial"
-              formControlName="formato_presencial"
-              [options]="presencialOptions"
-              [style]="{ width: '100%' }"
-            />
-          } 
-          
-          @if ( 
-            this.registerRequestForm.value.modalidad.id === 2 ||
-            this.registerRequestForm.value.modalidad.id === 5 ||
-            this.registerRequestForm.value.modalidad.id === 6 ||
-            this.registerRequestForm.value.modalidad.id === 7 
-          ) {
-
-            <label for="sc-formato-semipresencial">Semipresencial</label>
-
-            <p-dropdown
-              id="sc-formato-presencial"
-              formControlName="formato_semipresencial"
-              [options]="semipresencialOptions"
-              [style]="{ width: '100%' }"
-            />
-
-          } 
-          
-          @if ( 
-            this.registerRequestForm.value.modalidad.id === 3 ||
-            this.registerRequestForm.value.modalidad.id === 4 ||
-            this.registerRequestForm.value.modalidad.id === 5 ||
-            this.registerRequestForm.value.modalidad.id === 7 
-          ) {
-
-            <label for="sc-formato-a-distancia">A Distancia</label>
-
-            <p-dropdown
-              id="sc-formato-a-distancia"
-              formControlName="form_distancia"
-              [options]="aDistanciaOptions"
-              [style]="{ width: '100%' }"
-            />
-            
-          }
     
+        </div>
+
+        <div class="col-12">
+          
+          <p-button 
+            label="Registrar"
+            size="small"
+            type="submit"
+            (onClick)="onSubmitSolicitudDiseno()"
+          />
+
         </div>
 
       </form>
-
-      @if (shouldShowCarpetas) { 
-        
-        <div class="h-flex-align-center">
-
-          <h3 class="title-color">Carpetas</h3>
-
-          @if (firstOptionSelected != null) { 
-
-            <p-button 
-              label="Volver"
-              size="small"
-              (onClick)="cleanFirstOption()"
-              [style]="{ 'margin-left': '40px' }"
-
-            />
-
-          }
-
-        </div>
-
-      }
-
-      @if (shouldShowCarpetas && firstOptionSelected === null) {
-
-        <div class="h-flex">
-
-          <p-card>
-
-            <div class="v-flex">
-
-              <h4>Presencial</h4>
-
-              <p-button label="Acceder" size="small" (onClick)="selectFirstOption('Presencial')"/>
-
-            </div>
-
-          </p-card>
-
-          <p-card>
-
-            <div class="v-flex">
-
-              <h4>Semipresencial y a Distanca</h4>
-
-              <p-button label="Acceder" size="small" (onClick)="selectFirstOption('SemipresencialDistancia')"/>
-              
-            </div>
-
-          </p-card>
-
-        </div>
-
-      } @else if (shouldShowCarpetas && firstOptionSelected === 'Presencial') {
-
-        <div class="h-flex">
-
-          <p-card>
-
-            <div class="v-flex">
-    
-              <h4>Presencial</h4>
-    
-              <p-button label="Acceder" size="small" (onClick)="selectFirstOption('Presencial')"/>
-    
-            </div>
-    
-          </p-card>
-
-        </div>
-
-      } @else if (shouldShowCarpetas && firstOptionSelected === 'SemipresencialDistancia') {
-
-        <div class="h-flex">
-
-          <p-card>
-
-            <div class="v-flex">
-    
-              <h4>Virtual 16 Semanas</h4>
-    
-              <p-button label="Acceder" size="small" (onClick)="selectFirstOption('Presencial')"/>
-    
-            </div>
-    
-          </p-card>
-
-        </div>
-
-      }
       
     </div>
 
   </app-card-with-skeleton>
+
+  <app-card-with-skeleton>
+
+    <h3 class="title-color">Formato</h3>
+
+    @if (this.registerRequestForm.value.modalidad?.id === 0) {
+
+      <p-message 
+        severity="warn"
+        text="Seleccione el formato de acuerdo a la modalidad"
+        [style]="{'width':'100%'}"
+      />
+
+    }
+
+    <div class="grid">
+
+      @if ( 
+        this.registerRequestForm.value.modalidad?.id === 1 ||
+        this.registerRequestForm.value.modalidad?.id === 4 ||
+        this.registerRequestForm.value.modalidad?.id === 6 ||
+        this.registerRequestForm.value.modalidad?.id === 7 
+      ) {
+
+        <div class="col-12 md:col-4 v-flex">
+
+          <label for="sc-formato-presencial">Presencial</label>
+
+          <p-dropdown
+            id="sc-formato-presencial"
+            formControlName="formato_presencial"
+            [options]="presencialOptions"
+            [style]="{ width: '100%' }"
+          />
+
+        </div>
+      }
+
+      @if ( 
+        this.registerRequestForm.value.modalidad?.id === 2 ||
+        this.registerRequestForm.value.modalidad?.id === 5 ||
+        this.registerRequestForm.value.modalidad?.id === 6 ||
+        this.registerRequestForm.value.modalidad?.id === 7 
+      ) {
+
+        <div class="col-12 md:col-4 v-flex">
+
+          <label for="sc-formato-semipresencial">Semipresencial</label>
+
+          <p-dropdown
+            id="sc-formato-presencial"
+            formControlName="formato_semipresencial"
+            [options]="semipresencialOptions"
+            [style]="{ width: '100%' }"
+          />
+
+        </div>
+
+      } 
+
+      @if ( 
+        this.registerRequestForm.value.modalidad === 3 ||
+        this.registerRequestForm.value.modalidad === 4 ||
+        this.registerRequestForm.value.modalidad === 5 ||
+        this.registerRequestForm.value.modalidad === 7 
+      ) {
+
+        <div class="col-12 md:col-4 v-flex">
+
+          <label for="sc-formato-a-distancia">A Distancia</label>
+
+          <p-dropdown
+            id="sc-formato-a-distancia"
+            formControlName="form_distancia"
+            [options]="aDistanciaOptions"
+            [style]="{ width: '100%' }"
+          />
+
+        </div>
+        
+      }
+
+    </div>
+
+  </app-card-with-skeleton>
+
+  <!-- <app-card-with-skeleton>
+
+    @if (shouldShowCarpetas) { 
+  
+      <div class="h-flex-align-center">
+
+        <h3 class="title-color">Carpetas</h3>
+
+        @if (firstOptionSelected != null) { 
+
+          <p-button 
+            label="Volver"
+            size="small"
+            (onClick)="cleanFirstOption()"
+            [style]="{ 'margin-left': '40px' }"
+
+          />
+
+        }
+
+      </div>
+
+    }
+
+    @if (shouldShowCarpetas && firstOptionSelected === null) {
+
+      <div class="h-flex">
+
+        <p-card>
+
+          <div class="v-flex">
+
+            <h4>Presencial</h4>
+
+            <p-button label="Acceder" size="small" (onClick)="selectFirstOption('Presencial')"/>
+
+          </div>
+
+        </p-card>
+
+        <p-card>
+
+          <div class="v-flex">
+
+            <h4>Semipresencial y a Distanca</h4>
+
+            <p-button label="Acceder" size="small" (onClick)="selectFirstOption('SemipresencialDistancia')"/>
+            
+          </div>
+
+        </p-card>
+
+      </div>
+
+    } @else if (shouldShowCarpetas && firstOptionSelected === 'Presencial') {
+
+      <div class="h-flex">
+
+        <p-card>
+
+          <div class="v-flex">
+  
+            <h4>Presencial</h4>
+  
+            <p-button label="Acceder" size="small" (onClick)="selectFirstOption('Presencial')"/>
+  
+          </div>
+  
+        </p-card>
+
+      </div>
+
+    } @else if (shouldShowCarpetas && firstOptionSelected === 'SemipresencialDistancia') {
+
+      <div class="h-flex">
+
+        <p-card>
+
+          <div class="v-flex">
+  
+            <h4>Virtual 16 Semanas</h4>
+  
+            <p-button label="Acceder" size="small" (onClick)="selectFirstOption('Presencial')"/>
+  
+          </div>
+  
+        </p-card>
+
+      </div>
+
+    }
+
+  </app-card-with-skeleton> -->
 
 </app-navigation-container>

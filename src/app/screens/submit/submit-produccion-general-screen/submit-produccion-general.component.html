@@ -8,54 +8,97 @@
 
         <div class="v-flex">
 
-          <h3 class="title-color">Registro de Solicitud de Diseño de Curso</h3>
+          <h3 class="title-color fw-400">Registro de Producción General</h3>
       
           <form [formGroup]="registerProduccionGeneralForm">
       
             <div class="v-flex">
       
-              <label for="codigo">Código</label>
+              <div class="grid">
+
+                <div class="col-12 md:col-6 v-flex">
+
+                  <label for="codigo">Código</label>
+        
+                  <input 
+                    pInputText  
+                    formControlName="codigo" 
+                    [style]="{'width':'100%'}"
+                  />
+  
+                </div>
+        
+                <div class="col-12 md:col-6 v-flex">
+  
+                  <label>Plan</label>
+        
+                  <p-dropdown 
+                    formControlName="plan" 
+                    [style]="{'width':'100%'}"
+                    [options]="planListOptions"
+                  />
+  
+                </div>
+        
+                <div class="col-12 md:col-6 v-flex">
+  
+                  <label>Eap</label>
+        
+                  <p-dropdown 
+                    formControlName="eap" 
+                    [style]="{'width':'100%'}"
+                    [options]="eapListOptions"
+                  />
+  
+                </div>
+  
+                <div class="col-12 md:col-6 v-flex">
+  
+                  <label for="codigo">Asignatura</label>
+        
+                  <input 
+                    pInputText  
+                    formControlName="asignatura" 
+                    [style]="{'width':'100%'}"
+                  />
+  
+                </div>
+        
+                <div class="col-12 md:col-6 v-flex">
+  
+                  <label>Tipo Asignatura</label>
+        
+                  <p-dropdown 
+                    formControlName="tipo_asignatura" 
+                    [style]="{'width':'100%'}"
+                    [options]="tipoAsignaturaListOptions"
+                  />
+  
+                </div>
+  
+                <div class="col-12 md:col-6 v-flex">
+  
+                  <label>Número Formatos</label>
+        
+                  <p-dropdown 
+                    formControlName="numero_formatos" 
+                    [style]="{'width':'100%'}"
+                  />
+  
+                </div>
       
-              <input 
-                pInputText  
-                formControlName="codigo" 
-                [style]="{'width':'100%'}"
-              />
-      
-              <label>Plan</label>
-      
-              <p-dropdown 
-                formControlName="plan" 
-                [style]="{'width':'100%'}"
-              />
-      
-              <label>Eap</label>
-      
-              <p-dropdown 
-                formControlName="eap" 
-                [style]="{'width':'100%'}"
-              />
-      
-              <label>Tipo Asignatura</label>
-      
-              <p-dropdown 
-                formControlName="tipo_asignatura" 
-                [style]="{'width':'100%'}"
-              />
-      
-              <label>Número Formatos</label>
-      
-              <p-dropdown 
-                formControlName="numero_formatos" 
-                [style]="{'width':'100%'}"
-              />
-      
-              <label>Situación de la Asignatura</label>
-      
-              <p-dropdown 
-                formControlName="situacion_asignatura" 
-                [style]="{'width':'100%'}"
-              />
+                <div class="col-12 md:col-6 v-flex">
+  
+                  <label>Situación de la Asignatura</label>
+        
+                  <p-dropdown 
+                    formControlName="situacion_asignatura" 
+                    [style]="{'width':'100%'}"
+                  />
+  
+                </div>
+
+              </div>
       
               <p-divider/>
       

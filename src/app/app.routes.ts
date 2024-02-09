@@ -23,6 +23,6 @@ export const routes: Routes = [
   { path:'solicitud-diseno-curso', component:SolicitudesDisenoCursoComponent },
   { path:'produccion', component:ProduccionComponent },
   { path:'submit-solicitud-diseno-curso', component:SubmitSolicitudDisenoCursoComponent },
-  { path:'submit-produccion-general', component:SubmitProduccionGeneralComponent },
+  { path:'submit-produccion-general/:id', component:SubmitProduccionGeneralComponent },
   { path:'', redirectTo:'/login', pathMatch:'full' }
 ];

@@ -1,9 +1,9 @@
 // Modules
 import { CardModule } from 'primeng/card';
-import { Component, inject } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { DropdownModule } from 'primeng/dropdown';
+import { Component, inject } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
@@ -14,7 +14,8 @@ import { CardWithSkeletonComponent } from '../../../components/card-with-skeleto
 import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
 
 // Service
-import { DisenoCursoService } from '../../../api/diseno-curso/diseno-curso.service';
+import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-curso/diseno-curso.service';
+import { PostSolicitudDisenoCursoData } from '../../../api/solicitudes-diseno-curso/diseno-curso.types';
 
 @Component({
   selector: 'app-submit-solicitud-diseno-curso',
@@ -36,6 +37,8 @@ import { DisenoCursoService } from '../../../api/diseno-curso/diseno-curso.servi
 
 export class SubmitSolicitudDisenoCursoComponent {
 
+  submitSolicitudDisenoCurso = inject(SolicitudDisenoCursoService).submitSolicitudDisenoCurso();
+
   registerRequestForm: FormGroup;
   registerCarpetaForm: FormGroup;
   shouldShowCarpetas:boolean = false;
@@ -47,83 +50,94 @@ export class SubmitSolicitudDisenoCursoComponent {
   tipoAsignaturaOptions:OptionData[] = [];
   tipoDisenoOptions:OptionData[] = [];
   facultadOptions:OptionData[] = [];
+  planOptions:OptionData[] = [];
 
-  getEapListService = inject(DisenoCursoService)
+  getEapListService = inject(SolicitudDisenoCursoService)
     .getEapList()
     .result$
     .subscribe((result) => {
       if (result.isSuccess) {
-        const options:OptionData[] = result.data.map((row) => ({ id:row.id, label:row.nombre }));
+        const options:OptionData[] = result.data.map((row) => ({ id:row.id.toString(), label:row.nombre }));
         this.eapOptions = options;
       } 
   });
 
-  getTipoAsignaturaListService = inject(DisenoCursoService)
+  getTipoAsignaturaListService = inject(SolicitudDisenoCursoService)
     .getTipoAsignaturaList()
     .result$
     .subscribe((result) => {
       if (result.isSuccess) {
-        const options:OptionData[] = result.data.map((row) => ({ id:row.id, label:row.nombre }));
+        const options:OptionData[] = result.data.map((row) => ({ id:row.id.toString(), label:row.nombre }));
         this.tipoAsignaturaOptions = options;
       }
   })
 
-  getTipoDisenoListService = inject(DisenoCursoService)
+  getTipoDisenoListService = inject(SolicitudDisenoCursoService)
     .getTipoDisenoList()
     .result$
     .subscribe((result) => {
       if (result.isSuccess) {
-        const options:OptionData[] = result.data.map((row) => ({ id:row.id, label:row.nombre }));
+        const options:OptionData[] = result.data.map((row) => ({ id:row.id.toString(), label:row.nombre }));
         this.tipoDisenoOptions = options;
       }
   });
 
-  getFacultadListService = inject(DisenoCursoService)
+  getFacultadListService = inject(SolicitudDisenoCursoService)
     .getFacultadList()
     .result$
     .subscribe((result) => {
       if (result.isSuccess) {
-        const options:OptionData[] = result.data.map((row) => ({ id:row.id, label:row.nombre }));
+        const options:OptionData[] = result.data.map((row) => ({ id:row.id.toString(), label:row.nombre }));
         this.facultadOptions = options;
       }
   });
 
+  getPlanListService = inject(SolicitudDisenoCursoService)
+    .getPlanList()
+    .result$
+    .subscribe((result) => {
+      if (result.isSuccess) {
+        const options:OptionData[] = result.data.map((row) => ({ id:row.id.toString(), label:row.nombre }));
+        this.planOptions = options;
+      }
+    });
+
   modalidadOptions:OptionData[] = [
-    { id:0, label:'-' },
-    { id:1, label:'Presencial' },
-    { id:2, label:'Semipresencial' },
-    { id:3, label:'A Distacia' },
-    { id:4, label:'Presencial y a Distancia' },
-    { id:5, label:'Semipresencial y a Distancia' },
-    { id:6, label:'Presencial y Semipresencial' },
-    { id:7, label:'Presencial, Semipresencial y a Distancia' },
+    { id:'0', label:'-' },
+    { id:'1', label:'Presencial' },
+    { id:'2', label:'Semipresencial' },
+    { id:'3', label:'A Distacia' },
+    { id:'4', label:'Presencial y a Distancia' },
+    { id:'5', label:'Semipresencial y a Distancia' },
+    { id:'6', label:'Presencial y Semipresencial' },
+    { id:'7', label:'Presencial, Semipresencial y a Distancia' },
   ];
 
   presencialOptions:OptionData[] = [
-    { id:0, label:'-' },
-    { id:1, label:'Presencial' },
-    { id:2, label:'Virtual 16 Semanas' },
-    { id:3, label:'Virtual 8 Semanas' },
-    { id:4, label:'Blended 16 Semanas' },
-    { id:5, label:'Blended 8 Semanas' },
+    { id:'0', label:'-' },
+    { id:'1', label:'Presencial' },
+    { id:'2', label:'Virtual 16 Semanas' },
+    { id:'3', label:'Virtual 8 Semanas' },
+    { id:'4', label:'Blended 16 Semanas' },
+    { id:'5', label:'Blended 8 Semanas' },
   ];
 
   semipresencialOptions:OptionData[] = [
-    { id:0, label:'-' },
-    { id:1, label:'Presencial 16 Semanas' },
-    { id:2, label:'Presencial 8 Semanas' },
-    { id:3, label:'Virtual 16 Semanas' },
-    { id:4, label:'Virtual 8 Semanas' },
-    { id:5, label:'Blended 16 Semanas' },
+    { id:'0', label:'-' },
+    { id:'1', label:'Presencial 16 Semanas' },
+    { id:'2', label:'Presencial 8 Semanas' },
+    { id:'3', label:'Virtual 16 Semanas' },
+    { id:'4', label:'Virtual 8 Semanas' },
+    { id:'5', label:'Blended 16 Semanas' },
   ];
 
   aDistanciaOptions:OptionData[] = [
-    { id:0, label:'-' },
-    { id:1, label:'Presencial 16 Semanas' },
-    { id:2, label:'Presencial 8 Semanas' },
-    { id:3, label:'Virtual 16 Semanas' },
-    { id:4, label:'Virtual 8 Semanas' },
-    { id:5, label:'Blended 16 Semanas' },
+    { id:'0', label:'-' },
+    { id:'1', label:'Presencial 16 Semanas' },
+    { id:'2', label:'Presencial 8 Semanas' },
+    { id:'3', label:'Virtual 16 Semanas' },
+    { id:'4', label:'Virtual 8 Semanas' },
+    { id:'5', label:'Blended 16 Semanas' },
   ];
 
   constructor (private fb:FormBuilder,) {
@@ -135,21 +149,22 @@ export class SubmitSolicitudDisenoCursoComponent {
     });
 
     this.registerRequestForm = this.fb.group({
-      codigo: ['', Validators.required],
-      asignatura: ['', Validators.required],
-      eap: ['', Validators.required],
-      plan: ['', Validators.required],
-      tipo_asignatura: ['', Validators.required],
-      tipo_diseno: ['', Validators.required],
-      facultad: ['', Validators.required],
-      ciclo: ['', Validators.required],
+      codigo: ['Code 123', Validators.required],
+      asignatura: ['Matemáticas', Validators.required],
+      eap: [null, Validators.required],
+      plan: [null, Validators.required],
+      tipo_asignatura: [null, Validators.required],
+      tipo_diseno: [null, Validators.required],
+      facultad: [null, Validators.required],
+      ciclo: [null, Validators.required],
       docente_diseñador: ['', Validators.required],
-      modalidad: [0, Validators.required],
+      modalidad: [null, Validators.required],
       formato: ['', Validators.required],
     });
 
   }
 
+  // Select
   selectFirstOption (opt:FirstPossibleOptions) {
     this.firstOptionSelected = opt
   }
@@ -158,18 +173,56 @@ export class SubmitSolicitudDisenoCursoComponent {
     this.secondOptionSelected = opt
   }
    
+  // Toggle
   toggleShouldShowCarpetas () {
     this.shouldShowCarpetas = !this.shouldShowCarpetas;
   }
 
+  // Clean
   cleanFirstOption () {
     this.firstOptionSelected = null;
+  }
+
+  // On Submit
+  onSubmitSolicitudDiseno () {
+
+    const {
+      codigo,
+      asignatura,
+      eap,
+      plan,
+      tipo_asignatura,
+      tipo_diseno,
+      facultad,
+      docente_diseñador,
+      modalidad,
+      formato,
+    } = this.registerRequestForm.value;
+
+    const parsedBody:PostSolicitudDisenoCursoData = {
+      adistancia:'1',
+      asignatura,
+      codigo,
+      docente:docente_diseñador, 
+      eap:eap.id.toString(),
+      facultad:facultad.id.toString(),
+      formato,
+      modalidad:modalidad.id.toString(),
+      plan:plan.label.toString(),
+      presencial:'1',
+      semipresencial:'1',
+      tipo_asignatura:tipo_asignatura.id.toString(),
+      tipo_diseno:tipo_diseno.id.toString(),
+    }
+
+    this.submitSolicitudDisenoCurso.mutate(parsedBody);
+
   }
 
 }
 
 export type OptionData = {
-  id:number;
+  id:string;
   label:string;
 }
 

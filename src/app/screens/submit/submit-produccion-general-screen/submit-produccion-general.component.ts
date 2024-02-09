@@ -1,7 +1,8 @@
 // Modules
-import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
+import { ActivatedRoute } from '@angular/router';
+import { Component, inject } from '@angular/core';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -9,9 +10,13 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 // Components
 import { CardWithSkeletonComponent } from '../../../components/card-with-skeleton/card-with-skeleton.component';
 import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
+import { RegisterPeriodoGeneralDialogComponent } from '../../../dialogs/submit/register-periodo-general-dialog/register-periodo-general-dialog.component';
 
 // Dialogs
-import { RegisterPeriodoGeneralDialogComponent } from '../../../dialogs/submit/register-periodo-general-dialog/register-periodo-general-dialog.component';
+import { OptionData } from '../submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
+
+// Service
+import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-curso/diseno-curso.service';
 
 @Component({
   selector: 'app-submit-produccion-general',
@@ -31,19 +36,25 @@ import { RegisterPeriodoGeneralDialogComponent } from '../../../dialogs/submit/r
 })
 export class SubmitProduccionGeneralComponent {
 
-  registerProduccionGeneralForm: FormGroup;
   isRegisterOpen = false;
+  registerProduccionGeneralForm: FormGroup;
 
-  constructor (private fb:FormBuilder) {
+  // Options 
+  planListOptions:OptionData[] = [];
+  eapListOptions:OptionData[] = [];
+  tipoAsignaturaListOptions:OptionData[] = [];
+
+  constructor (private fb:FormBuilder, private route: ActivatedRoute) {
 
     this.registerProduccionGeneralForm = this.fb.group({
 
       codigo:['', Validators.required],
-      plan:['', Validators.required],
-      eap:['', Validators.required],
-      tipo_asignatura:['', Validators.required],
+      plan:[null, Validators.required],
+      eap:[null, Validators.required],
+      asignatura:['', Validators.required],
+      tipo_asignatura:[null, Validators.required],
       numero_formatos:['', Validators.required],
-      situacion_asignatura:['', Validators.required],
+      situacion_asignatura:[null, Validators.required],
 
       fecha_inicio:['', Validators.required],
       fecha_finalizacion:['', Validators.required],
@@ -86,6 +97,44 @@ export class SubmitProduccionGeneralComponent {
     });
 
   }
+
+  disenoCursoByIdService = inject(SolicitudDisenoCursoService)
+    .getDisenoCursoById(this.route.snapshot.params['id'])
+    .result$
+    .subscribe((result) => {
+      if (result.isSuccess) {
+        if (result.data.data === null) return;
+        const { codigo, eap, plan, tipo_asignatura, asignatura } =  result.data.data;
+        this.registerProduccionGeneralForm.patchValue({ codigo, asignatura });
+      } 
+    });
+
+  getPlanListService = inject(SolicitudDisenoCursoService)
+    .getPlanList()
+    .result$
+    .subscribe((result) => {
+      if (result.isSuccess) {
+        this.planListOptions = result.data.map((row) => ({ id:row.id.toString(), label:row.nombre }));
+      } 
+    });
+
+  getEapListService = inject(SolicitudDisenoCursoService)
+    .getEapList()
+    .result$
+    .subscribe((result) => {
+      if (result.isSuccess) {
+        this.eapListOptions = result.data.map((row) => ({ id:row.id.toString(), label:row.nombre }));
+      } 
+    });
+
+  getTipoAsignaturaListService = inject(SolicitudDisenoCursoService)
+    .getTipoAsignaturaList()
+    .result$
+    .subscribe((result) => {
+      if (result.isSuccess) {
+        this.tipoAsignaturaListOptions = result.data.map((row) => ({ id:row.toString(), label:row.nombre }));
+      } 
+    });
 
   public toggleIsRegisterOpen () {
     this.isRegisterOpen = !this.isRegisterOpen;
