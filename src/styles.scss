@@ -3,29 +3,34 @@
 @import "primeng/resources/primeng.css";
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 
-/* You can add global styles to this file, and also import other style files */
-
+// You can add global styles to this file, and also import other style files
 h1 {
+  font-size: 1.4rem;
   margin: 0;
 }
 
 h2 {
+  font-size: 1.2rem;
   margin: 0;
 }
 
 h3 {
+  font-size: 1rem;
   margin: 0;
 }
 
 h4 {
+  font-size: .875rem;
   margin: 0;
 }
 
 h5 {
+  font-size: .75rem;
   margin: 0;
 }
 
 h6 {
+  font-size: .625rem;
   margin: 0;
 }
 
@@ -37,14 +42,35 @@ html {
 body {
   margin: 0;
   padding: 0;
+} 
+
+td {
+  padding: 0rem 1rem;
+  height: 52px;
 }
 
+.p-datatable .p-datatable-thead > tr > th {
+  padding: .0rem 1rem;
+  height: 50px;
+}
+
+body .p-component {
+  margin: 0;
+  font-family: Roboto;
+  font-weight: 400;
+}
+
+.p-button.p-button-sm {
+  padding:.5rem .8rem;
+}
+
+// Custom
 .p-0 {
   padding: 0 !important;
 }
 
 .p-2 {
-  padding: 12px !important;
+  padding: 16px !important;
 }
 
 .p-card-content {
@@ -61,4 +87,8 @@ body {
 
 .w-full {
   width: 100%;
+}
+
+.fw-400 {
+  font-weight: 400;
 }

@@ -1,10 +1,13 @@
 // Modules
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+
+// Api
+import { apiUrl } from '..';
 
 // Types
-import { PostDisenoCursoData, PostDisenoCursoResponse } from './diseno-curso.types';
-import { apiUrl } from '..';
+import { injectQuery } from '@ngneat/query';
+import { GetEapData, GetFacultadData, GetTipoAsignaturaData, GetTipoDisenoData } from './diseno-curso.types';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +15,35 @@ import { apiUrl } from '..';
 
 export class DisenoCursoService {
 
-  constructor (private http:HttpClient) {}
+  #http = inject(HttpClient);
+  #query = injectQuery();
 
-  postDisenoCurso (data:PostDisenoCursoData) {
-    return this.http.post<PostDisenoCursoResponse>(`${apiUrl}/diseno-curso`, data);
+  getEapList () {
+    return this.#query({
+      queryKey: ['get-eap'] as const,
+      queryFn: () => this.#http.get<GetEapData[]>(`${apiUrl}eap`)
+    });
+  }
+
+  getTipoAsignaturaList () {
+    return this.#query({
+      queryKey: ['get-tipo-asignaturas'] as const,
+      queryFn: () => this.#http.get<GetTipoAsignaturaData[]>(`${apiUrl}tipo-asignaturas`)
+    });
+  }
+
+  getTipoDisenoList () {
+    return this.#query({
+      queryKey: ['get-tipo-disenos'] as const,
+      queryFn: () => this.#http.get<GetTipoDisenoData[]>(`${apiUrl}tipo-disenos`)
+    });
+  }
+
+  getFacultadList () {
+    return this.#query({
+      queryKey: ['get-facultades'] as const,
+      queryFn: () => this.#http.get<GetFacultadData[]>(`${apiUrl}facultades`)
+    });
   }
 
 }

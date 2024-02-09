@@ -28,6 +28,7 @@
             formControlName="eap" 
             placeholder="Eap"
             [style]="{'width':'100%'}"
+            [options]="eapOptions"
           />
     
           <p-dropdown 
@@ -40,8 +41,8 @@
             formControlName="tipo_asignatura" 
             placeholder="Tipo de Asignatura"
             [style]="{'width':'100%'}"
+            [options]="tipoAsignaturaOptions"
           />
-
     
           <p-button 
             label="Registrar"
@@ -57,12 +58,14 @@
             formControlName="tipo_diseno" 
             placeholder="Tipo de Diseño"
             [style]="{'width':'100%'}"
+            [options]="tipoDisenoOptions"
           />
 
           <p-dropdown 
             formControlName="facultad" 
             placeholder="Facultad"
             [style]="{'width':'100%'}"
+            [options]="facultadOptions"
           />
     
           <p-dropdown 

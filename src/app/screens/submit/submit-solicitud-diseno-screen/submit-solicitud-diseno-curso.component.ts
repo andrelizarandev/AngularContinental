@@ -1,6 +1,6 @@
 // Modules
 import { CardModule } from 'primeng/card';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { DropdownModule } from 'primeng/dropdown';
@@ -42,6 +42,52 @@ export class SubmitSolicitudDisenoCursoComponent {
   firstOptionSelected:FirstPossibleOptions = null;
   secondOptionSelected:SecondPossibleOptions = null;
 
+  // Options
+  eapOptions:OptionData[] = [];
+  tipoAsignaturaOptions:OptionData[] = [];
+  tipoDisenoOptions:OptionData[] = [];
+  facultadOptions:OptionData[] = [];
+
+  getEapListService = inject(DisenoCursoService)
+    .getEapList()
+    .result$
+    .subscribe((result) => {
+      if (result.isSuccess) {
+        const options:OptionData[] = result.data.map((row) => ({ id:row.id, label:row.nombre }));
+        this.eapOptions = options;
+      } 
+  });
+
+  getTipoAsignaturaListService = inject(DisenoCursoService)
+    .getTipoAsignaturaList()
+    .result$
+    .subscribe((result) => {
+      if (result.isSuccess) {
+        const options:OptionData[] = result.data.map((row) => ({ id:row.id, label:row.nombre }));
+        this.tipoAsignaturaOptions = options;
+      }
+  })
+
+  getTipoDisenoListService = inject(DisenoCursoService)
+    .getTipoDisenoList()
+    .result$
+    .subscribe((result) => {
+      if (result.isSuccess) {
+        const options:OptionData[] = result.data.map((row) => ({ id:row.id, label:row.nombre }));
+        this.tipoDisenoOptions = options;
+      }
+  });
+
+  getFacultadListService = inject(DisenoCursoService)
+    .getFacultadList()
+    .result$
+    .subscribe((result) => {
+      if (result.isSuccess) {
+        const options:OptionData[] = result.data.map((row) => ({ id:row.id, label:row.nombre }));
+        this.facultadOptions = options;
+      }
+  });
+
   modalidadOptions:OptionData[] = [
     { id:0, label:'-' },
     { id:1, label:'Presencial' },
@@ -80,10 +126,7 @@ export class SubmitSolicitudDisenoCursoComponent {
     { id:5, label:'Blended 16 Semanas' },
   ];
 
-  constructor (
-    private fb:FormBuilder,
-    private disenoCursoService:DisenoCursoService
-  ) {
+  constructor (private fb:FormBuilder,) {
 
     this.registerCarpetaForm = this.fb.group({
       formato_presencial: [0, Validators.required],

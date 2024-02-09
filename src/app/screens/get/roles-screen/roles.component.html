@@ -4,7 +4,7 @@
 
     <div class="h-flex-justify-between">
 
-      <h3 class="title-color">Roles</h3>
+      <h3 class="title-color fw-400">Roles</h3>
   
       <p-button 
         size="small"
@@ -43,19 +43,23 @@
   
           <td>{{ role.description }}</td>
           
-          <td class="h-flex">
+          <td>
   
-            <p-button 
-              icon="pi pi-pencil" 
-              size="small"
-              (onClick)="toggleOpenRegister()"
-            ></p-button>
-            
-            <p-button 
-              icon="pi pi-trash" 
-              size="small"
-              (onClick)="toggleOpenDeleteConfirm()"
-            ></p-button>
+            <div class="h-flex">
+              
+              <p-button 
+                icon="pi pi-pencil" 
+                size="small"
+                (onClick)="toggleOpenRegister()"
+              />
+              
+              <p-button 
+                icon="pi pi-trash" 
+                size="small"
+                (onClick)="toggleOpenDeleteConfirm()"
+              />
+
+            </div>
   
           </td>
   

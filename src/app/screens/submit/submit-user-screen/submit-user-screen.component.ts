@@ -11,9 +11,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CardWithSkeletonComponent } from '../../../components/card-with-skeleton/card-with-skeleton.component';
 import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
 
-// Services
-import { UsersService } from '../../../api/users/users.service';
-
 // Types
 import { PostUserData, PostUserResponse } from '../../../api/users/users.types';
 
@@ -36,11 +33,8 @@ export class SubmitUserScreenComponent {
 
   registerUserForm: FormGroup
 
-  rolOptions = []
-
   constructor (
-    private fb:FormBuilder,
-    private userService:UsersService,
+    private fb:FormBuilder, 
     private router:Router
   ) {
 

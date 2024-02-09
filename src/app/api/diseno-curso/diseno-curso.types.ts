@@ -17,3 +17,23 @@ export type PostDisenoCursoData = {
 export type PostDisenoCursoResponse = {
   data: GetDisenoCursoData;
 }
+
+export type GetEapData = {
+  id:number;
+  nombre:string;
+}
+
+export type GetTipoAsignaturaData = {
+  id:number;
+  nombre:string;
+}
+
+export type GetTipoDisenoData = {
+  id:number;
+  nombre:string;
+}
+
+export type GetFacultadData = {
+  id:number;
+  nombre:string;
+}
