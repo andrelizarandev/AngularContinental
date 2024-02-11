@@ -3,11 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 
 // Api
-import { apiUrl } from '..';
+import { apiExcelUrl, apiUrl } from '..';
 
 // Types
 import { injectMutation, injectQuery } from '@ngneat/query';
-import { GetSolicitudDisenoCursoData, GetEapData, GetFacultadData, GetPlanData, GetTipoAsignaturaData, GetTipoDisenoData, PostSolicitudDisenoCursoData, GetSolicitudDisenoCursoByIdResponse } from './diseno-curso.types';
+import { GetSolicitudDisenoCursoData, GetEapData, GetFacultadData, GetPlanData, GetTipoAsignaturaData, GetTipoDisenoData, PostSolicitudDisenoCursoData, GetSolicitudDisenoCursoByIdResponse, SubmitSolicitudDisenoCursoFileData } from './diseno-curso.types';
 
 @Injectable({
   providedIn: 'root'
@@ -71,6 +71,16 @@ export class SolicitudDisenoCursoService {
   submitSolicitudDisenoCurso () {
     return this.#mutation({
       mutationFn: (data:PostSolicitudDisenoCursoData) => this.#http.post(`${apiUrl}solicitud`, data)
+    });
+  }
+
+  submitSolicitudDisenoCursoFile () {
+    return this.#mutation({
+      mutationFn: (data:SubmitSolicitudDisenoCursoFileData) => {
+        const formData = new FormData();
+        formData.append('archivo', data.file, 'archivo.xlsx');
+        return this.#http.post(`${apiExcelUrl}importar-excel`, formData)
+      }
     });
   }
 

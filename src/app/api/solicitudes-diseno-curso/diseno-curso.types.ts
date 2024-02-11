@@ -44,3 +44,7 @@ export type GetPlanData = {
   id:number;
   nombre:string;
 }
+
+export type SubmitSolicitudDisenoCursoFileData = {
+  file: File;
+}

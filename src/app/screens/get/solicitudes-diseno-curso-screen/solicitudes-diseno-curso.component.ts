@@ -29,6 +29,8 @@ import { GetSolicitudDisenoCursoData } from '../../../api/solicitudes-diseno-cur
 
 export class SolicitudesDisenoCursoComponent {
 
+  submitSolicitudDisenoCursoFileService = inject(SolicitudDisenoCursoService).submitSolicitudDisenoCursoFile();
+
   requestList:GetSolicitudDisenoCursoData[] = []
 
   getSolicitudesDisenoCursoService = inject(SolicitudDisenoCursoService).getDisenoCursoList().result
@@ -39,8 +41,8 @@ export class SolicitudesDisenoCursoComponent {
     this.router.navigate(['/submit-solicitud-diseno-curso'])
   }
 
-  onFileSelected (event:any) {
-    console.log(event)
+  async onFileSelected (event:any) {
+    const result = await this.submitSolicitudDisenoCursoFileService.mutate({ file:event.target.files[0] });
   }
 
 }
