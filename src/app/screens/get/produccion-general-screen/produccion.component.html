@@ -2,9 +2,16 @@
 
   <app-card-with-skeleton [isLoading]="getSolicitudDisenoCursoListService().isLoading">
 
-    <div class="h-flex-justify-between">
+    <div class="h-flex-justify-between-align-center">
 
       <h3 class="title-color fw-400">Producción General</h3>
+
+      <p-button 
+        label="Cargar Archivo" 
+        icon="pi pi-upload"
+        size="small"
+        (onClick)="toggleIsDialogOpen()"
+      />
   
     </div>
   
@@ -13,36 +20,36 @@
       <ng-template pTemplate="header">
   
         <tr>
-          <th>PLAN</th>
-          <th>EAP</th>
-          <th>FACULTAD</th>
-          <th>MODALIDAD</th>
-          <th>ASIGNATURA</th>
-          <th>ACCIONES</th>
+          <th>Plan</th>
+          <th>Eap</th>
+          <th>Decano</th>
+          <th>Modalidad</th>
+          <th>Asignatura</th>
+          <th>Acciones</th>
         </tr>
   
       </ng-template>
   
-      <ng-template pTemplate="body" let-solicitud>
+      <ng-template pTemplate="body" let-produccion>
   
         <tr>
 
-          <td>{{ solicitud.plan }}</td>
+          <td>{{ produccion.plan }}</td>
 
-          <td>{{ matchEapName(solicitud.eap) }}</td>
+          <td>{{ produccion.eap }}</td>
 
-          <td>{{ matchFacultadName(solicitud.facultad) }}</td>
+          <td>{{ produccion.decano }}</td>
 
-          <td>{{ solicitud.modalidad }}</td>
+          <td>{{ produccion.modalidad }}</td>
 
-          <td>{{ solicitud.asignatura }}</td>
+          <td>{{ produccion.asignatura }}</td>
 
           <td>
             <p-button 
               label="Ver" 
               size="small" 
-              icon="pi pi-eye" 
-              (onClick)="redirectToProductionForm(solicitud.id)"
+              icon="pi pi-eye"
+              (onClick)="redirectToProductionForm(produccion.id)"
             />
           </td>
         </tr>
@@ -54,3 +61,9 @@
   </app-card-with-skeleton>
 
 </app-navigation-container>
+
+<!-- El emisor y lo que va a emitir -->
+<app-upload-produccion-general-file-dialog 
+  [isDialogOpen]="isDialogOpen" 
+  (closeDialogEmitter)="toggleIsDialogOpen()"
+/>

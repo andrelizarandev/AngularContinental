@@ -10,9 +10,10 @@ import { NavigationContainerComponent } from '../../../components/navigation-con
 
 // Dialogs
 import { RegisterPeriodoGeneralDialogComponent } from '../../../dialogs/submit/register-periodo-general-dialog/register-periodo-general-dialog.component';
+import { UploadProduccionGeneralFileDialogComponent } from '../../../dialogs/submit/upload-produccion-general-file-dialog/upload-produccion-general-file-dialog.component';
 
 // Services
-import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-curso/diseno-curso.service';
+import { ProduccionService } from '../../../api/produccion/produccion.service';
 
 // Types
 import { GetEapData, GetFacultadData, GetSolicitudDisenoCursoData } from '../../../api/solicitudes-diseno-curso/diseno-curso.types';
@@ -25,41 +26,38 @@ import { GetEapData, GetFacultadData, GetSolicitudDisenoCursoData } from '../../
     ButtonModule, 
     TableModule,
     RegisterPeriodoGeneralDialogComponent,
-    CardWithSkeletonComponent
+    CardWithSkeletonComponent,
+    UploadProduccionGeneralFileDialogComponent
   ],
   templateUrl: './produccion.component.html',
   styleUrl: './produccion.component.scss'
 })
 export class ProduccionComponent {
 
+  isDialogOpen = false;
 
-  isRegisterOpen = false;
   productionList:GetSolicitudDisenoCursoData[] = [];
+
   eapList:GetEapData[] = [];
+
   facultadList:GetFacultadData[] = [];
-  
-  getSolicitudDisenoCursoListService = inject(SolicitudDisenoCursoService)
-    .getDisenoCursoList()
-    .result;
-
-  getEapListService = inject(SolicitudDisenoCursoService)
-    .getEapList()
-    .result$.subscribe((result) => {
-      if (result.isSuccess) this.eapList = result.data;
-    });
-
-  getFacultadListService = inject(SolicitudDisenoCursoService)
-    .getFacultadList()
-    .result$.subscribe((result) => {
-      if (result.isSuccess) this.facultadList = result.data;
-    });
 
   constructor(private router: Router) {}
+  
+  // Queries
+  getSolicitudDisenoCursoListService = inject(ProduccionService)
+    .getProduccionGeneral()
+    .result;
 
+  // Redirect
   redirectToProductionForm (id:string) {
     this.router.navigate([`/submit-produccion-general/${id}`]);
   }
 
+  // Open Dialog
+  toggleIsDialogOpen = () => this.isDialogOpen = !this.isDialogOpen;
+  
+  // Match
   matchEapName (id:string) {
     return this.eapList.find((eap) => eap.id.toString() === id)?.nombre || 'No Especificado';
   }

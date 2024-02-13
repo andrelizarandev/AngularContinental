@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 
 // Api
-import { apiExcelUrl, apiUrl } from '..';
+import { apiUrl } from '..';
 
 // Types
 import { injectMutation, injectQuery } from '@ngneat/query';
@@ -79,7 +79,7 @@ export class SolicitudDisenoCursoService {
       mutationFn: (data:SubmitSolicitudDisenoCursoFileData) => {
         const formData = new FormData();
         formData.append('archivo', data.file, 'archivo.xlsx');
-        return this.#http.post(`${apiExcelUrl}importar-excel`, formData)
+        return this.#http.post(`${apiUrl}importar-excel`, formData);
       }
     });
   }

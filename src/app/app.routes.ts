@@ -21,7 +21,7 @@ export const routes: Routes = [
   { path:'programas', component:ProgramasScreenComponent },
   { path:'submit-user', component:SubmitUserScreenComponent },
   { path:'solicitud-diseno-curso', component:SolicitudesDisenoCursoComponent },
-  { path:'produccion', component:ProduccionComponent },
+  { path:'produccion-general', component:ProduccionComponent },
   { path:'submit-solicitud-diseno-curso', component:SubmitSolicitudDisenoCursoComponent },
   { path:'submit-produccion-general/:id', component:SubmitProduccionGeneralComponent },
   { path:'', redirectTo:'/login', pathMatch:'full' }

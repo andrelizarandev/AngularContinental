@@ -1,0 +1,62 @@
+<p-dialog 
+  class="sm:w-12" 
+  header="Subir Archivo de Producción General" 
+  [style]="{width: '600px'}"
+  [visible]="isDialogOpen" 
+  [modal]="true" 
+  [closable]="false"
+  [draggable]="false"
+>
+
+  <input 
+    #fileInput 
+    type="file" 
+    style="display:none"
+    accept=".xlsx"
+    id="load-production-general-file"
+    (change)="onChangeFile($event)"
+  >
+
+  <form (ngSubmit)="sendFile()">
+
+    @if (currentFile != null) { 
+
+      <div class="h-flex-justify-between-align-center pb-2">
+  
+        <span>{{ currentFile.name }}</span>
+  
+        <p-button icon="pi pi-times" size="small" severity="danger" (onClick)="removeFile()"/>
+  
+      </div> 
+  
+    } @else {
+  
+      <div class="pb-2">
+  
+        <p-button label="Cargar Archivo" size="small" icon="pi pi-upload" (onClick)="fileInput.click()"/>
+  
+      </div>
+  
+    }
+  
+    <div class="h-flex pt-2">
+  
+      <p-button
+        label="Cancelar" 
+        size="small" 
+        severity="secondary"
+        (onClick)="closeDialog()"
+      />
+  
+      <p-button 
+        label="Enviar Archivo" 
+        size="small" 
+        (onClick)="sendFile()"
+      />
+  
+    </div>
+
+  </form>
+
+</p-dialog>
+

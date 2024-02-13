@@ -2,7 +2,7 @@
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { DividerModule } from 'primeng/divider';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, inject } from '@angular/core';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
@@ -17,6 +17,7 @@ import { RegisterPeriodoGeneralDialogComponent } from '../../../dialogs/submit/r
 import { OptionData } from '../submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
 
 // Service
+import { ProduccionService } from '../../../api/produccion/produccion.service';
 import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-curso/diseno-curso.service';
 
 @Component({
@@ -75,7 +76,11 @@ export class SubmitProduccionGeneralComponent {
     { id:'6', label:'No' },
   ];
 
-  constructor (private fb:FormBuilder, private route: ActivatedRoute) {
+  constructor (
+    private fb:FormBuilder, 
+    private activeRoute:ActivatedRoute,
+    private router:Router
+  ) {
 
     this.registerProduccionGeneralForm = this.fb.group({
 
@@ -129,16 +134,41 @@ export class SubmitProduccionGeneralComponent {
 
   }
 
-  // Get
-  disenoCursoByIdService = inject(SolicitudDisenoCursoService)
-    .getDisenoCursoById(this.route.snapshot.params['id'])
+  // Queries
+  disenoCursoByIdService = inject(ProduccionService)
+
+    .getProduccionGeneralById(this.activeRoute.snapshot.params['id'])
+
     .result$
+
     .subscribe((result) => {
+
       if (result.isSuccess) {
-        if (result.data.data === null) return;
-        const { codigo, eap, tipo_asignatura, asignatura } =  result.data.data;
-        this.registerProduccionGeneralForm.patchValue({ codigo, asignatura, plan:'1', eap, tipo_asignatura });
-      } 
+
+        const data = result.data.data;
+
+        if (data != null) {
+
+          const { tipo_asignatura, plan, codigo, eap } = data;
+
+          this.registerProduccionGeneralForm.patchValue({
+
+            ...this.registerProduccionGeneralForm.value,
+
+            codigo,
+
+            plan,
+
+            tipo_asignatura,
+
+            eap
+
+          })
+
+        }
+
+      }
+
     });
 
   getPlanListService = inject(SolicitudDisenoCursoService)
@@ -169,8 +199,13 @@ export class SubmitProduccionGeneralComponent {
     });
 
   // Toggle
-  public toggleIsRegisterOpen () {
+  toggleIsRegisterOpen () {
     this.isRegisterOpen = !this.isRegisterOpen;
+  }
+
+  // Return
+  redirectToProduccionGeneral () {
+    this.router.navigate(['/produccion-general']);
   }
 
 }

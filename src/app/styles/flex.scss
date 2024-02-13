@@ -10,13 +10,6 @@
   column-gap: 16px;
 }
 
-.h-flex-justify-between {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .h-flex-align-center {
   display: flex;
   flex-direction: row;
@@ -34,6 +27,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.h-flex-justify-between-align-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .align-self-center {

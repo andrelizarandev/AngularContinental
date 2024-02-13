@@ -2,7 +2,7 @@
 
   <div class="grid">
 
-    <div class="md:col-6 v-flex">
+    <div class="md:col-6">
 
       <app-card-with-skeleton>
 
@@ -32,12 +32,10 @@
   
                   <label>Plan</label>
         
-                  <p-dropdown 
+                  <input 
+                    pInputText  
                     formControlName="plan" 
                     [style]="{'width':'100%'}"
-                    [options]="planListOptions"
-                    optionLabel="label"
-                    optionValue="id"
                   />
   
                 </div>
@@ -46,12 +44,10 @@
   
                   <label>Eap</label>
         
-                  <p-dropdown 
+                  <input
+                    pInputText
                     formControlName="eap" 
                     [style]="{'width':'100%'}"
-                    [options]="eapListOptions"
-                    optionLabel="label"
-                    optionValue="id"
                   />
   
                 </div>
@@ -439,22 +435,35 @@
           </form>
       
         </div>
+
+      <div class="h-flex">
+
+        <p-button
+          label="Cancelar"
+          size="small"
+          (onClick)="redirectToProduccionGeneral()"
+          severity="secondary"
+        />
       
-        <p-button label="Guardar" size="small" (onClick)="toggleIsRegisterOpen()"/>
+        <p-button 
+          label="Guardar" 
+          size="small" 
+          (onClick)="toggleIsRegisterOpen()"
+        />
+
+      </div>
 
       </app-card-with-skeleton>
 
     </div>
 
-    <div class="md:col-6 v-flex p-2">
+    <!-- <div class="md:col-6 v-flex p-2">
       {{ registerProduccionGeneralForm.value | json }}
-    </div>
+    </div> -->
 
   </div>
 
 </app-navigation-container>
-
-
 
 <app-register-periodo-general-dialog 
   [isRegisterOpen]="isRegisterOpen"
