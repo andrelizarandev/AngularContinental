@@ -6,7 +6,4 @@ import { AppState } from '../reducers';
 
 export const loginSelector = (state:AppState) => state.login;
 
-export const loginSelectorUser = createSelector(
-  loginSelector,
-  (login) => login.user
-);
+export const loginSelectorUser = createSelector(loginSelector, (login) => login.user);

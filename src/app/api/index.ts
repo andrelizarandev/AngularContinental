@@ -1,1 +1,1 @@
-export const apiUrl = 'https://api.ucontinental.lat/api/';
+export const apiUrl = 'https://api.ucontinental.lat/api';

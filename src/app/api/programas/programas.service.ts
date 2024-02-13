@@ -1,7 +1,7 @@
 // Modules
-import { injectQuery } from '@ngneat/query';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { injectMutation, injectQuery } from '@ngneat/query';
 
 // Api
 import { apiUrl } from '..';
@@ -16,13 +16,15 @@ export class ProgramasService {
 
   #http = inject(HttpClient);
   #query = injectQuery();
+  #mutation = injectMutation();
+
 
   postPrograma (data:PostProgramaData) {}
 
   getProgramasList () {
     return this.#query({
       queryKey: ['get-programas'] as const,
-      queryFn: () => this.#http.get<GetProgramaResponse>(`${apiUrl}programas`)
+      queryFn: () => this.#http.get<GetProgramaResponse>(`${apiUrl}/programas`)
     });
   }
   

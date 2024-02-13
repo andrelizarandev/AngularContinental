@@ -1,6 +1,6 @@
 <app-navigation-container>
 
-  <app-card-with-skeleton [isLoading]="getSolicitudesDisenoCursoService().isLoading">
+  <app-card-with-skeleton>
 
     <div class="h-flex-justify-between-align-center">
 
@@ -19,7 +19,7 @@
   
     </div>
 
-    <p-table [value]="getSolicitudesDisenoCursoService().data || []">
+    <p-table [value]="[]">
   
       <ng-template pTemplate="header">
   

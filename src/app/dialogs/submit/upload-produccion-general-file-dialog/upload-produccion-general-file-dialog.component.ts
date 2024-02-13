@@ -3,10 +3,14 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
+import { injectMutation } from '@tanstack/angular-query-experimental';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 
 // Services
-import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-curso/diseno-curso.service';
+import { ProduccionService } from '../../../api/produccion/produccion.service';
+
+// Types
+import { PostProduccionGeneralFileData } from '../../../api/produccion/produccion.types';
 
 @Component({
   selector: 'app-upload-produccion-general-file-dialog',
@@ -22,7 +26,15 @@ import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-cur
 })
 export class UploadProduccionGeneralFileDialogComponent {
 
-  submitProduccionGeneralFileService = inject(SolicitudDisenoCursoService).submitSolicitudDisenoCursoFile();
+  produccionService = inject(ProduccionService);
+
+  sendProduccionGeneralFileMutation = injectMutation((client) => ({
+    mutationFn: (data:PostProduccionGeneralFileData) => this.produccionService.submitProduccionGeneralFile(data),
+    onSuccess: () =>  {
+      client.invalidateQueries({ queryKey:['get-produccion-general' ]});
+      this.closeDialog();
+    }
+  }))
 
   @Input() isDialogOpen = false;
   @Output() closeDialogEmitter = new EventEmitter<void>();
@@ -38,15 +50,11 @@ export class UploadProduccionGeneralFileDialogComponent {
   removeFile = () => this.currentFile = null;
 
   closeDialog () {
-    this.removeFile();
     this.closeDialogEmitter.emit();
   }
 
-  async sendFile () {
-    try {
-      const result = await this.submitProduccionGeneralFileService.mutateAsync({ file:this.currentFile!! });
-      this.closeDialog();
-    } catch (err:any) {}
+  sendFile () {
+    const result = this.sendProduccionGeneralFileMutation.mutate({ file: this.currentFile!!, data:'Hello World' });
   }
 
 }

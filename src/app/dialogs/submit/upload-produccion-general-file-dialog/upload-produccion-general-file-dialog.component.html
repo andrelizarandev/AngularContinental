@@ -17,7 +17,7 @@
     (change)="onChangeFile($event)"
   >
 
-  <form (ngSubmit)="sendFile()">
+  <form>
 
     @if (currentFile != null) { 
 
@@ -50,7 +50,7 @@
   
       <p-button 
         label="Enviar Archivo" 
-        size="small" 
+        size="small"
         (onClick)="sendFile()"
       />
   

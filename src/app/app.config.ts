@@ -11,6 +11,7 @@ import { routes } from './app.routes';
 
 // Reducers
 import { reducers } from './state/reducers';
+import { QueryClient, provideAngularQuery } from '@tanstack/angular-query-experimental';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,6 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideStore(reducers, { metaReducers: [] }),
     provideHttpClient(withInterceptorsFromDi()),
-    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
+    provideAngularQuery(new QueryClient())
   ]
 };

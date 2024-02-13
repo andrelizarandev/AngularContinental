@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Component, inject } from '@angular/core';
+import { injectQuery } from '@tanstack/angular-query-experimental';
 
 // Components
 import { CardWithSkeletonComponent } from '../../../components/card-with-skeleton/card-with-skeleton.component';
@@ -34,21 +35,20 @@ import { GetEapData, GetFacultadData, GetSolicitudDisenoCursoData } from '../../
 })
 export class ProduccionComponent {
 
+  router = inject(Router);
+
+  produccionGeneralService = inject(ProduccionService)
+
+  getProduccionGeneralQuery = injectQuery(() => ({
+    queryKey: ['get-produccion-general'],
+    queryFn: () => this.produccionGeneralService.getProduccionGeneral(),
+  }));
+
   isDialogOpen = false;
-
   productionList:GetSolicitudDisenoCursoData[] = [];
-
   eapList:GetEapData[] = [];
-
   facultadList:GetFacultadData[] = [];
-
-  constructor(private router: Router) {}
   
-  // Queries
-  getSolicitudDisenoCursoListService = inject(ProduccionService)
-    .getProduccionGeneral()
-    .result;
-
   // Redirect
   redirectToProductionForm (id:string) {
     this.router.navigate([`/submit-produccion-general/${id}`]);

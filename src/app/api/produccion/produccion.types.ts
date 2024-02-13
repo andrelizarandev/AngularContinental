@@ -48,3 +48,8 @@ export type GetProduccionGeneralData = {
 export type GetProduccionGeneralDataById = {
   data:GetProduccionGeneralData | null;
 }
+
+export type PostProduccionGeneralFileData = {
+  file:File;
+  data:string;
+}

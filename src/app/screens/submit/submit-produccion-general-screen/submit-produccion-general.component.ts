@@ -2,10 +2,11 @@
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { DividerModule } from 'primeng/divider';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Component, inject } from '@angular/core';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
+import { ActivatedRoute, Router } from '@angular/router';
+import { injectQuery } from '@tanstack/angular-query-experimental';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 // Components
@@ -40,6 +41,7 @@ import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-cur
 
 export class SubmitProduccionGeneralComponent {
 
+  // Props
   isRegisterOpen = false;
   registerProduccionGeneralForm: FormGroup;
 
@@ -134,69 +136,64 @@ export class SubmitProduccionGeneralComponent {
 
   }
 
+  // Services
+  produccionGeneralService = inject(ProduccionService);
+  solicitudDisenoCursoService = inject(SolicitudDisenoCursoService);
+  
   // Queries
-  disenoCursoByIdService = inject(ProduccionService)
-
-    .getProduccionGeneralById(this.activeRoute.snapshot.params['id'])
-
-    .result$
-
-    .subscribe((result) => {
-
-      if (result.isSuccess) {
-
-        const data = result.data.data;
-
-        if (data != null) {
-
-          const { tipo_asignatura, plan, codigo, eap } = data;
-
-          this.registerProduccionGeneralForm.patchValue({
-
-            ...this.registerProduccionGeneralForm.value,
-
-            codigo,
-
-            plan,
-
-            tipo_asignatura,
-
-            eap
-
-          })
-
-        }
-
+  getProduccionGeneralById = injectQuery(() => ({
+    queryKey: ['get-produccion-general', this.activeRoute.snapshot.params['id']],
+    queryFn: async () => {
+      try {
+        const result = await this.produccionGeneralService.getProduccionGeneralById(this.activeRoute.snapshot.params['id'])
+        const { codigo, plan, eap, tipo_asignatura } = result.data!!;
+        this.registerProduccionGeneralForm.patchValue({ codigo, plan, eap, tipo_asignatura });
+      } catch (err:any) {
+        return Promise.reject(err);
       }
+    }
+  }));
 
-    });
+  getPlanListQuery = injectQuery(() => ({
+    queryKey: ['get-plan-list'],
+    queryFn: async () => {
+      try {
+        const result = await this.solicitudDisenoCursoService.getPlanList();
+        const options:OptionData[] = result.map((data) => ({ id:data.id.toString(), label:data.nombre }));
+        this.planListOptions = options;
+      } catch (err:any) {
+        return Promise.reject(err);
+      }
+    }
+  }));
 
-  getPlanListService = inject(SolicitudDisenoCursoService)
-    .getPlanList()
-    .result$
-    .subscribe((result) => {
-      if (result.isSuccess) {
-        this.planListOptions = result.data.map((row) => ({ id:row.id.toString(), label:row.nombre }));
-      } 
-    });
+  getEapListQuery = injectQuery(() => ({
+    queryKey: ['get-eap-list'],
+    queryFn: async () => {
+      try {
+        const result = await this.solicitudDisenoCursoService.getEapList();
+        const options:OptionData[] = result.map((data) => ({ id:data.id.toString(), label:data.nombre }));
+        this.eapListOptions = options;
+      } catch (err:any) {
+        return Promise.reject(err);
+      }
+    }
+  }));
 
-  getEapListService = inject(SolicitudDisenoCursoService)
-    .getEapList()
-    .result$
-    .subscribe((result) => {
-      if (result.isSuccess) {
-        this.eapListOptions = result.data.map((row) => ({ id:row.id.toString(), label:row.nombre }));
-      } 
-    });
+  getTipoAsignaturaListQuery = injectQuery(() => ({
+    queryKey: ['get-tipo-asignatura-list'],
+    queryFn: async () => {
+      try {
+        const result = await this.solicitudDisenoCursoService.getTipoAsignaturaList();
+        const options:OptionData[] = result.map((data) => ({ id:data.id.toString(), label:data.nombre }));
+        this.tipoAsignaturaListOptions = options;
+      } catch (err:any) {
+        return Promise.reject(err);
+      }
+    }
+  }));
 
-  getTipoAsignaturaListService = inject(SolicitudDisenoCursoService)
-    .getTipoAsignaturaList()
-    .result$
-    .subscribe((result) => {
-      if (result.isSuccess) {
-        this.tipoAsignaturaListOptions = result.data.map((row) => ({ id:row.toString(), label:row.nombre }));
-      } 
-    });
+  // Functions
 
   // Toggle
   toggleIsRegisterOpen () {

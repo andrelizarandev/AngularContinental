@@ -30,8 +30,6 @@ import { GetSolicitudDisenoCursoData } from '../../../api/solicitudes-diseno-cur
 export class SolicitudesDisenoCursoComponent {
 
   requestList:GetSolicitudDisenoCursoData[] = []
-
-  getSolicitudesDisenoCursoService = inject(SolicitudDisenoCursoService).getDisenoCursoList().result
   
   constructor (private router:Router) { }
 

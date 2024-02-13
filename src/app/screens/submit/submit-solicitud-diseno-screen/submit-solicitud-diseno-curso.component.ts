@@ -37,8 +37,6 @@ import { PostSolicitudDisenoCursoData } from '../../../api/solicitudes-diseno-cu
 
 export class SubmitSolicitudDisenoCursoComponent {
 
-  submitSolicitudDisenoCurso = inject(SolicitudDisenoCursoService).submitSolicitudDisenoCurso();
-
   registerRequestForm: FormGroup;
   registerCarpetaForm: FormGroup;
   shouldShowCarpetas:boolean = false;
@@ -51,56 +49,6 @@ export class SubmitSolicitudDisenoCursoComponent {
   tipoDisenoOptions:OptionData[] = [];
   facultadOptions:OptionData[] = [];
   planOptions:OptionData[] = [];
-
-  getEapListService = inject(SolicitudDisenoCursoService)
-    .getEapList()
-    .result$
-    .subscribe((result) => {
-      if (result.isSuccess) {
-        const options:OptionData[] = result.data.map((row) => ({ id:row.id.toString(), label:row.nombre }));
-        this.eapOptions = options;
-      } 
-  });
-
-  getTipoAsignaturaListService = inject(SolicitudDisenoCursoService)
-    .getTipoAsignaturaList()
-    .result$
-    .subscribe((result) => {
-      if (result.isSuccess) {
-        const options:OptionData[] = result.data.map((row) => ({ id:row.id.toString(), label:row.nombre }));
-        this.tipoAsignaturaOptions = options;
-      }
-  })
-
-  getTipoDisenoListService = inject(SolicitudDisenoCursoService)
-    .getTipoDisenoList()
-    .result$
-    .subscribe((result) => {
-      if (result.isSuccess) {
-        const options:OptionData[] = result.data.map((row) => ({ id:row.id.toString(), label:row.nombre }));
-        this.tipoDisenoOptions = options;
-      }
-  });
-
-  getFacultadListService = inject(SolicitudDisenoCursoService)
-    .getFacultadList()
-    .result$
-    .subscribe((result) => {
-      if (result.isSuccess) {
-        const options:OptionData[] = result.data.map((row) => ({ id:row.id.toString(), label:row.nombre }));
-        this.facultadOptions = options;
-      }
-  });
-
-  getPlanListService = inject(SolicitudDisenoCursoService)
-    .getPlanList()
-    .result$
-    .subscribe((result) => {
-      if (result.isSuccess) {
-        const options:OptionData[] = result.data.map((row) => ({ id:row.id.toString(), label:row.nombre }));
-        this.planOptions = options;
-      }
-    });
 
   modalidadOptions:OptionData[] = [
     { id:'0', label:'-' },
@@ -214,8 +162,6 @@ export class SubmitSolicitudDisenoCursoComponent {
       tipo_asignatura:tipo_asignatura.id.toString(),
       tipo_diseno:tipo_diseno.id.toString(),
     }
-
-    this.submitSolicitudDisenoCurso.mutate(parsedBody);
 
   }
 
