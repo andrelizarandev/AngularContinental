@@ -54,7 +54,7 @@ export class UploadProduccionGeneralFileDialogComponent {
   }
 
   sendFile () {
-    const result = this.sendProduccionGeneralFileMutation.mutate({ file: this.currentFile!!, data:'Hello World' });
+    const result = this.sendProduccionGeneralFileMutation.mutate({ file: this.currentFile!! });
   }
 
 }

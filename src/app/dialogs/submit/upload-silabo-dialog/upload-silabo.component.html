@@ -1,0 +1,75 @@
+<p-dialog 
+  class="sm:w-12" 
+  header="Subir Archivo de Sílabo" 
+  [style]="{width: '600px'}"
+  [visible]="isDialogOpen" 
+  [modal]="true" 
+  [closable]="false"
+  [draggable]="false"
+>
+
+  <div class="v-flex pt-1">
+
+    <input 
+      #fileInput 
+      type="file" 
+      style="display:none"
+      accept=".xlsx"
+      id="load-production-general-file"
+      (change)="onFileChange($event)"
+    >
+
+    @if (!currentFile) {
+
+      <div class="h-flex-align-center">
+
+        <p-button
+          label="Cargar Archivo"
+          size="small"
+          icon="pi pi-upload"
+          (onClick)="fileInput.click()"
+        />
+  
+        <span>No has cargado ningún archivo</span>
+  
+      </div>
+
+    } @else {
+
+      <div class="h-flex-align-center">
+
+        <p-button  
+          size="small"
+          severity="danger"
+          (onClick)="cleanFile()"
+          icon="pi pi-times"
+        />
+
+        <span>{{ currentFile.name }}</span>
+
+      </div>
+
+    }
+
+    <div class="h-flex">
+
+      <p-button 
+        label="Cancelar" 
+        size="small"
+        severity="secondary"
+        (onClick)="toggleIsDialogOpen()"
+      />
+
+      <p-button
+        (onClick)="toggleIsDialogOpen()"
+        label="Enviar Archivo"
+        size="small"
+        icon="pi pi-send"
+        [disabled]="!currentFile"
+      />
+
+    </div>
+
+  </div>
+
+</p-dialog>

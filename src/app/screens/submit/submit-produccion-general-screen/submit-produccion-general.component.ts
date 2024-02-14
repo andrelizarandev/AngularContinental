@@ -15,11 +15,14 @@ import { NavigationContainerComponent } from '../../../components/navigation-con
 import { RegisterPeriodoGeneralDialogComponent } from '../../../dialogs/submit/register-periodo-general-dialog/register-periodo-general-dialog.component';
 
 // Dialogs
-import { OptionData } from '../submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
+import { UploadSilaboDialogComponent } from '../../../dialogs/submit/upload-silabo-dialog/upload-silabo.component';
 
 // Service
 import { ProduccionService } from '../../../api/produccion/produccion.service';
 import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-curso/diseno-curso.service';
+
+// Types
+import { OptionData } from '../submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
 
 @Component({
   selector: 'app-submit-produccion-general',
@@ -33,6 +36,7 @@ import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-cur
     ReactiveFormsModule,
     RegisterPeriodoGeneralDialogComponent,
     CardWithSkeletonComponent,
+    UploadSilaboDialogComponent,
     CommonModule
   ],
   templateUrl: './submit-produccion-general.component.html',
@@ -41,8 +45,11 @@ import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-cur
 
 export class SubmitProduccionGeneralComponent {
 
-  // Props
-  isRegisterOpen = false;
+  // Is open
+  isRegisterPeriodoGeneralDialogOpen = false;
+  isUploadSilaboDialogOpen = true;
+
+  // Forms
   registerProduccionGeneralForm: FormGroup;
 
   // Dynamic options
@@ -196,10 +203,14 @@ export class SubmitProduccionGeneralComponent {
   // Functions
 
   // Toggle
-  toggleIsRegisterOpen () {
-    this.isRegisterOpen = !this.isRegisterOpen;
+  toggleIsRegisterPeriodoGeneralDialogOpen () {
+    this.isRegisterPeriodoGeneralDialogOpen = !this.isRegisterPeriodoGeneralDialogOpen;
   }
-
+  
+  toggleIsUploadSilaboDialogOpen () {
+    this.isUploadSilaboDialogOpen = !this.isUploadSilaboDialogOpen;
+  }
+  
   // Return
   redirectToProduccionGeneral () {
     this.router.navigate(['/produccion-general']);

@@ -51,5 +51,4 @@ export type GetProduccionGeneralDataById = {
 
 export type PostProduccionGeneralFileData = {
   file:File;
-  data:string;
 }

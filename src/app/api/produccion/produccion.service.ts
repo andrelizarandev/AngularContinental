@@ -29,7 +29,13 @@ export class ProduccionService {
   }
 
   submitProduccionGeneralFile (data:PostProduccionGeneralFileData) {
-    return lastValueFrom(this.http.post<PostProduccionGeneralFileData>(`${apiUrl}/produccion-general`, data));
+    const formData = new FormData();
+    formData.append('file', data.file);
+    return lastValueFrom(this.http.post<PostProduccionGeneralFileData>(`${apiUrl}/produccion-general`, formData));
+  }
+
+  submitSilaboFile (data:PostProduccionGeneralFileData) {
+
   }
 
 }

@@ -17,29 +17,41 @@
     (change)="onChangeFile($event)"
   >
 
-  <form>
+  <div class="v-flex">
 
     @if (currentFile != null) { 
 
-      <div class="h-flex-justify-between-align-center pb-2">
+      <div class="h-flex-align-center">
   
+        <p-button 
+          icon="pi pi-times" 
+          size="small" 
+          severity="danger" 
+          (onClick)="removeFile()"
+        />
+
         <span>{{ currentFile.name }}</span>
-  
-        <p-button icon="pi pi-times" size="small" severity="danger" (onClick)="removeFile()"/>
   
       </div> 
   
     } @else {
   
-      <div class="pb-2">
+      <div class="h-flex-align-center">
   
-        <p-button label="Cargar Archivo" size="small" icon="pi pi-upload" (onClick)="fileInput.click()"/>
+        <p-button 
+          label="Cargar Archivo" 
+          size="small" 
+          icon="pi pi-upload" 
+          (onClick)="fileInput.click()"
+        />
+
+        <span>No has cargado ningún archivo</span>
   
       </div>
   
     }
   
-    <div class="h-flex pt-2">
+    <div class="h-flex">
   
       <p-button
         label="Cancelar" 
@@ -52,11 +64,12 @@
         label="Enviar Archivo" 
         size="small"
         (onClick)="sendFile()"
+        icon="pi pi-send"
       />
   
     </div>
 
-  </form>
+  </div>
 
 </p-dialog>
 

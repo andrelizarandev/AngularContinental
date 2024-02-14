@@ -20,10 +20,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 export class RegisterPeriodoGeneralDialogComponent {
 
-  @Input() isRegisterOpen = false;
-  @Output() toggleIsRegisterOpen = new EventEmitter(); 
+  @Input() isDialogOpen = false;
+  @Output() closeDialogEmitter = new EventEmitter(); 
 
   closeRegister () {
-    this.toggleIsRegisterOpen.emit();
+    this.closeDialogEmitter.emit();
   }
 }

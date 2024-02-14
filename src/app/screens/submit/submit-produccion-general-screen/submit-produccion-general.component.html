@@ -138,6 +138,23 @@
                   />
           
                 </div>
+
+                <div class="col-12">
+
+                  <div class="h-flex-justify-between-align-center">
+
+                    <label>Sílabos</label>
+
+                    <p-button 
+                      label="Cargar Sílabo" 
+                      size="small"
+                      icon="pi pi-plus"
+                      (onClick)="toggleIsUploadSilaboDialogOpen()"
+                    />
+
+                  </div>
+
+                </div>
       
               </div>
       
@@ -448,7 +465,7 @@
         <p-button 
           label="Guardar" 
           size="small" 
-          (onClick)="toggleIsRegisterOpen()"
+          (onClick)="toggleIsRegisterPeriodoGeneralDialogOpen()"
         />
 
       </div>
@@ -457,15 +474,20 @@
 
     </div>
 
-    <!-- <div class="md:col-6 v-flex p-2">
-      {{ registerProduccionGeneralForm.value | json }}
-    </div> -->
-
   </div>
 
 </app-navigation-container>
 
+
+
+<!-- Input en el dialog, Vars en la pantalla -->
+<!-- Emitter en el dialog, Toggle en la pantalla -->
 <app-register-periodo-general-dialog 
-  [isRegisterOpen]="isRegisterOpen"
-  (toggleIsRegisterOpen)="toggleIsRegisterOpen()"
+  [isDialogOpen]="isRegisterPeriodoGeneralDialogOpen"
+  (closeDialogEmitter)="toggleIsRegisterPeriodoGeneralDialogOpen()"
+/>
+
+<app-upload-silabo-dialog
+  [isDialogOpen]="isUploadSilaboDialogOpen"
+  (closeDialogEmitter)="toggleIsUploadSilaboDialogOpen()"
 />
