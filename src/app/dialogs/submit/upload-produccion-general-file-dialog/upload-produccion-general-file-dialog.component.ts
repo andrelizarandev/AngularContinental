@@ -4,7 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { injectMutation } from '@tanstack/angular-query-experimental';
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
 
 // Services
 import { ProduccionService } from '../../../api/produccion/produccion.service';
@@ -26,6 +26,8 @@ import { PostProduccionGeneralFileData } from '../../../api/produccion/produccio
 })
 export class UploadProduccionGeneralFileDialogComponent {
 
+  @ViewChild('fileInput') fileInput:ElementRef | null = null;
+
   produccionService = inject(ProduccionService);
 
   sendProduccionGeneralFileMutation = injectMutation((client) => ({
@@ -41,10 +43,11 @@ export class UploadProduccionGeneralFileDialogComponent {
 
   currentFile: File | null = null;
 
-  onChangeFile (event: Event) {
+  onFileChange (event: Event) {
     const target = event.target as HTMLInputElement;
     const file = (target.files as FileList)[0];
     this.currentFile = file;
+    this.fileInput!!.nativeElement.value = '';
   }
 
   removeFile = () => this.currentFile = null;

@@ -8,13 +8,13 @@
   [draggable]="false"
 >
 
-  <div class="v-flex pt-1">
+  <form class="v-flex pt-1">
 
     <input 
       #fileInput 
       type="file" 
       style="display:none"
-      accept=".xlsx"
+      accept=".pdf"
       id="load-production-general-file"
       (change)="onFileChange($event)"
     >
@@ -57,19 +57,19 @@
         label="Cancelar" 
         size="small"
         severity="secondary"
-        (onClick)="toggleIsDialogOpen()"
+        (onClick)="closeDialog()"
       />
 
       <p-button
-        (onClick)="toggleIsDialogOpen()"
         label="Enviar Archivo"
         size="small"
         icon="pi pi-send"
+        (onClick)="submitSilaboFile()"
         [disabled]="!currentFile"
       />
 
     </div>
 
-  </div>
+  </form>
 
 </p-dialog>

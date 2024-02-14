@@ -10,7 +10,8 @@ import { apiUrl } from '..';
 import { 
   GetProduccionGeneralData, 
   GetProduccionGeneralDataById, 
-  PostProduccionGeneralFileData 
+  PostProduccionGeneralFileData, 
+  PostSilaboFileData
 } from './produccion.types';
 
 @Injectable({
@@ -30,12 +31,15 @@ export class ProduccionService {
 
   submitProduccionGeneralFile (data:PostProduccionGeneralFileData) {
     const formData = new FormData();
-    formData.append('file', data.file);
-    return lastValueFrom(this.http.post<PostProduccionGeneralFileData>(`${apiUrl}/produccion-general`, formData));
+    formData.append('archivo', data.file);
+    return lastValueFrom(this.http.post<PostProduccionGeneralFileData>(`${apiUrl}/importar-excel`, formData));
   }
 
-  submitSilaboFile (data:PostProduccionGeneralFileData) {
-
+  submitSilaboFile (data:PostSilaboFileData) {
+    const formData = new FormData();
+    formData.append('archivo', data.file);
+    formData.append('id_produccion_general', data.id_produccion_general.toString());
+    return lastValueFrom(this.http.post<PostProduccionGeneralFileData>(`${apiUrl}/silabo`, formData));
   }
 
 }

@@ -52,3 +52,8 @@ export type GetProduccionGeneralDataById = {
 export type PostProduccionGeneralFileData = {
   file:File;
 }
+
+export type PostSilaboFileData = {
+  file:File;
+  id_produccion_general:number;
+}
