@@ -46,11 +46,15 @@ import { OptionData } from '../submit-solicitud-diseno-screen/submit-solicitud-d
 export class SubmitProduccionGeneralComponent {
 
   // Is open
+  isUploadSilaboDialogOpen = false;
   isRegisterPeriodoGeneralDialogOpen = false;
-  isUploadSilaboDialogOpen = true;
 
   // Forms
   registerProduccionGeneralForm: FormGroup;
+
+  // Services
+  produccionGeneralService = inject(ProduccionService);
+  solicitudDisenoCursoService = inject(SolicitudDisenoCursoService);
 
   // Dynamic options
   eapListOptions:OptionData[] = [];
@@ -85,11 +89,7 @@ export class SubmitProduccionGeneralComponent {
     { id:'6', label:'No' },
   ];
 
-  constructor (
-    private fb:FormBuilder, 
-    private activeRoute:ActivatedRoute,
-    private router:Router
-  ) {
+  constructor (private fb:FormBuilder, private activeRoute:ActivatedRoute, private router:Router) {
 
     this.registerProduccionGeneralForm = this.fb.group({
 
@@ -105,7 +105,7 @@ export class SubmitProduccionGeneralComponent {
       fecha_finalizacion:['', Validators.required],
       tiempo_programado:['', Validators.required],
 
-      asesor_didactico:['', Validators.required],
+      asesor:['', Validators.required],
       correo_asesor_didactico:['', Validators.required],
       telefono_asesor_didactico:['', Validators.required],
 
@@ -135,30 +135,111 @@ export class SubmitProduccionGeneralComponent {
       unidad_4:['', Validators.required],
 
       fecha_presentacion_di:['', Validators.required],
-      fecha_presentacion:['', Validators.required],
+      fecha_finalizacion_presentacion:['', Validators.required],
       observaciones:['', Validators.required],
       correo_finalizacion:['', Validators.required],
 
     });
 
   }
-
-  // Services
-  produccionGeneralService = inject(ProduccionService);
-  solicitudDisenoCursoService = inject(SolicitudDisenoCursoService);
   
   // Queries
   getProduccionGeneralById = injectQuery(() => ({
+
     queryKey: ['get-produccion-general', this.activeRoute.snapshot.params['id']],
+
     queryFn: async () => {
+
       try {
+
         const result = await this.produccionGeneralService.getProduccionGeneralById(this.activeRoute.snapshot.params['id'])
-        const { codigo, plan, eap, tipo_asignatura } = result.data!!;
-        this.registerProduccionGeneralForm.patchValue({ codigo, plan, eap, tipo_asignatura });
+
+        const { 
+          codigo, 
+          plan, 
+          eap, 
+          tipo_asignatura, 
+          numero_formatos, 
+          situacion_asignatura,
+          fecha_inicio,
+          tiempo_programado,
+          fecha_programada,
+          asesor,
+          telefono_asesor,
+          correo_asesor,
+          decano,
+          correo_decano,
+          docente_disenador,
+          email_docente,
+          observaciones,
+          telefono_docente,
+          designacion,
+          carpeta_entregable,
+          responsable,
+          video_presentacion,
+          colaborativo,
+          simulador,
+          unidad1,
+          unidad2,
+          unidad3,
+          unidad4,
+          fecha_presentacion_di,
+          correo_finalizacion,
+          fecha_finalizacion
+        } = result.data!!;
+
+        this.registerProduccionGeneralForm.patchValue({ 
+          codigo, 
+          plan, 
+          eap, 
+          tipo_asignatura, 
+          numero_formatos, 
+          situacion_asignatura,
+          fecha_inicio,
+          tiempo_programado,
+          fecha_finalizacion:fecha_programada,
+          asesor,
+          telefono_asesor_didactico:telefono_asesor,
+          correo_asesor_didactico:correo_asesor,
+          decano_director_camara:decano,
+          correo_decano_director_camara:correo_decano,
+          docente_disenador,
+          email_docente_disenador:email_docente,
+          procedencia_docente_disenador:'Null',
+          observaciones_designacion_docente:observaciones,
+          telefono_docente_disenador:telefono_docente,
+          designacion_docente:designacion,
+
+          disenador_instruccional:'',
+          correo_disenador_instruccional:'',
+          telefono_disenador_instruccional:'',
+
+          responsable_seguimiento:responsable,
+          video_presentacion,
+          carpeta_entregable,
+
+          producto_academico:colaborativo,
+          simulador,
+          unidad_1:unidad1,
+          unidad_2:unidad2,
+          unidad_3:unidad3,
+          unidad_4:unidad4,
+
+          fecha_presentacion_di,
+          fecha_finalizacion_presentacion:fecha_finalizacion,
+          observaciones,
+          correo_finalizacion,
+
+        });
+
       } catch (err:any) {
+
         return Promise.reject(err);
+
       }
+
     }
+
   }));
 
   getPlanListQuery = injectQuery(() => ({
@@ -199,8 +280,6 @@ export class SubmitProduccionGeneralComponent {
       }
     }
   }));
-
-  // Functions
 
   // Toggle
   toggleIsRegisterPeriodoGeneralDialogOpen () {

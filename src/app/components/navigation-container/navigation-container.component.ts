@@ -1,18 +1,41 @@
 // Modules
 import { Router } from '@angular/router';
-import { Component } from '@angular/core';
+import { ToastModule } from 'primeng/toast';
+import { Store, select } from '@ngrx/store';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { Component, inject } from '@angular/core';
+
+// Selectors
+import { messageSelector } from '../../state/selectors/ui.selector';
+
+// Types
+import { MessageData } from '../../state/reducers/ui.reducer';
 
 @Component({
   selector: 'app-navigation-container',
   standalone: true,
-  imports: [ButtonModule],
+  imports: [
+    ButtonModule,
+    ToastModule,
+  ],
+  providers: [MessageService],
   templateUrl: './navigation-container.component.html',
   styleUrl: './navigation-container.component.scss'
 })
 export class NavigationContainerComponent  {
 
-  constructor (private router:Router) {}
+  store = inject(Store);
+  message:MessageData | null = null;
+
+  constructor (private router:Router, private messageService: MessageService) {
+    this.store.pipe(select(messageSelector)).subscribe((message) => {
+      if (message) this.messageService.add({ 
+        severity:message.type,
+        summary:message.message 
+      });
+    });
+  }
 
   redirectTo (route:string) {
     this.router.navigate([route]);

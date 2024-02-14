@@ -5,13 +5,13 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { ApplicationConfig, isDevMode } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { QueryClient, provideAngularQuery } from '@tanstack/angular-query-experimental';
 
 // Data
 import { routes } from './app.routes';
 
 // Reducers
 import { reducers } from './state/reducers';
-import { QueryClient, provideAngularQuery } from '@tanstack/angular-query-experimental';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,6 +20,6 @@ export const appConfig: ApplicationConfig = {
     provideStore(reducers, { metaReducers: [] }),
     provideHttpClient(withInterceptorsFromDi()),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
-    provideAngularQuery(new QueryClient())
+    provideAngularQuery(new QueryClient()),
   ]
 };

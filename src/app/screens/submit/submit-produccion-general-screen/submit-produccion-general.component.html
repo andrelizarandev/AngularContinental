@@ -80,7 +80,8 @@
   
                   <label>Número Formatos</label>
         
-                  <p-dropdown 
+                  <input 
+                    pInputText
                     formControlName="numero_formatos" 
                     [style]="{'width':'100%'}"
                   />
@@ -91,7 +92,8 @@
   
                   <label>Situación de la Asignatura</label>
         
-                  <p-dropdown 
+                  <input 
+                    pInputText
                     formControlName="situacion_asignatura" 
                     [style]="{'width':'100%'}"
                   />
@@ -134,7 +136,6 @@
                     pInputText  
                     formControlName="tiempo_programado" 
                     [style]="{'width':'100%'}"
-                    type="date"
                   />
           
                 </div>
@@ -168,7 +169,7 @@
       
                 <input 
                   pInputText
-                  formControlName="asesor_didactico" 
+                  formControlName="asesor" 
                 />
       
                 <label>Correo Asesor Didactico</label>
@@ -258,7 +259,8 @@
       
                   <label>Designación Docente</label>
       
-                  <p-dropdown 
+                  <input
+                    pInputText
                     formControlName="designacion_docente" 
                     [style]="{'width':'100%'}"
                   />
@@ -347,26 +349,23 @@
       
                   <label>Producto Académico Colaborativo</label>
       
-                  <p-dropdown 
+                  <input 
+                    pInputText
                     formControlName="producto_academico" 
-                    [style]="{'width':'100%'}"
-                    [options]="colaborativoListOptions"
                   />
       
                   <label>Simulador</label>
       
-                  <p-dropdown 
+                  <input 
+                    pInputText
                     formControlName="simulador" 
-                    [style]="{'width':'100%'}"
-                    [options]="simuladorListOptions"
                   />
       
                   <label>Unidad 1</label>
       
-                  <p-dropdown 
+                  <input 
+                    pInputText
                     formControlName="unidad_1" 
-                    [style]="{'width':'100%'}"
-                    [options]="realidadAumentadaListOptions"
                   />
       
                 </div>
@@ -375,26 +374,23 @@
       
                   <label>Unidad 2</label>
       
-                  <p-dropdown 
+                  <input 
+                    pInputText
                     formControlName="unidad_2" 
-                    [style]="{'width':'100%'}"
-                    [options]="realidadAumentadaListOptions"
                   />
       
                   <label>Unidad 3</label>
       
-                  <p-dropdown 
+                  <input 
+                    pInputText
                     formControlName="unidad_3" 
-                    [style]="{'width':'100%'}"
-                    [options]="realidadAumentadaListOptions"
                   />
       
                   <label>Unidad 4</label>
       
-                  <p-dropdown 
+                  <input 
+                    pInputText
                     formControlName="unidad_4" 
-                    [style]="{'width':'100%'}"
-                    [options]="realidadAumentadaListOptions"
                   />
       
                 </div>
@@ -419,7 +415,7 @@
       
                   <input
                     pInputText
-                    formControlName="fecha_presentacion" 
+                    formControlName="fecha_finalizacion" 
                     type="date"
                   />
       
@@ -432,7 +428,6 @@
                   <input
                     pInputText
                     formControlName="observaciones" 
-                    type="date"
                   />
       
                   <label>Correo de Finalización del Diseño</label>

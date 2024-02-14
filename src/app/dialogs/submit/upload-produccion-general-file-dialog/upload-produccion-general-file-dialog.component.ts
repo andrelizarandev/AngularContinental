@@ -1,10 +1,14 @@
 // Modules
+import { Store, select } from '@ngrx/store';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { injectMutation } from '@tanstack/angular-query-experimental';
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
+
+// Actions
+import { setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
 
 // Services
 import { ProduccionService } from '../../../api/produccion/produccion.service';
@@ -26,38 +30,40 @@ import { PostProduccionGeneralFileData } from '../../../api/produccion/produccio
 })
 export class UploadProduccionGeneralFileDialogComponent {
 
+  @Input() isDialogOpen = false;
+  @Output() closeDialogEmitter = new EventEmitter<void>();
   @ViewChild('fileInput') fileInput:ElementRef | null = null;
 
+  store = inject(Store);
   produccionService = inject(ProduccionService);
+  
+  currentFile: File | null = null;
 
+  // Queries
   sendProduccionGeneralFileMutation = injectMutation((client) => ({
     mutationFn: (data:PostProduccionGeneralFileData) => this.produccionService.submitProduccionGeneralFile(data),
     onSuccess: () =>  {
       client.invalidateQueries({ queryKey:['get-produccion-general' ]});
       this.closeDialog();
     }
-  }))
+  }));
 
-  @Input() isDialogOpen = false;
-  @Output() closeDialogEmitter = new EventEmitter<void>();
-
-  currentFile: File | null = null;
-
+  // On Change
   onFileChange (event: Event) {
     const target = event.target as HTMLInputElement;
     const file = (target.files as FileList)[0];
     this.currentFile = file;
     this.fileInput!!.nativeElement.value = '';
+    this.store.dispatch(setMessageFromUiDataAction({ message:{ message:'Archivo Cargado', type:'success' } }))
   }
 
   removeFile = () => this.currentFile = null;
 
   closeDialog () {
     this.closeDialogEmitter.emit();
+    this.removeFile();
   }
 
-  sendFile () {
-    const result = this.sendProduccionGeneralFileMutation.mutate({ file: this.currentFile!! });
-  }
+  sendFile = () => this.sendProduccionGeneralFileMutation.mutate({ file: this.currentFile!! });
 
 }
