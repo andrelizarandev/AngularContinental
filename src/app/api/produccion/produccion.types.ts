@@ -1,6 +1,7 @@
 export type GetProduccionGeneralData = {
   adistancia:string
   asesor:string
+  asignatura:string;
   autor:string
   carpeta_entregable:string
   codigo:string; 
@@ -56,4 +57,15 @@ export type PostProduccionGeneralFileData = {
 export type PostSilaboFileData = {
   file:File;
   id_produccion_general:number;
+}
+
+export type GetDataSilabosData = {
+  id:string;
+  id_produccion_general:string;
+  ruta_archivo:string;
+  created_at:string;
+}
+
+export type GetSilabosFromProduccionGeneralResponse = {
+  archivos:GetDataSilabosData[];
 }

@@ -45,6 +45,7 @@ export class UploadProduccionGeneralFileDialogComponent {
     onSuccess: () =>  {
       client.invalidateQueries({ queryKey:['get-produccion-general' ]});
       this.closeDialog();
+      this.store.dispatch(setMessageFromUiDataAction({ message:{ message:'Archivo Enviado', type:'success' } }));
     }
   }));
 
@@ -54,15 +55,14 @@ export class UploadProduccionGeneralFileDialogComponent {
     const file = (target.files as FileList)[0];
     this.currentFile = file;
     this.fileInput!!.nativeElement.value = '';
-    this.store.dispatch(setMessageFromUiDataAction({ message:{ message:'Archivo Cargado', type:'success' } }))
   }
-
-  removeFile = () => this.currentFile = null;
 
   closeDialog () {
     this.closeDialogEmitter.emit();
     this.removeFile();
   }
+
+  removeFile = () => this.currentFile = null;
 
   sendFile = () => this.sendProduccionGeneralFileMutation.mutate({ file: this.currentFile!! });
 

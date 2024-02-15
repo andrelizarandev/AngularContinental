@@ -2,7 +2,7 @@
 
   <div class="grid">
 
-    <div class="md:col-6">
+    <div class="md:col-8">
 
       <app-card-with-skeleton>
 
@@ -142,16 +142,60 @@
 
                 <div class="col-12">
 
-                  <div class="h-flex-justify-between-align-center">
+                  <div class="v-flex">
 
-                    <label>Sílabos</label>
+                    <div class="h-flex-justify-between-align-center">
 
-                    <p-button 
-                      label="Cargar Sílabo" 
-                      size="small"
-                      icon="pi pi-plus"
-                      (onClick)="toggleIsUploadSilaboDialogOpen()"
-                    />
+                      <label>Sílabos</label>
+  
+                      <p-button 
+                        label="Cargar Sílabo" 
+                        size="small"
+                        icon="pi pi-plus"
+                        (onClick)="toggleIsUploadSilaboDialogOpen()"
+                        [disabled]="silabosInThisPeriodoGeneral.length >= 3"
+                      />
+  
+                    </div>
+
+                    @if (silabosInThisPeriodoGeneral.length >= 3) {
+  
+                      <p-message 
+                        severity="warn"
+                        text="Has cargado el máximo de sílabos permitidos"
+                        [style]="{'width':'100%'}"
+                      />
+  
+                    } @else if (silabosInThisPeriodoGeneral.length === 0) {
+
+                      <p-message 
+                        severity="info"
+                        text="No has cargado ningún sílabo"
+                        [style]="{'width':'100%'}"
+                      />
+
+                    }
+  
+                    @for (silabo of silabosInThisPeriodoGeneral; track silabo.id) {
+
+                      <div class="h-flex-justify-between-align-center">
+  
+                        <div class="v-flex-no-gap">
+                          <span>{{ silabo.ruta_archivo.slice(0,20) }}</span>
+                          <small>Subido: {{ formatDate(silabo.created_at) }}</small>
+                        </div>
+  
+                        <a [href]="silabo.ruta_archivo" target="_blank">
+                          <p-button 
+                            label="Ver" 
+                            size="small"
+                            icon="pi pi-eye"
+                          />
+                        </a>
+  
+                      </div>
+
+                    }
 
                   </div>
 

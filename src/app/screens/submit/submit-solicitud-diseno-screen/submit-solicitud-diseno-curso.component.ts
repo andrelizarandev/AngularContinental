@@ -1,9 +1,9 @@
 // Modules
 import { CardModule } from 'primeng/card';
+import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { DropdownModule } from 'primeng/dropdown';
-import { Component, inject } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
@@ -14,7 +14,6 @@ import { CardWithSkeletonComponent } from '../../../components/card-with-skeleto
 import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
 
 // Service
-import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-curso/diseno-curso.service';
 import { PostSolicitudDisenoCursoData } from '../../../api/solicitudes-diseno-curso/diseno-curso.types';
 
 @Component({

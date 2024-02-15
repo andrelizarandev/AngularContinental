@@ -1,4 +1,5 @@
 // Modules
+import { Store } from '@ngrx/store';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
@@ -6,6 +7,9 @@ import { ActivatedRoute } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { injectMutation } from '@tanstack/angular-query-experimental';
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
+
+// Actions
+import { setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
 
 // Services
 import { ProduccionService } from '../../../api/produccion/produccion.service';
@@ -31,18 +35,23 @@ export class UploadSilaboDialogComponent {
 
   produccionService = inject(ProduccionService);
 
-  submitSilaboFileMutation = injectMutation(() => ({
-    mutationFn: (data:PostSilaboFileData) => this.produccionService.submitSilaboFile(data),
-    onSuccess: () => {
-      this.closeDialog();
-    }
-  }));
-
-  constructor (private activeRoute:ActivatedRoute) {}
-
   // Props
   @Input() isDialogOpen = false;
   @Output() closeDialogEmitter = new EventEmitter();
+
+  constructor (
+    private activeRoute:ActivatedRoute,
+    private store:Store
+  ) {}
+
+  submitSilaboFileMutation = injectMutation((client) => ({
+    mutationFn: (data:PostSilaboFileData) => this.produccionService.submitSilaboFile(data),
+    onSuccess: () => {
+      this.closeDialog();
+      this.store.dispatch(setMessageFromUiDataAction({ message:{ message:'Archivo Enviado', type:'success' } }))
+      client.invalidateQueries({ queryKey:['get-silabos-in-this-periodo-general'] });
+    }
+  }));
 
   // Properties
   currentFile: File | null = null;

@@ -10,6 +10,7 @@ import { apiUrl } from '..';
 import { 
   GetProduccionGeneralData, 
   GetProduccionGeneralDataById, 
+  GetSilabosFromProduccionGeneralResponse, 
   PostProduccionGeneralFileData, 
   PostSilaboFileData
 } from './produccion.types';
@@ -27,6 +28,10 @@ export class ProduccionService {
 
   getProduccionGeneralById (id:string) {
     return lastValueFrom(this.http.get<GetProduccionGeneralDataById>(`${apiUrl}/produccion-general/${id}`));
+  }
+
+  getSilabosFromProduccionGeneral (id:string) {
+    return lastValueFrom(this.http.get<GetSilabosFromProduccionGeneralResponse>(`${apiUrl}/detalle-silabo/${id}`));
   }
 
   submitProduccionGeneralFile (data:PostProduccionGeneralFileData) {
