@@ -7,7 +7,7 @@ import { Injectable, inject } from '@angular/core';
 import { apiUrl } from '..';
 
 // Types
-import { GetValidacionResponse } from './validacion-types';
+import { GetValidacionResponse } from './validacion.types';
 
 @Injectable({
   providedIn: 'root'

@@ -54,6 +54,8 @@ export class ProduccionComponent {
 
   redirectToSeguimiento = (id:string) => this.router.navigate([`/submit-seguimiento/${id}`]);
 
+  redirectToValidacion = (id:string) => this.router.navigate([`/submit-validacion/${id}`]);
+
   // Open Dialog
   toggleIsDialogOpen = () => this.isDialogOpen = !this.isDialogOpen;
   

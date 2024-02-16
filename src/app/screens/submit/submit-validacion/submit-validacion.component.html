@@ -1,0 +1,107 @@
+<app-navigation-container>
+
+  <app-card-with-skeleton>
+
+    <h3 class="c-title">Validación</h3>
+
+    <p-table [value]="validacionList || []">
+  
+      <ng-template pTemplate="header">
+  
+        <tr>  
+
+          <th>Código</th>
+          
+          <th>Asignatura</th>
+          
+          <th>Modalidad</th>
+          
+          <th>Tipo de diseño</th>
+          
+          <th>Formato presencial</th>
+          
+          <th>Formato semipresencial</th>
+          
+          <th>Formato distancia</th>
+          
+          <th>Número de formato</th>
+          
+          <th>Docente diseñador</th>
+          
+          <th>Email docente diseñador</th>
+          
+          <th>Teléfono docente diseñador</th>
+          
+          <th>Diseñador instruccional</th>
+          
+          <th>Correo diseñador instruccional</th>
+          
+          <th>Teléfono diseñador instruccional</th>
+          
+          <th>Responsable seguimiento</th>
+          
+          <th>Fecha inicio</th>
+          
+          <th>Fecha finalización</th>
+          
+          <th>Observaciones</th>
+
+        </tr>
+  
+      </ng-template>
+  
+      <ng-template pTemplate="body" let-validacion>
+  
+        <tr>
+
+          <td>{{validacion.codigo}}</td>
+          
+          <td>{{validacion.asignatura}}</td>
+          
+          <td>{{validacion.modalidad}}</td>
+          
+          <td>{{validacion.tipo_de_diseno}}</td>
+          
+          <td>{{validacion.presencial}}</td>
+          
+          <td>{{validacion.semipresencial}}</td>
+          
+          <td>{{validacion.adistancia}}</td>
+          
+          <td>{{validacion.numero_formatos}}</td>
+          
+          <td>{{validacion.docente_disenador}}</td>
+          
+          <td>{{validacion.email_docente}}</td>
+          
+          <td>{{validacion.telefono_docente_disenador}}</td>
+          
+          <td>{{validacion.disenador_instruccional}}</td>
+          
+          <td>{{validacion.correo_disenador_instruccional}}</td>
+          
+          <td>{{validacion.telefono_instruccional}}</td>
+          
+          <td>{{validacion.responsable}}</td>
+          
+          <td>{{validacion.fecha_inicio}}</td>
+          
+          <td>{{validacion.fecha_finalizacion}}</td>
+          
+          <td>{{validacion.observaciones}}</td>
+          
+        </tr>
+        
+      </ng-template>
+  
+    </p-table>
+
+    <p-button 
+      label="Confirmar" 
+      size="small"
+      icon="pi pi-check"
+    />
+
+  </app-card-with-skeleton>
+
+</app-navigation-container>
