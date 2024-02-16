@@ -50,9 +50,9 @@ export class ProduccionComponent {
   facultadList:GetFacultadData[] = [];
   
   // Redirect
-  redirectToProductionForm (id:string) {
-    this.router.navigate([`/submit-produccion-general/${id}`]);
-  }
+  redirectToProductionForm = (id:string) => this.router.navigate([`/submit-produccion-general/${id}`]);
+
+  redirectToSeguimiento = (id:string) => this.router.navigate([`/submit-seguimiento/${id}`]);
 
   // Open Dialog
   toggleIsDialogOpen = () => this.isDialogOpen = !this.isDialogOpen;

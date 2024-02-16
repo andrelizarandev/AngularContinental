@@ -1,0 +1,79 @@
+<app-navigation-container>
+
+  <app-card-with-skeleton>
+
+    <h3 class="c-title fw-400">Seguimiento</h3>
+
+    <p-table [value]="seguimientoData || []">
+  
+      <ng-template pTemplate="header">
+  
+        <tr>
+
+          <th>Codigo</th>
+
+          <th>Asignatura</th>
+
+          <th>Docente Diseñador</th>
+
+          <th>Email Docente Diseñador</th>
+
+          <th>Télefono Docente Diseñador</th>
+
+          <th>Diseñador Instruccional</th>
+
+          <th>Responsable Seguimiento</th>
+
+          <th>Fecha Inicio</th>
+
+          <th>Fecha Finalizacion</th>
+
+          <th>Fecha Presentacion Di</th>
+
+          <th>Observaciones</th>
+
+          <th>Porcentaje Real</th>
+          
+        </tr>
+  
+      </ng-template>
+  
+      <ng-template pTemplate="body" let-produccion>
+  
+        <tr>
+
+          <td>{{ produccion.plan }}</td>
+
+          <td>{{ produccion.codigo }}</td>
+
+          <td>{{ produccion.asignatura }}</td>
+
+          <td>{{ produccion.docente_disenador }}</td>
+
+          <td>{{ produccion.email_docente_disenador }}</td>
+
+          <td>{{ produccion.telefono_docente_disenador }}</td>
+
+          <td>{{ produccion.disenador_instruccional }}</td>
+
+          <td>{{ produccion.responsable_seguimiento }}</td>
+
+          <td>{{ produccion.fecha_inicio }}</td>
+
+          <td>{{ produccion.fecha_finalizacion }}</td>
+
+          <td>{{ produccion.fecha_presentacion_di }}</td>
+
+          <td>{{ produccion.observaciones }}</td>
+
+          <td>{{  produccion.porcentaje_real }}</td>
+          
+        </tr>
+        
+      </ng-template>
+  
+    </p-table>
+    
+  </app-card-with-skeleton>
+
+</app-navigation-container>

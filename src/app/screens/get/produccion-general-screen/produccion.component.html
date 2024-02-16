@@ -4,7 +4,7 @@
 
     <div class="h-flex-justify-between-align-center">
 
-      <h3 class="title-color fw-400">Producción General</h3>
+      <h3 class="c-title fw-400">Producción General</h3>
 
       <p-button 
         label="Cargar Archivo" 
@@ -22,9 +22,9 @@
         <tr>
           <th>Plan</th>
           <th>Asignatura</th>
+          <th>Asesor</th>
           <th>Decano</th>
           <th>Modalidad</th>
-          <th>Asignatura</th>
           <th>Acciones</th>
         </tr>
   
@@ -38,19 +38,39 @@
 
           <td>{{ produccion.asignatura }}</td>
 
+          <td>{{ produccion.asesor }}</td>
+
           <td>{{ produccion.decano }}</td>
 
           <td>{{ produccion.modalidad }}</td>
 
-          <td>{{ produccion.asignatura }}</td>
-
           <td>
-            <p-button 
-              label="Ver" 
-              size="small" 
-              icon="pi pi-eye"
-              (onClick)="redirectToProductionForm(produccion.id)"
-            />
+            <div class="h-flex">
+
+              <p-button 
+                label="Ver" 
+                size="small" 
+                icon="pi pi-eye"
+                (onClick)="redirectToProductionForm(produccion.id)"
+              />
+
+              <p-button 
+                label="Seguimiento" 
+                size="small" 
+                (onClick)="redirectToSeguimiento(produccion.id)"
+                icon="pi pi-folder"
+                severity="secondary"
+              />
+
+              <p-button 
+                label="Validación" 
+                size="small" 
+                (onClick)="redirectToSeguimiento(produccion.id)"
+                icon="pi pi-check"
+                severity="warning"
+              />
+
+            </div>
           </td>
         </tr>
         

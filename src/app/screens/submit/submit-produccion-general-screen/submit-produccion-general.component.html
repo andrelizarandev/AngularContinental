@@ -8,7 +8,7 @@
 
         <div class="v-flex">
 
-          <h3 class="title-color fw-400">Registro de Producción General</h3>
+          <h3 class="c-title fw-400">Registro de Producción General</h3>
       
           <form [formGroup]="registerProduccionGeneralForm">
       
@@ -182,7 +182,7 @@
   
                         <div class="v-flex-no-gap">
                           <span>{{ silabo.ruta_archivo.slice(0,20) }}</span>
-                          <small>Subido: {{ formatDate(silabo.created_at) }}</small>
+                          <small class="c-gray">Subido: {{ formatDate(silabo.created_at) }}</small>
                         </div>
   
                         <a [href]="silabo.ruta_archivo" target="_blank">
@@ -385,7 +385,7 @@
               
               <p-divider/>
       
-              <h4 class="title-color">Método por Unidad</h4>
+              <h4 class="c-title">Método por Unidad</h4>
       
               <div class="grid">
       
