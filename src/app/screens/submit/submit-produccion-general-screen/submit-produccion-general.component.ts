@@ -15,12 +15,16 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
 
 // Components
+import { CustomBreadcrumbComponent } from '../../../components/custom-breadcrumb/custom-breadcrumb.component';
 import { CardWithSkeletonComponent } from '../../../components/card-with-skeleton/card-with-skeleton.component';
 import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
 import { RegisterPeriodoGeneralDialogComponent } from '../../../dialogs/submit/register-periodo-general-dialog/register-periodo-general-dialog.component';
 
 // Dialogs
 import { UploadSilaboDialogComponent } from '../../../dialogs/submit/upload-silabo-dialog/upload-silabo.component';
+
+// Helpers
+import HandleDates from '../../../helpers/handle-dates';
 
 // Service
 import { ProduccionService } from '../../../api/produccion/produccion.service';
@@ -29,7 +33,8 @@ import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-cur
 // Types
 import { GetDataSilabosData } from '../../../api/produccion/produccion.types';
 import { OptionData } from '../submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
-import HandleDates from '../../../helpers/handle-dates';
+import { MenuItem } from 'primeng/api';
+import BreadcrumbItemsClass from '../../../utils/breadcrumb-items';
 
 @Component({
   selector: 'app-submit-produccion-general',
@@ -45,13 +50,16 @@ import HandleDates from '../../../helpers/handle-dates';
     CardWithSkeletonComponent,
     UploadSilaboDialogComponent,
     MessageModule,
-    CommonModule
+    CommonModule,
+    CustomBreadcrumbComponent
   ],
   templateUrl: './submit-produccion-general.component.html',
   styleUrl: './submit-produccion-general.component.scss'
 })
 
 export class SubmitProduccionGeneralComponent {
+
+  currentId = this.activeRoute.snapshot.params['id'];
 
   // Vars
   isUploadSilaboDialogOpen = false;
@@ -70,6 +78,12 @@ export class SubmitProduccionGeneralComponent {
   eapListOptions:OptionData[] = [];
   planListOptions:OptionData[] = [];
   tipoAsignaturaListOptions:OptionData[] = [];
+
+  breadcrumbItems:MenuItem[] = [
+    BreadcrumbItemsClass.homeItem,
+    BreadcrumbItemsClass.produccionGeneral,
+    { ...BreadcrumbItemsClass.registroProduccionGeneralItem(this.currentId) }
+  ]
 
   // Static options
   simuladorListOptions:OptionData[] = [

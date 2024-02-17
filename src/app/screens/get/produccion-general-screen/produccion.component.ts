@@ -1,11 +1,16 @@
 // Modules
+import { MenuItem } from 'primeng/api';
 import { Router } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Component, inject } from '@angular/core';
 import { injectQuery } from '@tanstack/angular-query-experimental';
 
+// Classes
+import BreadcrumbItemsClass from '../../../utils/breadcrumb-items';
+
 // Components
+import { CustomBreadcrumbComponent } from '../../../components/custom-breadcrumb/custom-breadcrumb.component';
 import { CardWithSkeletonComponent } from '../../../components/card-with-skeleton/card-with-skeleton.component';
 import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
 
@@ -28,7 +33,8 @@ import { GetEapData, GetFacultadData, GetSolicitudDisenoCursoData } from '../../
     TableModule,
     RegisterPeriodoGeneralDialogComponent,
     CardWithSkeletonComponent,
-    UploadProduccionGeneralFileDialogComponent
+    UploadProduccionGeneralFileDialogComponent,
+    CustomBreadcrumbComponent
   ],
   templateUrl: './produccion.component.html',
   styleUrl: './produccion.component.scss'
@@ -36,7 +42,6 @@ import { GetEapData, GetFacultadData, GetSolicitudDisenoCursoData } from '../../
 export class ProduccionComponent {
 
   router = inject(Router);
-
   produccionGeneralService = inject(ProduccionService)
 
   getProduccionGeneralQuery = injectQuery(() => ({
@@ -45,9 +50,17 @@ export class ProduccionComponent {
   }));
 
   isDialogOpen = false;
+
   productionList:GetSolicitudDisenoCursoData[] = [];
+
   eapList:GetEapData[] = [];
+
   facultadList:GetFacultadData[] = [];
+
+  breadcrumbItems:MenuItem[] = [
+    BreadcrumbItemsClass.homeItem,
+    BreadcrumbItemsClass.produccionGeneral
+  ];
   
   // Redirect
   redirectToProductionForm = (id:string) => this.router.navigate([`/submit-produccion-general/${id}`]);

@@ -1,5 +1,7 @@
 <app-navigation-container>
 
+  <app-custom-breadcrumb [items]="breadcrumbItems"/>
+
   <app-card-with-skeleton [isLoading]="getProduccionGeneralQuery.isLoading()">
 
     <div class="h-flex-justify-between-align-center">

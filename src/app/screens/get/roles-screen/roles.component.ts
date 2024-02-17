@@ -4,6 +4,7 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 
 // Components
+import { CustomBreadcrumbComponent } from '../../../components/custom-breadcrumb/custom-breadcrumb.component';
 import { CardWithSkeletonComponent } from '../../../components/card-with-skeleton/card-with-skeleton.component';
 import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
 
@@ -16,6 +17,8 @@ import { RolesService } from '../../../api/roles/roles.service';
 // Types
 import { GetRoleData } from '../../../api/roles/roles.types';
 import { ConfirmDialogComponent, ConfirmDialogPayload } from '../../../dialogs/shared/confirm-dialog/confirm-dialog.component';
+import { MenuItem } from 'primeng/api';
+import BreadcrumbItemsClass from '../../../utils/breadcrumb-items';
 
 @Component({
   selector: 'app-roles',
@@ -26,7 +29,8 @@ import { ConfirmDialogComponent, ConfirmDialogPayload } from '../../../dialogs/s
     ButtonModule, 
     RegisterRolDialogComponent, 
     ConfirmDialogComponent,
-    CardWithSkeletonComponent
+    CardWithSkeletonComponent,
+    CustomBreadcrumbComponent
   ],
   templateUrl: './roles.component.html',
   styleUrl: './roles.component.scss'
@@ -44,8 +48,14 @@ export class RolesComponent {
     { id: '3', name: 'Guest', description: 'Guest' },
   ];
 
+  breadcrumbItems:MenuItem[] = [
+    BreadcrumbItemsClass.homeItem,
+    BreadcrumbItemsClass.rolesItem
+  ]
+
   constructor (private rolesService:RolesService) {}
 
+  // Toggle
   toggleOpenRegister() {
     this.isRegisterOpen = !this.isRegisterOpen;
   }
@@ -60,6 +70,7 @@ export class RolesComponent {
     };
   }
 
+  // Submit
   submitRol () {
     this.rolesService.postRol({ description:'', name:'' }).subscribe({
       next:(response) => this.onSuccessSubmitRol(response.data),

@@ -1,5 +1,7 @@
 <app-navigation-container>
 
+  <app-custom-breadcrumb [items]="breadcrumbItems"/>
+
   <app-card-with-skeleton>
 
     <h3 class="c-title">Validación</h3>
@@ -60,7 +62,7 @@
           
           <td>{{validacion.modalidad}}</td>
           
-          <td>{{validacion.tipo_de_diseno}}</td>
+          <td>{{validacion.tipo_diseno}}</td>
           
           <td>{{validacion.presencial}}</td>
           
@@ -74,13 +76,13 @@
           
           <td>{{validacion.email_docente}}</td>
           
-          <td>{{validacion.telefono_docente_disenador}}</td>
+          <td>{{validacion.telefono_docente}}</td>
           
           <td>{{validacion.disenador_instruccional}}</td>
           
-          <td>{{validacion.correo_disenador_instruccional}}</td>
+          <td>{{validacion.email_docente}}</td>
           
-          <td>{{validacion.telefono_instruccional}}</td>
+          <td>{{validacion.telefono_docente}}</td>
           
           <td>{{validacion.responsable}}</td>
           

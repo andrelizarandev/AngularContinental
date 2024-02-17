@@ -4,6 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { Component, inject } from '@angular/core';
 
 // Components
+import { CustomBreadcrumbComponent } from '../../../components/custom-breadcrumb/custom-breadcrumb.component';
 import { CardWithSkeletonComponent } from '../../../components/card-with-skeleton/card-with-skeleton.component';
 import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
 
@@ -14,8 +15,9 @@ import { RegisterProgramaComponentDialog } from '../../../dialogs/submit/registe
 import { ProgramasService } from '../../../api/programas/programas.service';
 
 // Types
-import { GetProgramaData } from '../../../api/programas/programas.types';
 import { ConfirmDialogComponent, ConfirmDialogPayload } from '../../../dialogs/shared/confirm-dialog/confirm-dialog.component';
+import { MenuItem } from 'primeng/api';
+import BreadcrumbItemsClass from '../../../utils/breadcrumb-items';
 
 @Component({
   selector: 'app-programas-screen',
@@ -26,7 +28,8 @@ import { ConfirmDialogComponent, ConfirmDialogPayload } from '../../../dialogs/s
     NavigationContainerComponent, 
     RegisterProgramaComponentDialog, 
     ConfirmDialogComponent,
-    CardWithSkeletonComponent
+    CardWithSkeletonComponent,
+    CustomBreadcrumbComponent
   ],
   templateUrl: './programas-screen.component.html',
   styleUrl: './programas-screen.component.scss'
@@ -37,6 +40,11 @@ export class ProgramasScreenComponent {
   isRegisterOpen = false;
   confirmDeletePayload:ConfirmDialogPayload | null = null;
   getUserListService = inject(ProgramasService).getProgramasList().result;
+
+  breadcrumbItems:MenuItem[] = [
+    BreadcrumbItemsClass.homeItem,
+    BreadcrumbItemsClass.programasItem
+  ];
 
   // Toggle
   toggleOpenRegister () {

@@ -92,3 +92,14 @@ body .p-component {
 .fw-400 {
   font-weight: 400;
 }
+
+.p-breadcrumb {
+  border:0;
+  padding:0;
+  
+  .p-icon {
+    width: .8rem;
+    height: .8rem;
+  }
+
+}

@@ -1,10 +1,15 @@
 // Modules
+import { MenuItem } from 'primeng/api';
 import { Router } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Component, inject } from '@angular/core';
 
+// Classes
+import BreadcrumbItemsClass from '../../../utils/breadcrumb-items';
+
 // Components
+import { CustomBreadcrumbComponent } from '../../../components/custom-breadcrumb/custom-breadcrumb.component';
 import { CardWithSkeletonComponent } from '../../../components/card-with-skeleton/card-with-skeleton.component';
 import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
 
@@ -22,7 +27,8 @@ import { UsersService } from '../../../api/users/users.service';
     TableModule, 
     ButtonModule, 
     RegisterProgramaComponentDialog,
-    CardWithSkeletonComponent
+    CardWithSkeletonComponent,
+    CustomBreadcrumbComponent
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
@@ -31,6 +37,11 @@ import { UsersService } from '../../../api/users/users.service';
 export class UsersComponent {
 
   getUserListService = inject(UsersService).getUserList().result;
+
+  breadcrumbItems:MenuItem[] = [
+    BreadcrumbItemsClass.homeItem,
+    BreadcrumbItemsClass.usersItem
+  ]
 
   constructor (private router:Router) {}
 

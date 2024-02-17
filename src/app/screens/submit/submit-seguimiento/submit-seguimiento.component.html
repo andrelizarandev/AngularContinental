@@ -1,5 +1,7 @@
 <app-navigation-container>
 
+  <app-custom-breadcrumb [items]="breadcrumbItems"/>
+
   <app-card-with-skeleton>
 
     <h3 class="c-title fw-400">Seguimiento</h3>
@@ -48,7 +50,7 @@
 
           <td>{{ produccion.docente_disenador }}</td>
 
-          <td>{{ produccion.email_docente_disenador }}</td>
+          <td>{{ produccion.email_docente }}</td>
 
           <td>{{ produccion.telefono_docente }}</td>
 
