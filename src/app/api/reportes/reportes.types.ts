@@ -1,6 +1,8 @@
-export type GetReportesData = {
+import { GetProduccionGeneralData } from '../produccion/produccion.types';
 
-}
+export type GetReportesData = {
+  id_facultad:number;
+} & GetProduccionGeneralData;
 
 export type GetReportesResponse = {
   datos:GetReportesData[];

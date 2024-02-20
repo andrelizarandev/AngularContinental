@@ -8,28 +8,41 @@
 
     <form class="h-flex" [formGroup]="filterFormGroup!">
 
-      <div class="v-flex-low-gap">
+      <div class="v-flex-low-gap v-flex w-full">
         <label>Código</label>
-        <input type="text" pInputText/>
+        <input
+          pInputText
+          formControlName="codigo" 
+          type="text" 
+        />
       </div>
 
-      <div class="v-flex-low-gap">
+      <div class="v-flex-low-gap v-flex w-full">
         <label>Asignatura</label>
-        <input type="text" pInputText/>
+        <input 
+          pInputText
+          formControlName="asignatura" 
+          type="text" 
+        />
       </div>
 
-      <div class="v-flex-low-gap">
+      <div class="v-flex-low-gap v-flex w-full">
         <label>Docente Diseñador</label>
-        <input type="text" pInputText/>
+        <input 
+          pInputText
+          formControlName="docente_disenador" 
+          type="text" 
+        />
       </div>
 
-      <div class="v-flex-low-gap">
+      <div class="v-flex-low-gap v-flex w-full">
         <label>Facultades</label>
         <p-dropdown 
           formControlName="selectedFacultad" 
           [options]="facultadesOptions" 
           optionLabel="label"
           placeholder="Selecciona una Facultad"
+          [style]="{'width': '100%'}"
         />
       </div>
 
@@ -41,7 +54,17 @@
 
     <h3 class="c-title">Reportes</h3>
 
-    <p-table [value]="getReportesQuery.data() || []">
+    @if (getFilteredReportRows().length === 0) {
+
+      <p-message 
+        severity="warn" 
+        text="No cuentas con reportes de esta facultad" 
+        [style]="{'width': '100%'}"
+      />
+
+    }
+
+    <p-table [value]="getFilteredReportRows()">
   
       <ng-template pTemplate="header">
   

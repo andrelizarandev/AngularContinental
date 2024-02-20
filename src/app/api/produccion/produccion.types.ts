@@ -10,7 +10,6 @@ export type GetProduccionGeneralData = {
   correo_asesor:string; 
   correo_decano:string; 
   correo_finalizacion:string; 
-  created_at:string; 
   decano:string; 
   designacion:string;
   dias_extra:string;
@@ -42,7 +41,6 @@ export type GetProduccionGeneralData = {
   unidad2:string;
   unidad3:string;
   unidad4:string;
-  updated_at:string;
   video_presentacion:string;
 }
 
@@ -53,6 +51,8 @@ export type GetProduccionGeneralDataById = {
 export type PostProduccionGeneralFileData = {
   file:File;
 }
+
+export type PutProduccionGeneralData = Omit<GetProduccionGeneralData, 'id'>;
 
 export type PostSilaboFileData = {
   file:File;

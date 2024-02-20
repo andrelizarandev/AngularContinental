@@ -12,7 +12,8 @@ import {
   GetProduccionGeneralDataById, 
   GetSilabosFromProduccionGeneralResponse, 
   PostProduccionGeneralFileData, 
-  PostSilaboFileData
+  PostSilaboFileData,
+  PutProduccionGeneralData
 } from './produccion.types';
 
 @Injectable({
@@ -32,6 +33,10 @@ export class ProduccionService {
 
   getSilabosFromProduccionGeneral (id:string) {
     return lastValueFrom(this.http.get<GetSilabosFromProduccionGeneralResponse>(`${apiUrl}/detalle-silabo/${id}`));
+  }
+
+  putProduccionGeneral (id:string, data:PutProduccionGeneralData) {
+    return lastValueFrom(this.http.put(`${apiUrl}/produccion-general/${id}`, data));
   }
 
   submitProduccionGeneralFile (data:PostProduccionGeneralFileData) {

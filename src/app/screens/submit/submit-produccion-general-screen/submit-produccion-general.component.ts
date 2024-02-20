@@ -9,7 +9,7 @@ import { Component, inject } from '@angular/core';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { ActivatedRoute, Router } from '@angular/router';
-import { injectQuery } from '@tanstack/angular-query-experimental';
+import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 // Actions
@@ -35,7 +35,7 @@ import { ProduccionService } from '../../../api/produccion/produccion.service';
 import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-curso/diseno-curso.service';
 
 // Types
-import { GetDataSilabosData } from '../../../api/produccion/produccion.types';
+import { GetDataSilabosData, PutProduccionGeneralData } from '../../../api/produccion/produccion.types';
 import { OptionData } from '../submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
 
 @Component({
@@ -348,6 +348,22 @@ export class SubmitProduccionGeneralComponent {
       }
     }
   }));
+
+  // Submit
+  putProduccionGeneral = injectMutation(() => ({
+    mutationFn: () => {
+      return this.produccionGeneralService.putProduccionGeneral(this.currentId, this.registerProduccionGeneralForm.value as PutProduccionGeneralData)
+    },
+    onSuccess: () => {
+      this.store.dispatch(setMessageFromUiDataAction({ message:{ message:'Producción Actualizada', type:'success' } }));
+    }
+  }));
+
+  // Start
+  startPutProduccionGeneral () {
+    this.store.dispatch(setMessageFromUiDataAction({ message:{ message:'Producción Actualizada', type:'success' } }));
+    // this.putProduccionGeneral.mutate();
+  }
 
   // Toggle
   toggleIsRegisterPeriodoGeneralDialogOpen () {

@@ -2,6 +2,7 @@
 import { MenuItem } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { ChartModule } from 'primeng/chart';
+import { MessageModule } from 'primeng/message';
 import { ActivatedRoute } from '@angular/router';
 import { DropdownModule } from 'primeng/dropdown';
 import { Component, inject } from '@angular/core';
@@ -35,7 +36,8 @@ import { OptionDataIdNumber } from '../submit-solicitud-diseno-screen/submit-sol
     ChartModule,
     CustomBreadcrumbComponent,
     DropdownModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MessageModule
   ],
   templateUrl: './submit-reportes.component.html',
   styleUrl: './submit-reportes.component.scss'
@@ -242,8 +244,47 @@ export class SubmitReportesComponent {
     };
 
     this.filterFormGroup = new FormGroup({
-      selectedFacultad: new FormControl<OptionDataIdNumber | null>(null)
+      codigo: new FormControl<string>(''),
+      asignatura: new FormControl<string>(''),
+      docente_disenador: new FormControl<string>(''),
+      selectedFacultad: new FormControl<OptionDataIdNumber | null>(null),
     });
+
+  }
+
+  getFilteredReportRows () {  
+    
+    const codigoFilter = this.filterFormGroup?.value.codigo;
+
+    const asignaturaFilter = this.filterFormGroup?.value.asignatura;
+
+    const docenteDisenadorFilter = this.filterFormGroup?.value.docente_disenador;
+
+    const facultadFilter = this.filterFormGroup?.value.selectedFacultad;
+
+    const result1 = this.getReportesQuery.data();
+
+    if (!result1) return [];
+
+    else if (result1.length === 0) return [];
+
+    const firstFilter = (codigoFilter === '') 
+      ? result1 
+      : result1.filter(({ codigo }) => codigo.toLowerCase().includes(codigoFilter.toLowerCase()));
+
+    const secondFilter = (asignaturaFilter === '') 
+      ? firstFilter 
+      : firstFilter.filter(({ asignatura }) => asignatura.toLowerCase().includes(asignaturaFilter.toLowerCase()));
+
+    const thirdFilter = (docenteDisenadorFilter === '') 
+      ? secondFilter 
+      : secondFilter.filter(({ docente_disenador }) => docente_disenador.toLowerCase().includes(docenteDisenadorFilter.toLowerCase()));
+
+    const fourthFilter = (facultadFilter === null)
+      ? thirdFilter
+      : thirdFilter.filter(({ id_facultad }) => id_facultad === facultadFilter?.id);
+
+    return fourthFilter;
 
   }
 

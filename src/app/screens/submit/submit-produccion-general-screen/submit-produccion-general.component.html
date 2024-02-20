@@ -12,7 +12,11 @@
 
           <h3 class="c-title fw-400">Registro de Producción General</h3>
       
-          <form [formGroup]="registerProduccionGeneralForm">
+          <form 
+            [formGroup]="registerProduccionGeneralForm" 
+            (ngSubmit)="startPutProduccionGeneral()"
+            class="v-flex"
+          >
       
             <div class="v-flex">
       
@@ -489,27 +493,27 @@
               </div>
       
             </div>
+
+            <div class="h-flex">
+
+              <p-button
+                label="Cancelar"
+                size="small"
+                (onClick)="redirectToProduccionGeneral()"
+                severity="secondary"
+              />
+            
+              <p-button 
+                label="Guardar" 
+                size="small" 
+                type="submit"
+              />
+      
+            </div>
       
           </form>
       
         </div>
-
-      <div class="h-flex">
-
-        <p-button
-          label="Cancelar"
-          size="small"
-          (onClick)="redirectToProduccionGeneral()"
-          severity="secondary"
-        />
-      
-        <p-button 
-          label="Guardar" 
-          size="small" 
-          (onClick)="toggleIsRegisterPeriodoGeneralDialogOpen()"
-        />
-
-      </div>
 
       </app-card-with-skeleton>
 
