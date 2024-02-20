@@ -42,6 +42,7 @@ export class NavigationContainerComponent  {
   }
 
   routeList:RouteElement[] = [
+    { name: "Inicio", icon: "pi pi-home", route: "/" },
     { name: "Usuarios", icon: "pi pi-users", route: "/users" },
     { name: "Programas", icon: "pi pi-book", route: "/programas" },
     { name: "Periodos", icon: "pi pi-calendar", route: "/periodos" },

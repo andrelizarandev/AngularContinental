@@ -35,8 +35,8 @@ import { ProduccionService } from '../../../api/produccion/produccion.service';
 import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-curso/diseno-curso.service';
 
 // Types
-import { GetDataSilabosData, PutProduccionGeneralData } from '../../../api/produccion/produccion.types';
 import { OptionData } from '../submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
+import { GetDataSilabosData, PutProduccionGeneralData } from '../../../api/produccion/produccion.types';
 
 @Component({
   selector: 'app-submit-produccion-general',
@@ -170,6 +170,19 @@ export class SubmitProduccionGeneralComponent {
       observaciones:['', Validators.required],
       correo_finalizacion:['', Validators.required],
 
+      // Extra
+      adistancia:['', Validators.required],
+      autor:['', Validators.required],
+      contiverso:['', Validators.required],
+      dias_extra:['', Validators.required],
+      id:['', Validators.required],
+      modalidad:['', Validators.required],
+      presencial:['', Validators.required],
+      procedencia:['', Validators.required],
+      realidad_aumentada:['', Validators.required],
+      semipresencial:['', Validators.required],
+      solicitud_id:['', Validators.required],
+
     });
 
   }
@@ -224,7 +237,20 @@ export class SubmitProduccionGeneralComponent {
           unidad4,
           fecha_presentacion_di,
           correo_finalizacion,
-          fecha_finalizacion
+          fecha_finalizacion,
+
+          // Extra
+          adistancia,
+          autor, 
+          contiverso,
+          dias_extra,
+          id,
+          modalidad,
+          presencial,
+          procedencia,
+          realidad_aumentada,
+          semipresencial,
+          solicitud_id
 
         } = result.data!!;
 
@@ -275,6 +301,15 @@ export class SubmitProduccionGeneralComponent {
           fecha_finalizacion_presentacion:fecha_finalizacion,
           observaciones,
           correo_finalizacion,
+
+          // Extra
+          adistancia,
+          autor,
+
+
+
+
+
 
         });
 
@@ -352,6 +387,62 @@ export class SubmitProduccionGeneralComponent {
   // Submit
   putProduccionGeneral = injectMutation(() => ({
     mutationFn: () => {
+      // const payload:PutProduccionGeneralData = {
+
+      //   codigo:this.registerProduccionGeneralForm.value.codigo,
+      //   plan:this.registerProduccionGeneralForm.value.plan,
+      //   eap:this.registerProduccionGeneralForm.value.eap,
+      //   asignatura:this.registerProduccionGeneralForm.value.asignatura,
+      //   tipo_asignatura:this.registerProduccionGeneralForm.value.tipo_asignatura,
+      //   numero_formatos:this.registerProduccionGeneralForm.value.numero_formatos,
+      //   situacion_asignatura:this.registerProduccionGeneralForm.value.situacion_asignatura,
+
+      //   fecha_inicio:this.registerProduccionGeneralForm.value.fecha_inicio,
+      //   tiempo_programado:this.registerProduccionGeneralForm.value.tiempo_programado,
+      //   fecha_programada:this.registerProduccionGeneralForm.value.fecha_finalizacion,
+
+      //   asesor:this.registerProduccionGeneralForm.value.asesor,
+      //   telefono_asesor:this.registerProduccionGeneralForm.value.telefono_asesor_didactico,
+      //   correo_asesor:this.registerProduccionGeneralForm.value.correo_asesor_didactico,
+
+      //   decano:this.registerProduccionGeneralForm.value.decano_director_camara,
+      //   correo_decano:this.registerProduccionGeneralForm.value.correo_decano_director_camara,
+
+      //   docente_disenador:this.registerProduccionGeneralForm.value.docente_disenador,
+      //   email_docente:this.registerProduccionGeneralForm.value.email_docente_disenador,
+      //   observaciones:this.registerProduccionGeneralForm.value.observaciones_designacion_docente,
+      //   telefono_docente:this.registerProduccionGeneralForm.value.telefono_docente_disenador,
+      //   designacion:this.registerProduccionGeneralForm.value.designacion_docente,
+
+      //   responsable:this.registerProduccionGeneralForm.value.responsable_seguimiento,
+      //   carpeta_entregable:this.registerProduccionGeneralForm.value.carpeta_entregable,
+      //   video_presentacion:this.registerProduccionGeneralForm.value.video_presentacion,
+
+      //   colaborativo:this.registerProduccionGeneralForm.value.producto_academico,
+      //   simulador:this.registerProduccionGeneralForm.value.simulador,
+      //   unidad1:this.registerProduccionGeneralForm.value.unidad_1,
+      //   unidad2:this.registerProduccionGeneralForm.value.unidad_2,
+      //   unidad3:this.registerProduccionGeneralForm.value.unidad_3,
+      //   unidad4:this.registerProduccionGeneralForm.value.unidad_4,
+      //   fecha_presentacion_di:this.registerProduccionGeneralForm.value.fecha_presentacion_di,
+
+      //   // Extra
+      //   correo_finalizacion:this.registerProduccionGeneralForm.value.correo_finalizacion,
+      //   fecha_finalizacion:this.registerProduccionGeneralForm.value.fecha_finalizacion_presentacion,
+      //   observaciones:this.registerProduccionGeneralForm.value.observaciones,
+      //   adistancia:this.registerProduccionGeneralForm.value.adistancia,
+      //   autor:this.registerProduccionGeneralForm.value.autor,
+      //   contiverso:this.registerProduccionGeneralForm.value.contiverso,
+      //   dias_extra:this.registerProduccionGeneralForm.value.dias_extra,
+      //   id:this.registerProduccionGeneralForm.value.id,
+      //   modalidad:this.registerProduccionGeneralForm.value.modalidad,
+      //   presencial:this.registerProduccionGeneralForm.value.presencial,
+      //   procedencia:this.registerProduccionGeneralForm.value.procedencia,
+      //   realidad_aumentada:this.registerProduccionGeneralForm.value.realidad_aumentada,
+      //   semipresencial:this.registerProduccionGeneralForm.value.semipresencial,
+      //   solicitud_id:this.registerProduccionGeneralForm.value.solicitud_id
+
+      // }
       return this.produccionGeneralService.putProduccionGeneral(this.currentId, this.registerProduccionGeneralForm.value as PutProduccionGeneralData)
     },
     onSuccess: () => {
@@ -362,7 +453,6 @@ export class SubmitProduccionGeneralComponent {
   // Start
   startPutProduccionGeneral () {
     this.store.dispatch(setMessageFromUiDataAction({ message:{ message:'Producción Actualizada', type:'success' } }));
-    // this.putProduccionGeneral.mutate();
   }
 
   // Toggle
