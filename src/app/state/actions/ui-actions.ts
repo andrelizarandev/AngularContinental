@@ -7,3 +7,7 @@ import { MessageData } from '../reducers/ui.reducer';
 export const setMessageFromUiDataAction = createAction(
   '[Ui] Set Message', props<{ message:MessageData }>()
 );
+
+export const setShowSidebarAction = createAction(
+  '[Ui] Set Show Sidebar', props<{ showSidebar:boolean }>()
+);

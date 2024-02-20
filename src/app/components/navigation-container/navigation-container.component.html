@@ -4,13 +4,24 @@
 
     <div class="top-bar-padding-container">
 
-      <h3 class="c-white">Continental</h3>
+      <div class="h-flex-align-center">
+
+        <p-button
+          icon="pi pi-bars"
+          size="small"
+          (onClick)="toggleSidebar()"
+        />
+
+        <h3 class="c-white">Continental</h3>
+
+      </div>
 
       <p-button
         label="Cerrar sesión"
         size="small"
         icon="pi pi-sign-out"
-        severity="danger"/>
+        severity="danger"
+      />
 
     </div>
 
@@ -18,35 +29,39 @@
 
   <div class="main-container">
 
-    <nav class="sidebar-container">
+    @if (shouldShowSidebar) {
 
-      <div class="sidebar-padding-container">
+      <nav class="sidebar-container">
 
-        <h3 style="color: var(--surface-600)">Menú</h3>
+        <div class="sidebar-padding-container">
+  
+          <h3 style="color: var(--surface-600)">Menú</h3>
+  
+          @for (route of routeList; track $index) {
+            <p-button
+              label="{{ route.name }}"
+              size="small"
+              icon="{{ route.icon }}"
+              severity="secondary"
+              [rounded]="true"
+              (onClick)="redirectTo(route.route)"
+            ></p-button>
+          }
+  
+        </div>
+  
+      </nav>
 
-        @for (route of routeList; track $index) {
-          <p-button
-            label="{{ route.name }}"
-            size="small"
-            icon="{{ route.icon }}"
-            severity="secondary"
-            [rounded]="true"
-            (onClick)="redirectTo(route.route)"
-          ></p-button>
-        }
+    }
 
-      </div>
-
-    </nav>
-
-    <main class="main-content-container">
+    <main [ngClass]="shouldShowSidebar ? 'main-content-container-with-sidebar' : 'main-content-container-without-sidebar'">
 
       <div class="main-content-padding-container">
 
-        <ng-content />
+        <ng-content/>
 
       </div>
-      
+
     </main>
 
   </div>

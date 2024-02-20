@@ -51,7 +51,15 @@
   row-gap: 16px;
 }
 
-.main-content-container {
+.main-content-container-without-sidebar {
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: auto;
+  background-color: var(--bluegray-50);
+  padding-top:7vh;
+}
+
+.main-content-container-with-sidebar {
   width: 100%;
   min-height: 100vh;
   overflow-y: auto;

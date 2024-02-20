@@ -4,13 +4,15 @@ import { ToastModule } from 'primeng/toast';
 import { Store, select } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 
 // Selectors
-import { messageSelector } from '../../state/selectors/ui.selector';
+import { messageSelector, showSidebarSelector } from '../../state/selectors/ui.selector';
 
 // Types
 import { MessageData } from '../../state/reducers/ui.reducer';
+import { setShowSidebarAction } from '../../state/actions/ui-actions';
 
 @Component({
   selector: 'app-navigation-container',
@@ -18,6 +20,7 @@ import { MessageData } from '../../state/reducers/ui.reducer';
   imports: [
     ButtonModule,
     ToastModule,
+    CommonModule
   ],
   providers: [MessageService],
   templateUrl: './navigation-container.component.html',
@@ -26,19 +29,32 @@ import { MessageData } from '../../state/reducers/ui.reducer';
 export class NavigationContainerComponent  {
 
   store = inject(Store);
+
   message:MessageData | null = null;
 
+  shouldShowSidebar:boolean = true;
+
   constructor (private router:Router, private messageService: MessageService) {
+
     this.store.pipe(select(messageSelector)).subscribe((message) => {
       if (message) this.messageService.add({ 
         severity:message.type,
         summary:message.message 
       });
     });
+
+    this.store.pipe(select(showSidebarSelector)).subscribe((showSidebar) => {
+      this.shouldShowSidebar = showSidebar;
+    });
+
   }
 
   redirectTo (route:string) {
     this.router.navigate([route]);
+  }
+
+  toggleSidebar () {
+    this.store.dispatch(setShowSidebarAction({ showSidebar: !this.shouldShowSidebar }));
   }
 
   routeList:RouteElement[] = [
