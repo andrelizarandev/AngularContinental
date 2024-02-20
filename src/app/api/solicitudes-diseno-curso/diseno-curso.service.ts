@@ -1,4 +1,5 @@
 // Modules
+import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 
@@ -6,17 +7,14 @@ import { Injectable, inject } from '@angular/core';
 import { apiUrl } from '..';
 
 // Types
-import { injectMutation } from '@ngneat/query';
-
 import { 
   GetSolicitudDisenoCursoData, 
   GetEapData, 
-  GetFacultadData, 
   GetPlanData, 
   GetTipoAsignaturaData, 
   GetTipoDisenoData, 
 } from './diseno-curso.types';
-import { lastValueFrom } from 'rxjs';
+import { GetFacultadData } from '../reportes/reportes.types';
 
 @Injectable({
   providedIn: 'root'

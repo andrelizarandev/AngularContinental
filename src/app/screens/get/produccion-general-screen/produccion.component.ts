@@ -22,7 +22,8 @@ import { UploadProduccionGeneralFileDialogComponent } from '../../../dialogs/sub
 import { ProduccionService } from '../../../api/produccion/produccion.service';
 
 // Types
-import { GetEapData, GetFacultadData, GetSolicitudDisenoCursoData } from '../../../api/solicitudes-diseno-curso/diseno-curso.types';
+import { GetEapData, GetSolicitudDisenoCursoData } from '../../../api/solicitudes-diseno-curso/diseno-curso.types';
+import { GetFacultadData } from '../../../api/reportes/reportes.types';
 
 @Component({
   selector: 'app-produccion',
@@ -68,6 +69,8 @@ export class ProduccionComponent {
   redirectToSeguimiento = (id:string) => this.router.navigate([`/submit-seguimiento/${id}`]);
 
   redirectToValidacion = (id:string) => this.router.navigate([`/submit-validacion/${id}`]);
+
+  redirectToReportes = (id:string) => this.router.navigate([`/submit-reportes/${id}`]);
 
   // Open Dialog
   toggleIsDialogOpen = () => this.isDialogOpen = !this.isDialogOpen;

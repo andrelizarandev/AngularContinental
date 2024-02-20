@@ -35,11 +35,6 @@ export type GetTipoDisenoData = {
   nombre:string;
 }
 
-export type GetFacultadData = {
-  id:number;
-  nombre:string;
-}
-
 export type GetPlanData = {
   id:number;
   nombre:string;

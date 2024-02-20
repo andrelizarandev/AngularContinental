@@ -171,5 +171,10 @@ export type OptionData = {
   label:string;
 }
 
+export type OptionDataIdNumber = {
+  id:number;
+  label:string;
+}
+
 export type FirstPossibleOptions = null | 'Presencial' | 'SemipresencialDistancia';
 export type SecondPossibleOptions = null | 'Presencial' | 'Presencial16Semanas';

@@ -1,0 +1,128 @@
+<app-navigation-container>
+  
+  <app-custom-breadcrumb [items]="breadcrumbItems"/>
+
+  <app-card-with-skeleton>
+
+    <h3 class="c-title">Filtros</h3>
+
+    <form class="h-flex" [formGroup]="filterFormGroup!">
+
+      <div class="v-flex-low-gap">
+        <label>Código</label>
+        <input type="text" pInputText/>
+      </div>
+
+      <div class="v-flex-low-gap">
+        <label>Asignatura</label>
+        <input type="text" pInputText/>
+      </div>
+
+      <div class="v-flex-low-gap">
+        <label>Docente Diseñador</label>
+        <input type="text" pInputText/>
+      </div>
+
+      <div class="v-flex-low-gap">
+        <label>Facultades</label>
+        <p-dropdown 
+          formControlName="selectedFacultad" 
+          [options]="facultadesOptions" 
+          optionLabel="label"
+          placeholder="Selecciona una Facultad"
+        />
+      </div>
+
+    </form>
+
+  </app-card-with-skeleton>
+
+  <app-card-with-skeleton>
+
+    <h3 class="c-title">Reportes</h3>
+
+    <p-table [value]="getReportesQuery.data() || []">
+  
+      <ng-template pTemplate="header">
+  
+        <tr>
+
+          <th>Codigo</th>
+
+          <th>Asignatura</th>
+
+          <th>Docente Diseñador</th>
+
+          <th>Facultad</th>
+
+          <th>Porcentaje Real</th>
+
+        </tr>
+  
+      </ng-template>
+
+      <ng-template pTemplate="body" let-produccion>
+  
+        <tr>
+
+          <td>{{ produccion.codigo }}</td>
+
+          <td>{{ produccion.asignatura }}</td>
+
+          <td>{{ produccion.docente_disenador }}</td>
+
+          <td>
+            {{ matchIdFacultad(produccion.id_facultad) }}
+          </td>
+
+          <td>
+            {{ getPorcetajeRealQuery.data() || '-' }}
+          </td>
+
+        </tr>
+        
+      </ng-template>
+
+    </p-table>
+
+  </app-card-with-skeleton>
+
+  <div class="grid">
+
+    <div class="col-12 md:col-6">
+
+      <app-card-with-skeleton>
+    
+        <h3 class="c-title">Gráfico 1</h3>
+    
+        <p-chart 
+          type="bar" 
+          [data]="barData" 
+          [options]="barOptions"
+          height="340px"
+        />
+    
+      </app-card-with-skeleton>
+
+    </div>
+
+    <div class="col-12 md:col-6">
+
+      <app-card-with-skeleton>
+  
+        <h3 class="c-title">Gráfico 2</h3>
+  
+        <p-chart 
+          type="pie" 
+          [data]="pieData" 
+          [options]="pieOptions"
+          height="340px"
+        />
+  
+      </app-card-with-skeleton>
+
+    </div>
+
+  </div>
+
+</app-navigation-container>

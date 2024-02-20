@@ -1,5 +1,6 @@
 // Modules
 import { Store } from '@ngrx/store';
+import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { DividerModule } from 'primeng/divider';
@@ -13,6 +14,9 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 
 // Actions
 import { setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
+
+// Classes
+import BreadcrumbItemsClass from '../../../utils/breadcrumb-items';
 
 // Components
 import { CustomBreadcrumbComponent } from '../../../components/custom-breadcrumb/custom-breadcrumb.component';
@@ -33,8 +37,6 @@ import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-cur
 // Types
 import { GetDataSilabosData } from '../../../api/produccion/produccion.types';
 import { OptionData } from '../submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
-import { MenuItem } from 'primeng/api';
-import BreadcrumbItemsClass from '../../../utils/breadcrumb-items';
 
 @Component({
   selector: 'app-submit-produccion-general',

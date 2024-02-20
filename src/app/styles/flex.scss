@@ -4,6 +4,12 @@
   row-gap: 16px;
 }
 
+.v-flex-low-gap {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
 .v-flex-no-gap {
   display: flex;
   flex-direction: column;

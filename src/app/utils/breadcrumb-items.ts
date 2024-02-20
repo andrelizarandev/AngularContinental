@@ -27,4 +27,8 @@ export default class BreadcrumbItemsClass {
     return { label:'Registro de Producción General', routerLink:`/submit-produccion-general/${id}` };
   }
 
+  static registroReportesItem (id:string):MenuItem {
+    return { label:'Registro de Reportes', routerLink:`/submit-reportes/${id}` };
+  }
+
 }
