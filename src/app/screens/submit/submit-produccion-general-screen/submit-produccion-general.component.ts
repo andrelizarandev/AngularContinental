@@ -32,11 +32,12 @@ import HandleDates from '../../../helpers/handle-dates';
 
 // Service
 import { ProduccionService } from '../../../api/produccion/produccion.service';
+import { ModalidadesService } from '../../../api/modalidades/modalidades.service';
 import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-curso/diseno-curso.service';
 
 // Types
 import { OptionData } from '../submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
-import { GetDataSilabosData, PutProduccionGeneralData } from '../../../api/produccion/produccion.types';
+import { GetDataSilabosData, ModalidadEnum, PutProduccionGeneralData } from '../../../api/produccion/produccion.types';
 
 @Component({
   selector: 'app-submit-produccion-general',
@@ -68,24 +69,28 @@ export class SubmitProduccionGeneralComponent {
   isRegisterPeriodoGeneralDialogOpen = false;
   lastSilaboData:GetDataSilabosData | null = null;
   silabosInThisPeriodoGeneral:GetDataSilabosData[] = [];
+  extraData:any = null;
+
+  // Modalidad
+  modalidadName:ModalidadEnum | null = null;
+  currentModalidadForModal:ModalidadEnum | null = null;
 
   // Forms
   registerProduccionGeneralForm: FormGroup;
 
   // Services
+  modalidadesService = inject(ModalidadesService);
   produccionGeneralService = inject(ProduccionService);
   solicitudDisenoCursoService = inject(SolicitudDisenoCursoService);
 
-  // Dynamic options
-  eapListOptions:OptionData[] = [];
-  planListOptions:OptionData[] = [];
+  // Options
   tipoAsignaturaListOptions:OptionData[] = [];
 
   breadcrumbItems:MenuItem[] = [
     BreadcrumbItemsClass.homeItem,
     BreadcrumbItemsClass.produccionGeneral,
     { ...BreadcrumbItemsClass.registroProduccionGeneralItem(this.currentId) }
-  ]
+  ];
 
   // Static options
   simuladorListOptions:OptionData[] = [
@@ -119,76 +124,72 @@ export class SubmitProduccionGeneralComponent {
     private fb:FormBuilder, 
     private activeRoute:ActivatedRoute, 
     private router:Router,
-    private store:Store
+    private store:Store,
   ) {
 
     this.registerProduccionGeneralForm = this.fb.group({
 
-      codigo:['', Validators.required],
-      plan:[null, Validators.required],
-      eap:[null, Validators.required],
-      asignatura:['', Validators.required],
-      tipo_asignatura:[null, Validators.required],
-      numero_formatos:['', Validators.required],
-      situacion_asignatura:[null, Validators.required],
+      // Form 1
+      codigo: ['', Validators.required],
+      plan: ['', Validators.required],
+      eap: ['', Validators.required],
+      asignatura: ['', Validators.required],
+      tipo_asignatura: ['', Validators.required],
+      numero_formatos: ['', Validators.required],
+      situacion_asignatura: ['', Validators.required],
+      
+      // Form 2
+      fecha_inicio: ['', Validators.required],
+      tiempo_programado: ['', Validators.required],
+      fecha_programada: ['', Validators.required],
 
-      fecha_inicio:['', Validators.required],
-      fecha_finalizacion:['', Validators.required],
-      tiempo_programado:['', Validators.required],
+      // Form 3
+      asesor: ['', Validators.required],
+      telefono_asesor: ['', Validators.required],
+      correo_asesor: ['', Validators.required],
+      
+      // Form 4
+      decano: ['', Validators.required],
+      correo_decano: ['', Validators.required],
 
-      asesor:['', Validators.required],
-      correo_asesor_didactico:['', Validators.required],
-      telefono_asesor_didactico:['', Validators.required],
+      // Form 5
+      docente_disenador: ['', Validators.required],
+      observacion_designacion: ['', Validators.required],
+      email_docente: ['', Validators.required],
+      telefono_docente: ['', Validators.required],
+      procedencia: ['', Validators.required],
+      designacion: ['', Validators.required],
 
-      decano_director_camara:['', Validators.required],
-      correo_decano_director_camara:['', Validators.required],
+      // Form 6
+      disenador_instruccional: ['', Validators.required],
+      telefono_instruccional: ['', Validators.required],
+      correo_instruccional: ['', Validators.required],
 
-      docente_disenador:['', Validators.required],
-      email_docente_disenador:['', Validators.required],
-      procedencia_docente_disenador:['', Validators.required],
-      observaciones_designacion_docente:['', Validators.required],
-      telefono_docente_disenador:['', Validators.required],
-      designacion_docente:['', Validators.required],
+      // Form 7
+      responsable: ['', Validators.required],
+      video_presentacion: ['', Validators.required],
+      carpeta_entregable: ['', Validators.required],
 
-      disenador_instruccional:['', Validators.required],
-      correo_disenador_instruccional:['', Validators.required],
-      telefono_disenador_instruccional:['', Validators.required],
+      // Form 8
+      colaborativo: ['', Validators.required],
+      unidad1: ['', Validators.required],
+      unidad2: ['', Validators.required],
+      unidad3: ['', Validators.required],
+      unidad4: ['', Validators.required],
+      simulador: ['', Validators.required],
 
-      responsable_seguimiento:['', Validators.required],
-      carpeta_entregable:['', Validators.required],
-      video_presentacion:['', Validators.required],
-
-      producto_academico:['', Validators.required],
-      simulador:['', Validators.required],
-      unidad_1:['', Validators.required],
-      unidad_2:['', Validators.required],
-      unidad_3:['', Validators.required],
-      unidad_4:['', Validators.required],
-
-      fecha_presentacion_di:['', Validators.required],
-      fecha_finalizacion_presentacion:['', Validators.required],
-      observaciones:['', Validators.required],
-      correo_finalizacion:['', Validators.required],
-
-      // Extra
-      adistancia:['', Validators.required],
-      autor:['', Validators.required],
-      contiverso:['', Validators.required],
-      dias_extra:['', Validators.required],
-      id:['', Validators.required],
-      modalidad:['', Validators.required],
-      presencial:['', Validators.required],
-      procedencia:['', Validators.required],
-      realidad_aumentada:['', Validators.required],
-      semipresencial:['', Validators.required],
-      solicitud_id:['', Validators.required],
-
+      // Form 9
+      fecha_presentacion_di: ['', Validators.required],
+      observaciones: ['', Validators.required],
+      fecha_finalizacion: ['', Validators.required],
+      correo_finalizacion: ['', Validators.required],
+      
     });
 
   }
   
   // Queries
-  getProduccionGeneralById = injectQuery(() => ({
+  getProduccionGeneralByIdQuery = injectQuery(() => ({
 
     queryKey: ['get-produccion-general', this.activeRoute.snapshot.params['id']],
 
@@ -198,120 +199,147 @@ export class SubmitProduccionGeneralComponent {
 
         const result = await this.produccionGeneralService.getProduccionGeneralById(this.activeRoute.snapshot.params['id'])
 
+        if (!result.datos_produccion_general) return;
+
         const { 
 
-          codigo, 
-          plan, 
-          eap, 
+          // Form 1
+          codigo,
+          plan,
+          eap,
           asignatura,
-          tipo_asignatura, 
-          numero_formatos, 
+          tipo_asignatura,
+          numero_formatos,
           situacion_asignatura,
 
+          // Form 2
           fecha_inicio,
           tiempo_programado,
           fecha_programada,
 
+          // Form 3
           asesor,
           telefono_asesor,
           correo_asesor,
 
+          // Form 4
           decano,
           correo_decano,
 
+          // Form 5
           docente_disenador,
+          observacion_designacion,
           email_docente,
-          observaciones,
           telefono_docente,
+          procedencia,
           designacion,
 
-          responsable,
-          carpeta_entregable,
-          video_presentacion,
+          // Form 6
+          disenador_instruccional,
+          telefono_instruccional,
+          correo_instruccional,
 
+          // Form 7
+          responsable,
+          video_presentacion,
+          carpeta_entregable,
+
+          // Form 8
           colaborativo,
-          simulador,
           unidad1,
           unidad2,
           unidad3,
           unidad4,
-          fecha_presentacion_di,
-          correo_finalizacion,
-          fecha_finalizacion,
+          simulador,
 
-          // Extra
+          // Form 9
+          fecha_presentacion_di,
+          observaciones,
+          fecha_finalizacion,
+          correo_finalizacion,
+
+          // Extras
           adistancia,
-          autor, 
+          autor,
+          ciclo,
           contiverso,
           dias_extra,
+          facultad,
           id,
           modalidad,
+          nombre_formato_adistancia,
+          nombre_formato_presencial,
+          nombre_formato_semipresencial,
           presencial,
-          procedencia,
           realidad_aumentada,
           semipresencial,
-          solicitud_id
+          solicitud_id,
+          tipo_diseno,
+          nombre_modalidad,
 
-        } = result.data!!;
+        } = result.datos_produccion_general;
 
-        this.registerProduccionGeneralForm.patchValue({ 
+        this.registerProduccionGeneralForm.patchValue({
 
-          codigo, 
-          plan, 
-          eap, 
+          // Form 1
+          codigo,
+          plan,
+          eap,
           asignatura,
-          tipo_asignatura, 
-          numero_formatos, 
+          tipo_asignatura,
+          numero_formatos,
           situacion_asignatura,
 
+          // Form 2
           fecha_inicio,
           tiempo_programado,
-          fecha_finalizacion:fecha_programada,
+          fecha_programada,
 
+          // Form 3
           asesor,
-          telefono_asesor_didactico:telefono_asesor,
-          correo_asesor_didactico:correo_asesor,
+          telefono_asesor,
+          correo_asesor,
 
-          decano_director_camara:decano,
-          correo_decano_director_camara:correo_decano,
-          
+          // Form 4
+          decano,
+          correo_decano,
+
+          // Form 5
           docente_disenador,
-          email_docente_disenador:email_docente,
-          procedencia_docente_disenador:'Null',
-          observaciones_designacion_docente:observaciones,
-          telefono_docente_disenador:telefono_docente,
-          designacion_docente:designacion,
+          observacion_designacion,
+          email_docente,
+          telefono_docente,
+          procedencia,
+          designacion,
+          
+          // Form 6
+          disenador_instruccional,
+          telefono_instruccional,
+          correo_instruccional,
 
-          disenador_instruccional:'',
-          correo_disenador_instruccional:'',
-          telefono_disenador_instruccional:'',
-
-          responsable_seguimiento:responsable,
+          // Form 7
+          responsable,
           video_presentacion,
           carpeta_entregable,
 
-          producto_academico:colaborativo,
+          // Form 8
+          colaborativo,
+          unidad1,
+          unidad2,
+          unidad3,
+          unidad4,
           simulador,
-          unidad_1:unidad1,
-          unidad_2:unidad2,
-          unidad_3:unidad3,
-          unidad_4:unidad4,
 
+          // Form 9
           fecha_presentacion_di,
-          fecha_finalizacion_presentacion:fecha_finalizacion,
           observaciones,
+          fecha_finalizacion,
           correo_finalizacion,
 
-          // Extra
-          adistancia,
-          autor,
-
-
-
-
-
-
         });
+
+        this.modalidadName = nombre_modalidad;
+
 
         this.store.dispatch(setMessageFromUiDataAction({ message:{ message:'Información de Producción Cargada', type:'success' } }))
 
@@ -325,48 +353,6 @@ export class SubmitProduccionGeneralComponent {
 
     }
 
-  }));
-
-  getPlanListQuery = injectQuery(() => ({
-    queryKey: ['get-plan-list'],
-    queryFn: async () => {
-      try {
-        const result = await this.solicitudDisenoCursoService.getPlanList();
-        const options:OptionData[] = result.map((data) => ({ id:data.id.toString(), label:data.nombre }));
-        this.planListOptions = options;
-        return options;
-      } catch (err:any) {
-        return Promise.reject(err);
-      }
-    }
-  }));
-
-  getEapListQuery = injectQuery(() => ({
-    queryKey: ['get-eap-list'],
-    queryFn: async () => {
-      try {
-        const result = await this.solicitudDisenoCursoService.getEapList();
-        const options:OptionData[] = result.map((data) => ({ id:data.id.toString(), label:data.nombre }));
-        this.eapListOptions = options;
-        return options;
-      } catch (err:any) {
-        return Promise.reject(err);
-      }
-    }
-  }));
-
-  getTipoAsignaturaListQuery = injectQuery(() => ({
-    queryKey: ['get-tipo-asignatura-list'],
-    queryFn: async () => {
-      try {
-        const result = await this.solicitudDisenoCursoService.getTipoAsignaturaList();
-        const options:OptionData[] = result.map((data) => ({ id:data.id.toString(), label:data.nombre }));
-        this.tipoAsignaturaListOptions = options;
-        return options;
-      } catch (err:any) {
-        return Promise.reject(err);
-      }
-    }
   }));
 
   getSilabosInThisPeriodoGeneral = injectQuery(() => ({
@@ -450,21 +436,17 @@ export class SubmitProduccionGeneralComponent {
     }
   }));
 
-  // Start
-  startPutProduccionGeneral () {
-    this.store.dispatch(setMessageFromUiDataAction({ message:{ message:'Producción Actualizada', type:'success' } }));
-  }
-
   // Toggle
-  toggleIsRegisterPeriodoGeneralDialogOpen () {
+  toggleIsRegisterPeriodoGeneralDialogOpen (modalidad:ModalidadEnum | null = null) {
+    this.currentModalidadForModal = modalidad;
     this.isRegisterPeriodoGeneralDialogOpen = !this.isRegisterPeriodoGeneralDialogOpen;
   }
   
   toggleIsUploadSilaboDialogOpen () {
     this.isUploadSilaboDialogOpen = !this.isUploadSilaboDialogOpen;
   }
-  
-  // Return
+
+  // Redirect
   redirectToProduccionGeneral () {
     this.router.navigate(['/produccion-general']);
   }
@@ -474,6 +456,11 @@ export class SubmitProduccionGeneralComponent {
     const slicedDate = date.slice(0, 10);
     const restDate = date.slice(11, 16);
     return HandleDates.parseDateFormat1ToFormat2(slicedDate, 'YYYY-MM-DD', 'DD/MM/YYYY') + ' ' + restDate;
+  }
+
+  // Getters
+  public get modalidadEnum (): typeof ModalidadEnum {
+    return ModalidadEnum;
   }
 
 }

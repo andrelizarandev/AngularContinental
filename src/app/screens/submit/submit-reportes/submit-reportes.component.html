@@ -39,7 +39,7 @@
         <label>Facultades</label>
         <p-dropdown 
           formControlName="selectedFacultad" 
-          [options]="facultadesOptions" 
+          [options]="parseFacultadesOptions()" 
           optionLabel="label"
           placeholder="Selecciona una Facultad"
           [style]="{'width': '100%'}"
@@ -74,9 +74,15 @@
 
           <th>Asignatura</th>
 
+          <th>Modalidad</th>
+
+          <th>Formato</th>
+
           <th>Docente Diseñador</th>
 
           <th>Facultad</th>
+
+          <th>Fecha Inicio</th>
 
           <th>Porcentaje Real</th>
 
@@ -88,18 +94,37 @@
   
         <tr>
 
-          <td>{{ produccion.codigo }}</td>
-
-          <td>{{ produccion.asignatura }}</td>
-
-          <td>{{ produccion.docente_disenador }}</td>
-
           <td>
-            {{ matchIdFacultad(produccion.id_facultad) }}
+            {{ produccion.codigo }}
           </td>
 
           <td>
-            {{ getPorcetajeRealQuery.data() || '-' }}
+            {{ produccion.asignatura }}
+          </td>
+
+          <td>
+            {{ matchIdModalidad(produccion.modalidad) }}
+          </td>
+
+          <td>
+            {{ matchFormato(produccion.formato) }}
+          </td>
+
+          <td>
+            {{ produccion.docente_disenador }}
+          </td>
+
+          <td>
+            {{ matchIdFacultad(produccion.facultad) }}
+          </td>
+
+          <td>
+            {{ parseInitDate(produccion.fecha_inicio) }}
+          </td>
+
+          <td>
+            94%
+            <!-- {{ calculatePorcentajeReal(produccion.id) }} -->
           </td>
 
         </tr>
@@ -115,25 +140,8 @@
     <div class="col-12 md:col-6">
 
       <app-card-with-skeleton>
-    
-        <h3 class="c-title">Gráfico 1</h3>
-    
-        <p-chart 
-          type="bar" 
-          [data]="barData" 
-          [options]="barOptions"
-          height="340px"
-        />
-    
-      </app-card-with-skeleton>
-
-    </div>
-
-    <div class="col-12 md:col-6">
-
-      <app-card-with-skeleton>
   
-        <h3 class="c-title">Gráfico 2</h3>
+        <h3 class="c-title">Porcentaje de Modalidades</h3>
   
         <p-chart 
           type="pie" 
@@ -145,6 +153,23 @@
       </app-card-with-skeleton>
 
     </div>
+
+    <div class="col-12 md:col-6">
+
+      <app-card-with-skeleton>
+    
+        <h3 class="c-title">Porcentaje de Avance</h3>
+    
+        <p-chart 
+          type="bar" 
+          [data]="barData" 
+          [options]="barOptions"
+          height="340px"
+        />
+    
+      </app-card-with-skeleton>
+
+    </div> 
 
   </div>
 

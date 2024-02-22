@@ -35,14 +35,16 @@ export class UploadSilaboDialogComponent {
 
   produccionService = inject(ProduccionService);
 
-  // Props
-  @Input() isDialogOpen = false;
+  // Outputs
   @Output() closeDialogEmitter = new EventEmitter();
+  
+  // Inputs
+  @Input() isDialogOpen = false;
 
-  constructor (
-    private activeRoute:ActivatedRoute,
-    private store:Store
-  ) {}
+  // Vars
+  currentFile: File | null = null;
+
+  constructor (private activeRoute:ActivatedRoute, private store:Store) {}
 
   submitSilaboFileMutation = injectMutation((client) => ({
     mutationFn: (data:PostSilaboFileData) => this.produccionService.submitSilaboFile(data),
@@ -54,7 +56,6 @@ export class UploadSilaboDialogComponent {
   }));
 
   // Properties
-  currentFile: File | null = null;
 
   // Toggle
   closeDialog() {

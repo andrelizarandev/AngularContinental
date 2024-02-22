@@ -1,6 +1,6 @@
 <p-dialog 
   class="sm:w-12"
-  header="Registrar Nuevo Periodo"
+  header="Formato - {{ currentModalidad }}"
   [style]="{width: '600px'}"
   [visible]="isDialogOpen"
   [modal]="true"
@@ -8,157 +8,182 @@
   [draggable]="false"
 >
 
-  <div class="v-flex">
+  <form class="v-flex" [formGroup]="formatoForm">
 
     <h3 class="c-title">Presencial</h3>
 
     <label>Horas Asíncronas</label>
 
-    <input pInputText/>
+    <input 
+      pInputText 
+      formControlName="horas_asincronas"
+    />
 
     <label>Horas Síncronas</label>
 
-    <input class="mb-2" pInputText/>
+    <input 
+      class="mb-2" 
+      pInputText 
+      formControlName="horas_sincronas"
+    />
 
-    <h4>Introducción</h4>
+    <h3>Introducción</h3>
 
     <label>Evaluación de Entrada</label>
 
     <p-dropdown 
-      [options]="[]" 
+      [options]="ratingOptions" 
       placeholder="Seleccione" 
-      optionLabel="name" 
       [style]="{'width':'100%'}"
+      formControlName="intro_evaluacion_entrada"
     />
 
     <label>Hoja Calendario</label>
 
     <p-dropdown 
-      [options]="[]" 
+      [options]="ratingOptions" 
       placeholder="Seleccione" 
-      optionLabel="name" 
       [style]="{'width':'100%'}"
       class="mb-2"
+      formControlName="intro_hoja_calendario"
     />
 
-    <h4>Unidad 1</h4>
+    <h3>Unidad 1</h3>
 
     <label>Autoevaluaciones</label>
 
     <p-dropdown 
-      [options]="[]" 
+      [options]="ratingOptions" 
       placeholder="Seleccione" 
-      optionLabel="name" 
       [style]="{'width':'100%'}"
+      formControlName="u1_autoevaluacion"
     />
 
     <label>PPT-Objecto de Aprendizaje / Tutorial</label>
 
     <p-dropdown 
-      [options]="[]" 
+      [options]="ratingOptions" 
       placeholder="Seleccione" 
-      optionLabel="name" 
       [style]="{'width':'100%'}"
+      formControlName="u1_ppt"
     />
 
     <label>Guía</label>
 
     <p-dropdown 
-      [options]="[]" 
+      [options]="ratingOptions" 
       placeholder="Seleccione" 
-      optionLabel="name" 
       [style]="{'width':'100%'}"
+      formControlName="u1_guia"
     />
 
     <label>PA2</label>
 
     <p-dropdown 
-      [options]="[]" 
+      [options]="ratingOptions" 
       placeholder="Seleccione" 
-      optionLabel="name" 
       [style]="{'width':'100%'}"
       class="mb-2"
+      formControlName="u1_pa2"
     />
 
-    <h4>Unidad 2</h4>
+    <h3>Unidad 2</h3>
 
     <label>Autoevaluaciones</label>
 
     <p-dropdown 
-      [options]="[]" 
+      [options]="ratingOptions" 
       placeholder="Seleccione" 
       optionLabel="name" 
       [style]="{'width':'100%'}"
+      formControlName="u2_autoevaluacion"
     />
 
     <label>PPT-Objecto de Aprendizaje / Tutorial</label>
 
     <p-dropdown 
-      [options]="[]" 
+      [options]="ratingOptions" 
       placeholder="Seleccione" 
       optionLabel="name" 
       [style]="{'width':'100%'}"
+      formControlName="u2_ppt"
     />
 
     <label>Guía</label>
 
     <p-dropdown 
-      [options]="[]" 
-      placeholder="Seleccione" 
-      optionLabel="name" 
+      [options]="ratingOptions" 
+      placeholder="Seleccione"
       [style]="{'width':'100%'}"
+      formControlName="u2_guia"
     />
 
     <label>PA2</label>
 
     <p-dropdown 
-      [options]="[]" 
+      [options]="ratingOptions" 
       placeholder="Seleccione" 
-      optionLabel="name" 
       [style]="{'width':'100%'}"
       class="mb-2"
+      formControlName="u2_pa2"
     />
 
-    <h4>Unidad 3</h4>
+    <h3>Unidad 3</h3>
 
     <label>Autoevaluaciones</label>
 
     <p-dropdown 
-      [options]="[]" 
+      [options]="ratingOptions" 
       placeholder="Seleccione" 
-      optionLabel="name" 
       [style]="{'width':'100%'}"
+      formControlName="u3_autoevaluacion"
     />
 
     <label>PPT-Objecto de Aprendizaje / Tutorial</label>
 
     <p-dropdown 
-      [options]="[]" 
+      [options]="ratingOptions" 
       placeholder="Seleccione" 
-      optionLabel="name" 
       [style]="{'width':'100%'}"
+      formControlName="u3_ppt"
     />
 
     <label>Guía</label>
 
     <p-dropdown 
-      [options]="[]" 
+      [options]="ratingOptions" 
       placeholder="Seleccione" 
-      optionLabel="name"
       [style]="{'width':'100%'}"
+      formControlName="u3_guia"
     />
 
     <label>PA2</label>
 
     <p-dropdown 
-      [options]="[]" 
+      [options]="ratingOptions" 
       placeholder="Seleccione" 
-      optionLabel="name" 
       [style]="{'width':'100%'}"
+      class="mb-2"
+      formControlName="u3_pa2"
     />
 
-    <p-button label="Guardar" (onClick)="closeRegister()"/>
+    <div class="h-flex">
 
-  </div>
+      <p-button 
+        label="Cancelar" 
+        (onClick)="closeRegister()"
+        size="small"
+        severity="secondary"
+      />
+
+      <p-button 
+        label="Guardar" 
+        (onClick)="closeRegister()"
+        size="small"
+      />
+
+    </div>
+
+  </form>
 
 </p-dialog>

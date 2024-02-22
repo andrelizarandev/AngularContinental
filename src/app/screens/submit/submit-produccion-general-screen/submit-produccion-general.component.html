@@ -13,12 +13,13 @@
           <h3 class="c-title fw-400">Registro de Producción General</h3>
       
           <form 
-            [formGroup]="registerProduccionGeneralForm" 
-            (ngSubmit)="startPutProduccionGeneral()"
+            [formGroup]="registerProduccionGeneralForm"
             class="v-flex"
           >
       
             <div class="v-flex">
+
+              <!--  -->
       
               <div class="grid">
 
@@ -107,8 +108,95 @@
                 </div>
 
               </div>
+
+              <!--  -->
       
               <p-divider/>
+
+              <div class="grid">
+
+                <div class="col-6">
+
+                  <div class="v-flex">
+
+                    <h3 class="c-title">Modalidad</h3>
+
+                    <span>
+                      {{ modalidadName || '-' }}
+                    </span>
+
+                  </div>
+
+                </div>
+
+                <div class="col-6">
+
+                  <div class="v-flex">
+
+                    <h3 class="c-title">Modalidad</h3>
+
+                    @if (modalidadName == "Presencial") {
+
+                      <div class="h-flex-align-center">
+
+                        <label>Presencial</label>
+
+                        <p-button 
+                          label="Cargar" 
+                          size="small" 
+                          severity="secondary"
+                          (onClick)="toggleIsRegisterPeriodoGeneralDialogOpen(modalidadEnum.Presencial)"
+                        />
+
+                      </div>
+
+                    } 
+                    
+                    @if (modalidadName == "Semipresencial") {
+
+                      <div class="h-flex-align-center">
+
+                        <label>Presencial</label>
+                        
+                        <p-button 
+                          label="Cargar" 
+                          size="small" 
+                          severity="secondary"
+                          (onClick)="toggleIsRegisterPeriodoGeneralDialogOpen(modalidadEnum.Presencial)"
+                        />
+
+                      </div>
+
+                    } 
+
+                    @else if (modalidadName == "ADistancia") {
+
+                      <div class="h-flex-align-center">
+
+                        <label>A Distancia</label>
+                        
+                        <p-button 
+                          label="Cargar" 
+                          size="small" 
+                          severity="secondary"
+                          (onClick)="toggleIsRegisterPeriodoGeneralDialogOpen(modalidadEnum.ADistancia)"
+                        />
+
+                      </div>
+
+                    } 
+
+                  </div>
+  
+                </div>
+
+              </div>
+
+              <!--  -->
+
+              <p-divider/>
+
+              <!--  -->
       
               <div class="grid">
       
@@ -127,7 +215,7 @@
       
                   <input 
                     pInputText 
-                    formControlName="fecha_finalizacion" 
+                    formControlName="fecha_programada" 
                     [style]="{'width':'100%'}"
                     type="date"
                   />
@@ -208,61 +296,77 @@
                 </div>
       
               </div>
+
+              <!--  -->
       
               <p-divider/>
+
+              <!--  -->
       
-            <div class="grid">
+              <div class="grid">
+        
+                <div class="md:col-6 v-flex">
+        
+                  <label>Asesor Didáctico</label>
+        
+                  <input 
+                    pInputText
+                    formControlName="asesor" 
+                  />
+        
+                  <label>Correo Asesor Didactico</label>
+        
+                  <input
+                    pInputText
+                    formControlName="correo_asesor" 
+                  />
+        
+                </div>
+        
+                <div class="md:col-6 v-flex">
+        
+                  <label>Teléfono Asesor Didactico</label>
+        
+                  <input 
+                    pInputText 
+                    type="text"  
+                    formControlName="telefono_asesor" 
+                    [style]="{'width':'100%'}"
+                  />
+        
+                </div>
+        
+              </div>
+
+              <!--  -->
       
-              <div class="md:col-6 v-flex">
+              <p-divider/>
+
+              <!--  -->
       
-                <label>Asesor Didáctico</label>
+              <div class="v-flex">
+
+                <label>Decano Director Cámara</label>
       
                 <input 
                   pInputText
-                  formControlName="asesor" 
+                  formControlName="decano" 
                 />
-      
-                <label>Correo Asesor Didactico</label>
-      
+        
+                <label>Correo Decano Director Cámara</label>
+        
                 <input
                   pInputText
-                  formControlName="correo_asesor_didactico" 
+                  formControlName="correo_decano"
                 />
-      
+
               </div>
-      
-              <div class="md:col-6 v-flex">
-      
-                <label>Teléfono Asesor Didactico</label>
-      
-                <input 
-                  pInputText 
-                  type="text"  
-                  formControlName="telefono_asesor_didactico" 
-                  [style]="{'width':'100%'}"
-                />
-      
-              </div>
-      
-            </div>
+
+              <!--  -->
       
               <p-divider/>
-      
-              <label>Decano Director Cámara</label>
-      
-              <input 
-                pInputText
-                formControlName="decano_director_camara" 
-              />
-      
-              <label>Correo Decano Director Cámara</label>
-      
-              <input
-                pInputText
-                formControlName="correo_decano_director_camara"
-              />
-      
-              <p-divider/>
+
+              <!--  -->
       
               <div class="grid">
       
@@ -279,14 +383,14 @@
       
                   <input
                     pInputText
-                    formControlName="email_docente_disenador" 
+                    formControlName="email_docente" 
                   />
       
                   <label>Procedencia Docente Diseñador</label>
       
                   <input
                     pInputText
-                    formControlName="procedencia_docente_disenador" 
+                    formControlName="procedencia" 
                   />
       
                 </div>
@@ -297,29 +401,33 @@
       
                   <input
                     pInputText
-                    formControlName="observaciones_designacion_docente" 
+                    formControlName="observacion_designacion" 
                   />
       
                   <label>Teléfono Docente Diseñador</label>
       
                   <input
                     pInputText
-                    formControlName="telefono_docente_disenador" 
+                    formControlName="telefono_docente" 
                   />
       
                   <label>Designación Docente</label>
       
                   <input
                     pInputText
-                    formControlName="designacion_docente" 
+                    formControlName="designacion" 
                     [style]="{'width':'100%'}"
                   />
       
                 </div>
       
               </div>
+
+              <!--  -->
       
               <p-divider/>
+
+              <!--  -->
       
               <div class="grid">
       
@@ -332,11 +440,11 @@
                     formControlName="disenador_instruccional" 
                   />
       
-                  <label>Correo Diseñador Instruccional</label>
+                  <label>Correo Instruccional</label>
       
                   <input
                     pInputText
-                    formControlName="correo_disenador_instruccional" 
+                    formControlName="correo_instruccional" 
                   />
       
                 </div>
@@ -347,14 +455,18 @@
         
                   <input
                     pInputText
-                    formControlName="telefono_disenador_instruccional" 
+                    formControlName="telefono_instruccional" 
                   />
         
                 </div>
       
               </div>
+
+              <!--  -->
       
               <p-divider/>
+
+              <!--  -->
       
               <div class="grid">
       
@@ -364,7 +476,7 @@
       
                   <input
                     pInputText
-                    formControlName="responsable_seguimiento" 
+                    formControlName="responsable" 
                   />
       
                   <label>Carpeta Entregable</label>
@@ -388,66 +500,78 @@
                 </div>
       
               </div>
+
+              <!--  -->
               
               <p-divider/>
+
+              <!--  -->
       
-              <h4 class="c-title">Método por Unidad</h4>
+              <div class="v-flex">
+
+                <h3 class="c-title">Método por Unidad</h3>
       
-              <div class="grid">
-      
-                <div class="md:col-6 v-flex">
-      
-                  <label>Producto Académico Colaborativo</label>
-      
-                  <input 
-                    pInputText
-                    formControlName="producto_academico" 
-                  />
-      
-                  <label>Simulador</label>
-      
-                  <input 
-                    pInputText
-                    formControlName="simulador" 
-                  />
-      
-                  <label>Unidad 1</label>
-      
-                  <input 
-                    pInputText
-                    formControlName="unidad_1" 
-                  />
-      
+                <div class="grid">
+        
+                  <div class="md:col-6 v-flex">
+        
+                    <label>Producto Académico Colaborativo</label>
+        
+                    <input 
+                      pInputText
+                      formControlName="colaborativo" 
+                    />
+        
+                    <label>Simulador</label>
+        
+                    <input 
+                      pInputText
+                      formControlName="simulador" 
+                    />
+        
+                    <label>Unidad 1</label>
+        
+                    <input 
+                      pInputText
+                      formControlName="unidad1" 
+                    />
+        
+                  </div>
+        
+                  <div class="md:col-6 v-flex">
+        
+                    <label>Unidad 2</label>
+        
+                    <input 
+                      pInputText
+                      formControlName="unidad2" 
+                    />
+        
+                    <label>Unidad 3</label>
+        
+                    <input 
+                      pInputText
+                      formControlName="unidad3" 
+                    />
+        
+                    <label>Unidad 4</label>
+        
+                    <input 
+                      pInputText
+                      formControlName="unidad4" 
+                    />
+        
+                  </div>
+        
                 </div>
-      
-                <div class="md:col-6 v-flex">
-      
-                  <label>Unidad 2</label>
-      
-                  <input 
-                    pInputText
-                    formControlName="unidad_2" 
-                  />
-      
-                  <label>Unidad 3</label>
-      
-                  <input 
-                    pInputText
-                    formControlName="unidad_3" 
-                  />
-      
-                  <label>Unidad 4</label>
-      
-                  <input 
-                    pInputText
-                    formControlName="unidad_4" 
-                  />
-      
-                </div>
-      
+
               </div>
+
+              <!--  -->
       
               <p-divider/>
+
+              <!--  -->
       
               <div class="grid">
       
@@ -491,6 +615,8 @@
                 </div>
       
               </div>
+
+              <!--  -->
       
             </div>
 
@@ -523,12 +649,11 @@
 
 </app-navigation-container>
 
-
-
 <!-- Input en el dialog, Vars en la pantalla -->
 <!-- Emitter en el dialog, Toggle en la pantalla -->
 <app-register-periodo-general-dialog 
   [isDialogOpen]="isRegisterPeriodoGeneralDialogOpen"
+  [currentModalidad]="currentModalidadForModal"
   (closeDialogEmitter)="toggleIsRegisterPeriodoGeneralDialogOpen()"
 />
 
