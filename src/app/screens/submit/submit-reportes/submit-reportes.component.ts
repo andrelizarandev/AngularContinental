@@ -25,9 +25,9 @@ import HandleDates from '../../../helpers/handle-dates';
 // Services
 import { ReportesService } from '../../../api/reportes/reportes.service';
 import { FormatosService } from '../../../api/formatos/formatos.service';
+import { ModalidadesService } from '../../../api/modalidades/modalidades.service';
 
 // Types
-import { ModalidadesService } from '../../../api/modalidades/modalidades.service';
 import { GetFacultadData, GetReportesData } from '../../../api/reportes/reportes.types';
 import { OptionDataIdNumber } from '../submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
 
@@ -59,6 +59,7 @@ export class SubmitReportesComponent {
   facultadesList:GetFacultadData[] = [];
   currentId = this.activatedRoute.snapshot.params['id'];
 
+  // Utils
   documentStyle = getComputedStyle(document.documentElement);
 
   // Charts
@@ -73,6 +74,7 @@ export class SubmitReportesComponent {
   // Options
   facultadesOptions: OptionDataIdNumber[] | undefined;
 
+  // Static
   breadcrumbItems:MenuItem[] = [
     BreadcrumbItemsClass.homeItem,
     BreadcrumbItemsClass.produccionGeneral,
@@ -80,6 +82,81 @@ export class SubmitReportesComponent {
   ];
 
   constructor (private activatedRoute:ActivatedRoute) {}
+
+  ngOnInit() {
+    
+    const textColor = this.documentStyle.getPropertyValue('--text-color');
+    const surfaceBorder = this.documentStyle.getPropertyValue('--surface-border');
+    const textColorSecondary = this.documentStyle.getPropertyValue('--text-color-secondary');
+
+    this.barData = {
+        labels: ['23/02/2024', '24/02/2024', '25/02/2024', '26/02/2024', '27/02/2024'],
+        datasets: [
+            {
+              label: 'Porcentaje Avance',
+              data: [23, 45, 59, 70, 94, 100],
+              backgroundColor: [
+                this.documentStyle.getPropertyValue('--blue-500'), 
+                this.documentStyle.getPropertyValue('--red-500'), 
+                this.documentStyle.getPropertyValue('--green-500'),
+                this.documentStyle.getPropertyValue('--gray-500'),
+                this.documentStyle.getPropertyValue('--yellow-500'),
+                this.documentStyle.getPropertyValue('--purple-500')
+              ]
+            }
+        ]
+    };
+
+    this.barOptions = {
+        plugins: {
+            legend: {
+                labels: {
+                    color: textColor
+                }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    color: textColorSecondary
+                },
+                grid: {
+                    color: surfaceBorder,
+                    drawBorder: false
+                }
+            },
+            x: {
+                ticks: {
+                    color: textColorSecondary
+                },
+                grid: {
+                    color: surfaceBorder,
+                    drawBorder: false
+                }
+            }
+        }
+    };
+
+    this.pieOptions = {
+        plugins: {
+            legend: {
+                labels: {
+                    usePointStyle: true,
+                    color: textColor
+                }
+            }
+        }
+    };
+
+    this.filterFormGroup = new FormGroup({
+      codigo: new FormControl<string>(''),
+      asignatura: new FormControl<string>(''),
+      docente_disenador: new FormControl<string>(''),
+      selectedFacultad: new FormControl<OptionDataIdNumber | null>(null),
+    });
+
+  }
 
   // Queries
   getReportesQuery = injectQuery(() => ({
@@ -272,6 +349,10 @@ export class SubmitReportesComponent {
     return HandleDates.parseDateFormat1ToFormat2(date, 'YYYY-MM-DD', 'DD/MM/YYYY');
   }
 
+  parseReportesData () {
+    
+  }
+
   // Filter
   getFilteredReportRows () {  
     
@@ -304,81 +385,6 @@ export class SubmitReportesComponent {
       : thirdFilter.filter(({ facultad }) => Number(facultad) === facultadFilter.id);
 
     return fourthFilter;
-
-  }
-
-  ngOnInit() {
-    
-    const textColor = this.documentStyle.getPropertyValue('--text-color');
-    const surfaceBorder = this.documentStyle.getPropertyValue('--surface-border');
-    const textColorSecondary = this.documentStyle.getPropertyValue('--text-color-secondary');
-
-    this.barData = {
-        labels: ['23/02/2024', '24/02/2024', '25/02/2024', '26/02/2024', '27/02/2024'],
-        datasets: [
-            {
-              label: 'Porcentaje Avance',
-              data: [23, 45, 59, 70, 94, 100],
-              backgroundColor: [
-                this.documentStyle.getPropertyValue('--blue-500'), 
-                this.documentStyle.getPropertyValue('--red-500'), 
-                this.documentStyle.getPropertyValue('--green-500'),
-                this.documentStyle.getPropertyValue('--gray-500'),
-                this.documentStyle.getPropertyValue('--yellow-500'),
-                this.documentStyle.getPropertyValue('--purple-500')
-              ]
-            }
-        ]
-    };
-
-    this.barOptions = {
-        plugins: {
-            legend: {
-                labels: {
-                    color: textColor
-                }
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    color: textColorSecondary
-                },
-                grid: {
-                    color: surfaceBorder,
-                    drawBorder: false
-                }
-            },
-            x: {
-                ticks: {
-                    color: textColorSecondary
-                },
-                grid: {
-                    color: surfaceBorder,
-                    drawBorder: false
-                }
-            }
-        }
-    };
-
-    this.pieOptions = {
-        plugins: {
-            legend: {
-                labels: {
-                    usePointStyle: true,
-                    color: textColor
-                }
-            }
-        }
-    };
-
-    this.filterFormGroup = new FormGroup({
-      codigo: new FormControl<string>(''),
-      asignatura: new FormControl<string>(''),
-      docente_disenador: new FormControl<string>(''),
-      selectedFacultad: new FormControl<OptionDataIdNumber | null>(null),
-    });
 
   }
 

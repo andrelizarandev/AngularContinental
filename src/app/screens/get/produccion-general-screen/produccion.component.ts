@@ -20,10 +20,7 @@ import { UploadProduccionGeneralFileDialogComponent } from '../../../dialogs/sub
 
 // Services
 import { ProduccionService } from '../../../api/produccion/produccion.service';
-
-// Types
-import { GetEapData, GetSolicitudDisenoCursoData } from '../../../api/solicitudes-diseno-curso/diseno-curso.types';
-import { GetFacultadData } from '../../../api/reportes/reportes.types';
+import { ModalidadesService } from '../../../api/modalidades/modalidades.service';
 
 @Component({
   selector: 'app-produccion',
@@ -42,26 +39,31 @@ import { GetFacultadData } from '../../../api/reportes/reportes.types';
 })
 export class ProduccionComponent {
 
+  // Inject
   router = inject(Router);
+  modalidadesService = inject(ModalidadesService);
   produccionGeneralService = inject(ProduccionService)
 
+  // Vars
+  isDialogOpen = false;
+
+  // Static
+  breadcrumbItems:MenuItem[] = [
+    BreadcrumbItemsClass.homeItem,
+    BreadcrumbItemsClass.produccionGeneral
+  ];
+
+  // Queries
   getProduccionGeneralQuery = injectQuery(() => ({
     queryKey: ['get-produccion-general'],
     queryFn: () => this.produccionGeneralService.getProduccionGeneral(),
   }));
 
-  isDialogOpen = false;
+  getModalidadesQuery = injectQuery(() => ({
+    queryKey: ['get-modalidades'],
+    queryFn: () => this.modalidadesService.getModalidadesApi(),
 
-  productionList:GetSolicitudDisenoCursoData[] = [];
-
-  eapList:GetEapData[] = [];
-
-  facultadList:GetFacultadData[] = [];
-
-  breadcrumbItems:MenuItem[] = [
-    BreadcrumbItemsClass.homeItem,
-    BreadcrumbItemsClass.produccionGeneral
-  ];
+  }));
   
   // Redirect
   redirectToProductionForm = (id:string) => this.router.navigate([`/submit-produccion-general/${id}`]);
@@ -74,14 +76,13 @@ export class ProduccionComponent {
 
   // Open Dialog
   toggleIsDialogOpen = () => this.isDialogOpen = !this.isDialogOpen;
-  
-  // Match
-  matchEapName (id:string) {
-    return this.eapList.find((eap) => eap.id.toString() === id)?.nombre || 'No Especificado';
-  }
 
-  matchFacultadName (id:string) {
-    return this.facultadList.find((facultad) => facultad.id.toString() == id)?.nombre || 'No Especificado';
+  // Match
+  matchModalidad (id:string) {
+    const parsedId = parseInt(id);
+    const result = this.getModalidadesQuery.data()
+    if (!result) return '-';
+    return result.modalidades.find((modalidad) => modalidad.id === parsedId)?.nombre || 'NO ESPECIFICADO';
   }
 
 }
