@@ -52,6 +52,32 @@
 
   <app-card-with-skeleton>
 
+    <h3 class="c-title">Información de Producción General</h3>
+
+    <div class="grid">
+
+      <div class="col-6">
+        <span>Código: {{ produccionGeneralFromReportes?.codigo }}</span>
+      </div>
+
+      <div class="col-6">
+        <span>Asignatura: {{ produccionGeneralFromReportes?.asignatura }}</span>
+      </div>
+
+      <div class="col-6">
+        <span>Docente Diseñador: {{ produccionGeneralFromReportes?.docente_disenador }}</span>
+      </div>
+
+      <div class="col-6">
+        <span>Nombre Facultad: {{ produccionGeneralFromReportes?.nombre_facultad }}</span>
+      </div>
+
+    </div>
+
+  </app-card-with-skeleton>
+
+  <app-card-with-skeleton>
+
     <h3 class="c-title">Reportes</h3>
 
     @if (getFilteredReportRows().length === 0) {
@@ -70,21 +96,11 @@
   
         <tr>
 
-          <th>Codigo</th>
-
-          <th>Asignatura</th>
-
           <th>Modalidad</th>
 
           <th>Formato</th>
 
-          <th>Docente Diseñador</th>
-
-          <th>Facultad</th>
-
-          <th>Fecha Inicio</th>
-
-          <th>Porcentaje Real</th>
+          <th>Porcentaje de Avance</th>
 
         </tr>
   
@@ -95,15 +111,7 @@
         <tr>
 
           <td>
-            {{ produccion.codigo }}
-          </td>
-
-          <td>
-            {{ produccion.asignatura }}
-          </td>
-
-          <td>
-            {{ matchIdModalidad(produccion.modalidad) }}
+            {{ matchModalidad(produccion.modalidad) }}
           </td>
 
           <td>
@@ -111,20 +119,7 @@
           </td>
 
           <td>
-            {{ produccion.docente_disenador }}
-          </td>
-
-          <td>
-            {{ matchIdFacultad(produccion.facultad) }}
-          </td>
-
-          <td>
-            {{ parseInitDate(produccion.fecha_inicio) }}
-          </td>
-
-          <td>
-            94%
-            <!-- {{ calculatePorcentajeReal(produccion.id) }} -->
+            {{ calculatePorcentajeReal(produccion.id) }}%
           </td>
 
         </tr>

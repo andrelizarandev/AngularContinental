@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { apiUrl } from '..';
 
 // Types
-import { GetFacultadData, GetPorcentajeRealData, GetReportesData, GetReportesResponse } from './reportes.types';
+import { GetFacultadData, GetReportesResponse } from './reportes.types';
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +22,6 @@ export class ReportesService {
 
   getFacultadesApi () {
     return lastValueFrom(this.http.get<GetFacultadData[]>(`${apiUrl}/facultades`));
-  }
-
-  getPorcentajeRealApi (id:string) {
-    return lastValueFrom(this.http.get<GetPorcentajeRealData[]>(`${apiUrl}/metodos/${id}`));
   }
 
 }

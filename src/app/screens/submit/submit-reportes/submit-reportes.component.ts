@@ -28,7 +28,7 @@ import { FormatosService } from '../../../api/formatos/formatos.service';
 import { ModalidadesService } from '../../../api/modalidades/modalidades.service';
 
 // Types
-import { GetFacultadData, GetReportesData } from '../../../api/reportes/reportes.types';
+import { GetFacultadData, GetMetodoData } from '../../../api/reportes/reportes.types';
 import { OptionDataIdNumber } from '../submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
 
 @Component({
@@ -164,8 +164,8 @@ export class SubmitReportesComponent {
     queryFn: async () => {
       try {
         const result = await this.reportesService.getReportesApi(this.currentId);
-        this.calculatePorcentajeModalidades(result.resultado);
-        return result.resultado;
+        this.calculatePorcentajeModalidades(result.metodo);
+        return result;
       } catch (err:any) {
         return null;
       }
@@ -187,6 +187,11 @@ export class SubmitReportesComponent {
     queryFn: () => this.modalidadesService.getModalidadesApi()
   }));
 
+  // Getters
+  public get produccionGeneralFromReportes () {
+    return this.getReportesQuery.data()?.produccion_general || null;
+  }
+
   // Match
   matchIdFacultad (id:string) {
     const parsedId = Number(id);
@@ -195,15 +200,11 @@ export class SubmitReportesComponent {
     return data.find(facultad => facultad.id === parsedId)?.nombre || '-';
   }
 
-  matchIdModalidad (id:string) {
+  matchModalidad (id:string) {
     const parsedId = parseInt(id);
     const data = this.getModalidadesQuery.data();
     if (!data) return '-';
     return data.modalidades.find(modalidad => modalidad.id === parsedId)?.nombre || '-';
-  }
-
-  matchCurrentFormato (id:number) {
-    const result = this.getReportesQuery.data();
   }
 
   matchFormato (id:number) {
@@ -215,65 +216,65 @@ export class SubmitReportesComponent {
   // Calculate
   calculatePorcentajeReal (id:number) {
 
-    const selectedRow = this.getReportesQuery.data()?.find(({ id:currentId }) => currentId === id);
+    const result = this.getReportesQuery.data()
+
+    if (!result) return '-';
+
+    const selectedRow = result.metodo.find(({ id:rowId }) => rowId === id);
 
     if (!selectedRow) return '-';
 
-    const { unidades } = selectedRow;
-
-    const { unidad1, unidad2, unidad3, unidad4 } = unidades;
-
     const { 
-      autoevaluaciones,
-       guia,
-       hoja_calendario,
-       lecturas,
-       pa,
-       ppt,
-       recurso_innovador,
-    } = unidad1
+      u1_autoevaluaciones,
+      u1_guia,
+      hoja_calendario,
+      lecturas,
+      u1_pa1,
+      u1_ppt,
+      u1_recurso_innovador
+   } = selectedRow;
 
-    const sum = (autoevaluaciones + guia + hoja_calendario + lecturas + pa + ppt + recurso_innovador);  
+    const sum = (u1_autoevaluaciones + u1_guia + hoja_calendario + lecturas + u1_pa1 + u1_ppt + u1_recurso_innovador);  
     const porcentajeReal = (sum * 25 / 8);
 
     const {
-      autoevaluaciones:u2_autoevaluaciones,
-      guia:u2_guia,
-      pa:u2_pa2,
-      ppt:u2_ppt,
-      recurso_innovador:u2_recurso_innovador
-    } = unidad2;
+      u2_autoevaluaciones,
+      u2_guia,
+      u2_pa2,
+      u2_ppt,
+      u2_recurso_innovador
+    } = selectedRow;
 
     const sum2 = (u2_autoevaluaciones + u2_guia + u2_pa2 + u2_ppt + u2_recurso_innovador);
     const porcentajeReal2 = (sum2 * 25 / 5);
 
     const {
-      autoevaluaciones:u3_autoevaluaciones,
-      guia:u3_guia,
-      pa:u3_pa3,
-      ppt:u3_ppt,
-      recurso_innovador:u3_recurso_innovador
-    } = unidad3;
+      u3_autoevaluaciones,
+      u3_guia,
+      u3_pa3,
+      u3_ppt,
+      u3_recurso_innovador
+    } = selectedRow;
 
     const sum3 = (u3_autoevaluaciones + u3_guia + u3_pa3 + u3_ppt + u3_recurso_innovador);
     const porcentajeReal3 = (sum3 * 25 / 5);
 
     const {
-      autoevaluaciones:u4_autoevaluaciones,
-      guia:u4_guia,
-      pa:u4_pa4,
-      ppt:u4_ppt,
-      recurso_innovador:u4_recurso_innovador
-    } = unidad4;
+      u4_autoevaluaciones,
+      u4_guia,
+      u4_pa4,
+      u4_ppt,
+      u4_recurso_innovador
+    } = selectedRow;
     
     const sum4 = (u4_autoevaluaciones + u4_guia + u4_pa4 + u4_ppt + u4_recurso_innovador);
     const porcentajeReal4 = (sum4 * 25 / 5);
 
-    return `${(porcentajeReal + porcentajeReal2 + porcentajeReal3 + porcentajeReal4)}%`;
+    return porcentajeReal + porcentajeReal2 + porcentajeReal3 + porcentajeReal4;
 
   }
 
-  calculatePorcentajeModalidades (data:GetReportesData[]) {
+  calculatePorcentajeModalidades (data:GetMetodoData[]) {
 
     var totalPresencial = 0;
     var totalSemiprecencial = 0;
@@ -281,13 +282,13 @@ export class SubmitReportesComponent {
 
     data.forEach(({ modalidad }) => {
       switch (modalidad) {
-        case '1': totalPresencial++;
+        case 1: totalPresencial++;
           break;
-        case '2': totalSemiprecencial++;
+        case 2: totalSemiprecencial++;
           break;
-        case '3': totalADistancia++;
+        case 3: totalADistancia++;
           break;
-        case'4': 
+        case 4: 
           totalPresencial++;
           totalADistancia++;
           break;  
@@ -326,14 +327,14 @@ export class SubmitReportesComponent {
 
     if (!data) return [];
 
-    const rows = data.map(({ fecha_inicio, id }) => {
-      const parsedDate = this.parseInitDate(fecha_inicio);
-      const porcentajeReal = this.calculatePorcentajeReal(id);
-      const parsedPorcentaje = TextHelper.returnJustNumber(porcentajeReal);
-      return ({ fecha_inicio:parsedDate, porcentajeReal:parsedPorcentaje });
-    });
+    // const rows = data.metodo.map(({ , id }) => {
+    //   const parsedDate = this.parseInitDate(fecha_inicio);
+    //   const porcentajeReal = this.calculatePorcentajeReal(id);
+    //   const parsedPorcentaje = TextHelper.returnJustNumber(porcentajeReal);
+    //   return ({ fecha_inicio:parsedDate, porcentajeReal:parsedPorcentaje });
+    // });
 
-    return rows;
+    return [];
 
   }
 
@@ -349,42 +350,24 @@ export class SubmitReportesComponent {
     return HandleDates.parseDateFormat1ToFormat2(date, 'YYYY-MM-DD', 'DD/MM/YYYY');
   }
 
-  parseReportesData () {
-    
-  }
-
   // Filter
   getFilteredReportRows () {  
     
-    const codigoFilter = this.filterFormGroup?.value.codigo;
+    // const codigoFilter = this.filterFormGroup?.value.codigo;
 
-    const asignaturaFilter = this.filterFormGroup?.value.asignatura;
+    // const asignaturaFilter = this.filterFormGroup?.value.asignatura;
 
-    const docenteDisenadorFilter = this.filterFormGroup?.value.docente_disenador;
+    // const docenteDisenadorFilter = this.filterFormGroup?.value.docente_disenador;
 
-    const facultadFilter = this.filterFormGroup?.value.selectedFacultad;
+    // const facultadFilter = this.filterFormGroup?.value.selectedFacultad;
 
     const result1 = this.getReportesQuery.data();
 
-    if (result1 === null || result1 === undefined || result1.length === 0) return [];
+    if (result1 === null || result1 === undefined || result1.metodo.length === 0) return [];
 
-    const firstFilter = (codigoFilter === '') 
-      ? result1 
-      : result1.filter(({ codigo }) => codigo.toLowerCase().includes(codigoFilter.toLowerCase()));
+    const metodos = result1.metodo;
 
-    const secondFilter = (asignaturaFilter === '') 
-      ? firstFilter 
-      : firstFilter.filter(({ asignatura }) => asignatura.toLowerCase().includes(asignaturaFilter.toLowerCase()));
-
-    const thirdFilter = (docenteDisenadorFilter === '') 
-      ? secondFilter 
-      : secondFilter.filter(({ docente_disenador }) => docente_disenador.toLowerCase().includes(docenteDisenadorFilter.toLowerCase()));
-
-    const fourthFilter = (facultadFilter === null)
-      ? thirdFilter
-      : thirdFilter.filter(({ facultad }) => Number(facultad) === facultadFilter.id);
-
-    return fourthFilter;
+    return metodos;
 
   }
 
