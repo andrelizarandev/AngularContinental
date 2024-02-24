@@ -1,13 +1,14 @@
 // Modules
-import { injectMutation, injectQuery } from '@ngneat/query';
+import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { injectMutation, injectQuery } from '@ngneat/query';
 
 // Api
 import { apiUrl } from '..';
 
 // Types
-import { GetUserResponse } from './users.types';
+import { GetUserResponse, PostUserData } from './users.types';
 
 @Injectable({
   providedIn: 'root'
@@ -25,10 +26,8 @@ export class UsersService {
     });
   }
 
-  submitUser () {
-    return this.#mutation({
-      mutationFn: (user: any) => this.#http.post(`${apiUrl}/register`, user)
-    });
+  submitUser (data:PostUserData) {
+    return lastValueFrom(this.#http.post(`${apiUrl}/register`, data));
   }
 
 }

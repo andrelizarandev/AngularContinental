@@ -1,11 +1,16 @@
 // Modules
+import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { Component, inject } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
+import { Component, inject } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { injectMutation } from '@tanstack/angular-query-experimental';
+
+// Actions
+import { setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
 
 // Components
 import { CardWithSkeletonComponent } from '../../../components/card-with-skeleton/card-with-skeleton.component';
@@ -16,6 +21,7 @@ import { UsersService } from '../../../api/users/users.service';
 
 // Types
 import { PostUserData } from '../../../api/users/users.types';
+import { postUserErrorMessage, postUserSuccessMessage } from '../../../data/data.messages';
 
 @Component({
   selector: 'app-submit-user-screen',
@@ -34,13 +40,26 @@ import { PostUserData } from '../../../api/users/users.types';
 
 export class SubmitUserScreenComponent {
 
-  submitUserService = inject(UsersService).submitUser();
+  userServices = inject(UsersService)
+
+  submitUserMutation = injectMutation(() => ({
+    mutationFn: (data:PostUserData) => this.userServices.submitUser(data),
+    onSuccess: () => {
+      this.store.dispatch(setMessageFromUiDataAction({ message:postUserSuccessMessage }));
+      this.registerUserForm.enable();
+    },
+    onError: () => {
+      this.store.dispatch(setMessageFromUiDataAction({ message:postUserErrorMessage }));
+      this.registerUserForm.enable();
+    }
+  }))
 
   registerUserForm: FormGroup
 
   constructor (
     private fb:FormBuilder, 
-    private router:Router
+    private router:Router,
+    private store:Store
   ) {
 
     this.registerUserForm = this.fb.group({
@@ -78,12 +97,9 @@ export class SubmitUserScreenComponent {
       rol
     }
 
-    try {
-      const response = await this.submitUserService.mutateAsync(userPayload);
-      this.onSuccessSubmitUser();
-    } catch (err:any) {
-      console.log(err);
-    }
+    this.registerUserForm.disable();
+
+    this.submitUserMutation.mutate(userPayload);
 
   }
 

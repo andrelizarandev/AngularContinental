@@ -28,5 +28,6 @@ export const uiReducer = createReducer<InitialStateUiReducer>(initialStateUiRedu
 
 export type MessageData = {
   message:string;
+  body:string;
   type:'success' | 'error' | 'warning' | 'info';
 }

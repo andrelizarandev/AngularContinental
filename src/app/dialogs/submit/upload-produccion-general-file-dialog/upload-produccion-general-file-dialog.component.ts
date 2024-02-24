@@ -10,6 +10,9 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, inject }
 // Actions
 import { setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
 
+// Messages
+import { postArchivoSuccessMessage } from '../../../data/data.messages';
+
 // Services
 import { ProduccionService } from '../../../api/produccion/produccion.service';
 
@@ -45,7 +48,7 @@ export class UploadProduccionGeneralFileDialogComponent {
     onSuccess: () =>  {
       client.invalidateQueries({ queryKey:['get-produccion-general' ]});
       this.closeDialog();
-      this.store.dispatch(setMessageFromUiDataAction({ message:{ message:'Archivo Enviado', type:'success' } }));
+      this.store.dispatch(setMessageFromUiDataAction({ message:postArchivoSuccessMessage }));
     }
   }));
 

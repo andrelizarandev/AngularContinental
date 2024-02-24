@@ -39,7 +39,8 @@ export class NavigationContainerComponent  {
     this.store.pipe(select(messageSelector)).subscribe((message) => {
       if (message) this.messageService.add({ 
         severity:message.type,
-        summary:message.message 
+        summary:message.message,
+        detail:message.body
       });
     });
 

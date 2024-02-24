@@ -38,6 +38,7 @@ import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-cur
 // Types
 import { OptionData } from '../submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
 import { GetDataSilabosData, ModalidadEnum, PutProduccionGeneralData } from '../../../api/produccion/produccion.types';
+import { putProduccionGeneralSuccessMessage } from '../../../data/data.messages';
 
 @Component({
   selector: 'app-submit-produccion-general',
@@ -340,9 +341,6 @@ export class SubmitProduccionGeneralComponent {
 
         this.modalidadName = nombre_modalidad;
 
-
-        this.store.dispatch(setMessageFromUiDataAction({ message:{ message:'Información de Producción Cargada', type:'success' } }))
-
         return result;
 
       } catch (err:any) {
@@ -432,7 +430,7 @@ export class SubmitProduccionGeneralComponent {
       return this.produccionGeneralService.putProduccionGeneral(this.currentId, this.registerProduccionGeneralForm.value as PutProduccionGeneralData)
     },
     onSuccess: () => {
-      this.store.dispatch(setMessageFromUiDataAction({ message:{ message:'Producción Actualizada', type:'success' } }));
+      this.store.dispatch(setMessageFromUiDataAction({ message:putProduccionGeneralSuccessMessage }));
     }
   }));
 

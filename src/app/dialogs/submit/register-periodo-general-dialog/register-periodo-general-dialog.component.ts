@@ -7,7 +7,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 // Data
-import { ratingOptions } from '../../../data/data.index';
+import { ratingOptions } from '../../../data/data.options';
 
 // Types
 import { ModalidadEnum } from '../../../api/produccion/produccion.types';

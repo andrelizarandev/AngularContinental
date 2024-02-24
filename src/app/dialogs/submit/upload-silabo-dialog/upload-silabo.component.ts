@@ -11,6 +11,9 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, inject }
 // Actions
 import { setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
 
+// Messages
+import { postArchivoSuccessMessage } from '../../../data/data.messages';
+
 // Services
 import { ProduccionService } from '../../../api/produccion/produccion.service';
 
@@ -50,7 +53,7 @@ export class UploadSilaboDialogComponent {
     mutationFn: (data:PostSilaboFileData) => this.produccionService.submitSilaboFile(data),
     onSuccess: () => {
       this.closeDialog();
-      this.store.dispatch(setMessageFromUiDataAction({ message:{ message:'Archivo Enviado', type:'success' } }))
+      this.store.dispatch(setMessageFromUiDataAction({ message:postArchivoSuccessMessage }))
       client.invalidateQueries({ queryKey:['get-silabos-in-this-periodo-general'] });
     }
   }));
