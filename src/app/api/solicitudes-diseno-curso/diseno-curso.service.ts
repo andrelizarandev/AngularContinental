@@ -24,7 +24,7 @@ export class SolicitudDisenoCursoService {
 
   constructor (private http:HttpClient) {}
 
-  getEapList () {
+  getEapApi () {
     return lastValueFrom(this.http.get<GetEapData[]>(`${apiUrl}/eap`));
   }
 

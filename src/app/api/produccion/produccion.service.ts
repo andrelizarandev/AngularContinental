@@ -11,6 +11,7 @@ import {
   GetProduccionGeneralData, 
   GetProduccionGeneralDataById, 
   GetSilabosFromProduccionGeneralResponse, 
+  GetTipoDisenoData, 
   PostProduccionGeneralFileData, 
   PostSilaboFileData,
   PutProduccionGeneralData
@@ -50,6 +51,10 @@ export class ProduccionService {
     formData.append('archivo', data.file);
     formData.append('id_produccion_general', data.id_produccion_general.toString());
     return lastValueFrom(this.http.post<PostProduccionGeneralFileData>(`${apiUrl}/silabo`, formData));
+  }
+
+  getTipoDisenosApi () {
+    return lastValueFrom(this.http.get<GetTipoDisenoData[]>(`${apiUrl}/tipo-disenos`));
   }
 
 }

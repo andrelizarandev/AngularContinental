@@ -86,3 +86,8 @@ export type GetDataSilabosData = {
 export type GetSilabosFromProduccionGeneralResponse = {
   archivos:GetDataSilabosData[];
 }
+
+export type GetTipoDisenoData = {
+  id:number;
+  nombre:string;
+}

@@ -47,15 +47,21 @@
   
                 </div>
         
-                <div class="col-12 md:col-6 v-flex">
+                <div class="col-12 md:col-6">
   
-                  <label>Eap</label>
+                  <div class="v-flex">
+  
+                    <label>Eap</label>
         
-                  <input
-                    pInputText
-                    formControlName="eap" 
-                    [style]="{'width':'100%'}"
-                  />
+                    <p-dropdown
+                      [options]="getEapOptions()" 
+                      formControlName="eap" 
+                      [showClear]="true"
+                      [style]="{'width':'100%'}"
+                      placeholder="Seleccione una EAP"
+                    />
+
+                  </div>
   
                 </div>
   
@@ -105,6 +111,24 @@
                     [style]="{'width':'100%'}"
                   />
   
+                </div>
+
+                <div class="col-12 md:col-6 ">
+  
+                  <div class="v-flex">
+
+                    <label>Tipo de Diseño</label>
+        
+                    <p-dropdown 
+                      [options]="getTipoDisenoOptions()" 
+                      formControlName="tipo_diseno" 
+                      [showClear]="true"
+                      [style]="{'width':'100%'}"
+                      placeholder="Seleccione un Tipo de Diseño"
+                    />
+
+                  </div>
+
                 </div>
 
               </div>

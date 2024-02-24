@@ -30,15 +30,17 @@ import { UploadSilaboDialogComponent } from '../../../dialogs/submit/upload-sila
 // Helpers
 import HandleDates from '../../../helpers/handle-dates';
 
+// Messages
+import { putProduccionGeneralSuccessMessage } from '../../../data/data.messages';
+
 // Service
 import { ProduccionService } from '../../../api/produccion/produccion.service';
 import { ModalidadesService } from '../../../api/modalidades/modalidades.service';
 import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-curso/diseno-curso.service';
 
 // Types
-import { OptionData } from '../submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
+import { OptionData, OptionDataIdNumber } from '../submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
 import { GetDataSilabosData, ModalidadEnum, PutProduccionGeneralData } from '../../../api/produccion/produccion.types';
-import { putProduccionGeneralSuccessMessage } from '../../../data/data.messages';
 
 @Component({
   selector: 'app-submit-produccion-general',
@@ -133,11 +135,12 @@ export class SubmitProduccionGeneralComponent {
       // Form 1
       codigo: ['', Validators.required],
       plan: ['', Validators.required],
-      eap: ['', Validators.required],
+      eap: [null, Validators.required],
       asignatura: ['', Validators.required],
       tipo_asignatura: ['', Validators.required],
       numero_formatos: ['', Validators.required],
       situacion_asignatura: ['', Validators.required],
+      tipo_diseno: [null, Validators.required],
       
       // Form 2
       fecha_inicio: ['', Validators.required],
@@ -212,6 +215,7 @@ export class SubmitProduccionGeneralComponent {
           tipo_asignatura,
           numero_formatos,
           situacion_asignatura,
+          tipo_diseno,
 
           // Form 2
           fecha_inicio,
@@ -275,7 +279,6 @@ export class SubmitProduccionGeneralComponent {
           realidad_aumentada,
           semipresencial,
           solicitud_id,
-          tipo_diseno,
           nombre_modalidad,
 
         } = result.datos_produccion_general;
@@ -290,6 +293,7 @@ export class SubmitProduccionGeneralComponent {
           tipo_asignatura,
           numero_formatos,
           situacion_asignatura,
+          tipo_diseno,
 
           // Form 2
           fecha_inicio,
@@ -368,6 +372,16 @@ export class SubmitProduccionGeneralComponent {
     }
   }));
 
+  getTipoDisenoQuery = injectQuery(() => ({
+    queryKey: ['get-tipo-diseno'],
+    queryFn: () => this.produccionGeneralService.getTipoDisenosApi()
+  }));
+
+  getEapQuery = injectQuery(() => ({
+    queryKey: ['get-eap'],
+    queryFn: () => this.solicitudDisenoCursoService.getEapApi()
+  }));
+
   // Submit
   putProduccionGeneral = injectMutation(() => ({
     mutationFn: () => {
@@ -433,6 +447,21 @@ export class SubmitProduccionGeneralComponent {
       this.store.dispatch(setMessageFromUiDataAction({ message:putProduccionGeneralSuccessMessage }));
     }
   }));
+
+  // Get
+  getTipoDisenoOptions () {
+    const result = this.getTipoDisenoQuery.data();
+    if (!result) return [];
+    const options:OptionDataIdNumber[] = result.map(({ id, nombre }) => ({ id, label:nombre }));
+    return options;
+  }
+
+  getEapOptions () {
+    const result = this.getEapQuery.data();
+    if (!result) return [];
+    const options:OptionDataIdNumber[] = result.map(({ id, nombre }) => ({ id, label:nombre }));
+    return options;
+  }
 
   // Toggle
   toggleIsRegisterPeriodoGeneralDialogOpen (modalidad:ModalidadEnum | null = null) {
