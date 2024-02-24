@@ -2,7 +2,7 @@
   
   <app-custom-breadcrumb [items]="breadcrumbItems"/>
   
-  <app-card-with-skeleton [isLoading]="periodoListService().isLoading">
+  <app-card-with-skeleton>
 
     <div class="h-flex-justify-between-align-center">
     
@@ -17,7 +17,7 @@
   
     </div>
   
-    <p-table [value]="periodoListService().data || []">
+    <p-table [value]="[]">
   
       <ng-template pTemplate="header">
   

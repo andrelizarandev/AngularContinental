@@ -38,6 +38,7 @@ import BreadcrumbItemsClass from '../../../utils/breadcrumb-items';
 
 export class RolesComponent {
 
+  // Vars
   isRegisterOpen = false;
 
   confirmDeletePayload:ConfirmDialogPayload | null = null;
@@ -48,6 +49,7 @@ export class RolesComponent {
     { id: '3', name: 'Guest', description: 'Guest' },
   ];
 
+  // Breadcumb
   breadcrumbItems:MenuItem[] = [
     BreadcrumbItemsClass.homeItem,
     BreadcrumbItemsClass.rolesItem
@@ -78,8 +80,10 @@ export class RolesComponent {
     });
   }
 
+  // On Success
   onSuccessSubmitRol (data:GetRoleData) {}
 
+  // On Error
   onErrorSubmitRol () {}
 
 }

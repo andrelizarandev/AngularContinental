@@ -1,7 +1,7 @@
 // Modules
 import { lastValueFrom } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
 
 // Api
 import { apiUrl } from '..';
@@ -14,12 +14,10 @@ import { GetSeguimientoResponse } from './seguimiento.types';
 })
 export class SeguimientoService {
 
-  constructor() { }
-
-  #http = inject(HttpClient);
+  constructor (private http:HttpClient) {}
 
   getSeguimientoList (id:string) {
-    return lastValueFrom(this.#http.get<GetSeguimientoResponse>(`${apiUrl}/seguimiento/${id}`));
+    return lastValueFrom(this.http.get<GetSeguimientoResponse>(`${apiUrl}/seguimiento/${id}`));
   }
   
 }

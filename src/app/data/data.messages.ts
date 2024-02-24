@@ -24,3 +24,15 @@ export const postUserErrorMessage:MessageData = {
   body:'Revisa que tu correo no se haya repetido antes.',
   type:'error'
 }
+
+export const postProgramaSuccessMessage:MessageData = {
+  message:'Programa registrado con éxito',
+  body:'Se ha agregado tu programa a la plataforma.',
+  type:'success'
+}
+
+export const postProgramaErrorMessage:MessageData = {
+  message:'Error al registrar programa',
+  body:'Revisa que tu código no se haya repetido antes.',
+  type:'error'
+}

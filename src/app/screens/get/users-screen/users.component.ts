@@ -18,6 +18,7 @@ import { RegisterProgramaComponentDialog } from '../../../dialogs/submit/registe
 
 // Services
 import { UsersService } from '../../../api/users/users.service';
+import { injectQuery } from '@tanstack/angular-query-experimental';
 
 @Component({
   selector: 'app-users',
@@ -36,7 +37,12 @@ import { UsersService } from '../../../api/users/users.service';
 
 export class UsersComponent {
 
-  getUserListService = inject(UsersService).getUserList().result;
+  userService = inject(UsersService);
+
+  getUsersQuery = injectQuery(() => ({
+    queryKey: ['get-users'],
+    queryFn: () => this.userService.getUserApi()
+  }));
 
   breadcrumbItems:MenuItem[] = [
     BreadcrumbItemsClass.homeItem,

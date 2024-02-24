@@ -1,7 +1,7 @@
 // Modules
 import { lastValueFrom } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
 
 // Api
 import { apiUrl } from '..';
@@ -22,34 +22,34 @@ import { GetFacultadData } from '../reportes/reportes.types';
 
 export class SolicitudDisenoCursoService {
 
-  #http = inject(HttpClient);
+  constructor (private http:HttpClient) {}
 
   getEapList () {
-    return lastValueFrom(this.#http.get<GetEapData[]>(`${apiUrl}/eap`));
+    return lastValueFrom(this.http.get<GetEapData[]>(`${apiUrl}/eap`));
   }
 
   getTipoAsignaturaList () {
-    return lastValueFrom(this.#http.get<GetTipoAsignaturaData[]>(`${apiUrl}/tipo-asignaturas`));
+    return lastValueFrom(this.http.get<GetTipoAsignaturaData[]>(`${apiUrl}/tipo-asignaturas`));
   }
 
   getTipoDisenoList () {
-    return lastValueFrom(this.#http.get<GetTipoDisenoData[]>(`${apiUrl}/tipo-disenos`));
+    return lastValueFrom(this.http.get<GetTipoDisenoData[]>(`${apiUrl}/tipo-disenos`));
   }
 
   getFacultadList () {
-    return lastValueFrom(this.#http.get<GetFacultadData[]>(`${apiUrl}/facultades`));
+    return lastValueFrom(this.http.get<GetFacultadData[]>(`${apiUrl}/facultades`));
   }
 
   getPlanList () {
-    return lastValueFrom(this.#http.get<GetPlanData[]>(`${apiUrl}/planes`));
+    return lastValueFrom(this.http.get<GetPlanData[]>(`${apiUrl}/planes`));
   }
 
   getDisenoCursoList () {
-    return lastValueFrom(this.#http.get<GetSolicitudDisenoCursoData[]>(`${apiUrl}/solicitudes`));
+    return lastValueFrom(this.http.get<GetSolicitudDisenoCursoData[]>(`${apiUrl}/solicitudes`));
   }
 
   getDisenoCursoById (id: number) {
-    return lastValueFrom(this.#http.get<GetSolicitudDisenoCursoData[]>(`${apiUrl}/solicitudes`));
+    return lastValueFrom(this.http.get<GetSolicitudDisenoCursoData[]>(`${apiUrl}/solicitudes`));
   }
 
 }

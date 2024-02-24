@@ -14,12 +14,10 @@ import { GetValidacionResponse } from './validacion.types';
 })
 export class ValidacionService {
 
-  constructor() { }
-
-  #http = inject(HttpClient)
+  constructor (private http:HttpClient) {}
 
   getValidacionByProduccionGeneralId (id:string) {
-    return lastValueFrom(this.#http.get<GetValidacionResponse>(`${apiUrl}/validacion/${id}`))
+    return lastValueFrom(this.http.get<GetValidacionResponse>(`${apiUrl}/validacion/${id}`))
 
   }
 }

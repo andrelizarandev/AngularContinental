@@ -18,6 +18,7 @@ import { ProgramasService } from '../../../api/programas/programas.service';
 import { ConfirmDialogComponent, ConfirmDialogPayload } from '../../../dialogs/shared/confirm-dialog/confirm-dialog.component';
 import { MenuItem } from 'primeng/api';
 import BreadcrumbItemsClass from '../../../utils/breadcrumb-items';
+import { injectQuery } from '@tanstack/angular-query-experimental';
 
 @Component({
   selector: 'app-programas-screen',
@@ -37,10 +38,19 @@ import BreadcrumbItemsClass from '../../../utils/breadcrumb-items';
 
 export class ProgramasScreenComponent {
 
+  // Vars
   isRegisterOpen = false;
   confirmDeletePayload:ConfirmDialogPayload | null = null;
-  getUserListService = inject(ProgramasService).getProgramasList().result;
 
+  // Services
+  programasService = inject(ProgramasService)
+
+  getProgramasQuery = injectQuery(() => ({
+    queryKey: ['get-programas'],
+    queryFn: () => this.programasService.getProgramasApi()
+  }));
+
+  // Breadcrumb
   breadcrumbItems:MenuItem[] = [
     BreadcrumbItemsClass.homeItem,
     BreadcrumbItemsClass.programasItem

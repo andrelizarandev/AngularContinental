@@ -1,7 +1,7 @@
 // Modules
+import { lastValueFrom } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { injectQuery } from '@ngneat/query';
 
 // Api
 import { apiUrl } from '..';
@@ -14,14 +14,14 @@ import { GetProgramaResponse, PostProgramaData } from './programas.types';
 })
 export class ProgramasService {
 
-  #http = inject(HttpClient);
-  #query = injectQuery();
+  constructor (private http:HttpClient) {}
 
-  getProgramasList () {
-    return this.#query({
-      queryKey: ['get-programas'] as const,
-      queryFn: () => this.#http.get<GetProgramaResponse>(`${apiUrl}/programas`)
-    });
+  getProgramasApi () {
+    return lastValueFrom(this.http.get<GetProgramaResponse[]>(`${apiUrl}/programas`));
+  }
+
+  submitProgramaApi (data:PostProgramaData) {
+    return lastValueFrom(this.http.post(`${apiUrl}/programas`, data));
   }
   
 }

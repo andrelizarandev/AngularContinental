@@ -17,7 +17,7 @@ import { ConfirmDialogComponent, ConfirmDialogPayload } from '../../../dialogs/s
 import { RegisterPeriodoDialogComponent } from '../../../dialogs/submit/register-periodo-dialog/register-periodo-dialog.component';
 
 // Types
-import { ProgramasService } from '../../../api/programas/programas.service';
+import { PeriodoService } from '../../../api/periodo/periodo.service';
 
 @Component({
   selector: 'app-periodos-screen',
@@ -36,10 +36,14 @@ import { ProgramasService } from '../../../api/programas/programas.service';
 })
 export class PeriodosScreenComponent {
 
+  // Vars
   isRegisterOpen: boolean = false;
   confirmDeletePayload:ConfirmDialogPayload | null = null
-  periodoListService = inject(ProgramasService).getProgramasList().result;
 
+  // Services
+  periodoListService = inject(PeriodoService);
+
+  // Breadcrumb
   breadcrumbItems:MenuItem[] = [
     BreadcrumbItemsClass.homeItem,
     BreadcrumbItemsClass.periodosItem

@@ -2,7 +2,7 @@
 
   <app-custom-breadcrumb [items]="breadcrumbItems"/>
 
-  <app-card-with-skeleton [isLoading]="getUserListService().isLoading">
+  <app-card-with-skeleton [isLoading]="getUsersQuery.isLoading()">
 
     <div class="h-flex-justify-between-align-center">
 
@@ -12,7 +12,7 @@
   
     </div>
 
-    <p-table [value]="getUserListService().data || []">
+    <p-table [value]="getUsersQuery.data() || []">
 
       <ng-template pTemplate="header">
   

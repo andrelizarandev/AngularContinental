@@ -1,8 +1,7 @@
 // Modules
 import { lastValueFrom } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { injectMutation, injectQuery } from '@ngneat/query';
 
 // Api
 import { apiUrl } from '..';
@@ -15,19 +14,14 @@ import { GetUserResponse, PostUserData } from './users.types';
 })
 export class UsersService {
 
-  #http = inject(HttpClient);
-  #query = injectQuery();
-  #mutation = injectMutation();
+  constructor (private http:HttpClient) {}
 
-  getUserList () {
-    return this.#query({
-      queryKey: ['get-users'] as const,
-      queryFn: () => this.#http.get<GetUserResponse>(`${apiUrl}/usuarios`)
-    });
+  getUserApi () {
+    return lastValueFrom(this.http.get<GetUserResponse>(`${apiUrl}/usuarios`));
   }
 
   submitUser (data:PostUserData) {
-    return lastValueFrom(this.#http.post(`${apiUrl}/register`, data));
+    return lastValueFrom(this.http.post(`${apiUrl}/register`, data));
   }
 
 }
