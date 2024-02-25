@@ -1,25 +1,25 @@
-<div class="login-background">
+<app-context-container>
 
-  <div class="login-background-padding">
+  <div class="login-container">
 
-    <div class="grid">
-
-      <!-- <div class="hidden md:flex md:col-6">
+    <div class="grid h-full">
+  
+      <div class="hidden md:flex md:col-6 bg-blue-500">
         
         <div class="logo-container">
-
+  
           <img src="/assets/u-continental.svg" alt="" class="login-logo">
-
+  
         </div>
-
-      </div> -->
-
-      <div class="col-12 md:col-12">
+  
+      </div>
+  
+      <div class="col-12 md:col-6 bg-gray-100">
         
-        <div class="grid v-flex-justify-center-align-center">
-
-          <p-card class="col-12 md:col-8 lg:col-6 xl:col-4 p-0">
-
+        <div class="grid align-items-center	justify-content-center h-full">
+  
+          <p-card class="col-12 md:col-8 lg:col-6 xl:col-6 p-0">
+  
             <form class="v-flex p-0" [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
   
               <h2 class="c-title align-self-center">Iniciar Sesión</h2>
@@ -29,7 +29,7 @@
                 type="text" 
                 class="p-inputtext-sm" 
                 placeholder="Correo"
-                formControlName="correo" 
+                formControlName="email" 
               />
             
               <input 
@@ -37,7 +37,7 @@
                 type="password"
                 class="p-inputtext-sm" 
                 placeholder="Contraseña"
-                formControlName="contrasena"  
+                formControlName="password"  
               />
       
               <p-button 
@@ -50,14 +50,14 @@
             </form>
             
           </p-card>
-
+  
         </div>
-
-
+  
+  
       </div>
-
+  
     </div>
-
+  
   </div>
 
-</div>
+</app-context-container>

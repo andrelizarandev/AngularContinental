@@ -1,17 +1,8 @@
-.login-background {
+.login-container {
   width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: var(--bluegray-600);
-}
-
-.login-background-padding {
-  height: 100%;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 .logo-container {
@@ -23,6 +14,6 @@
 }
 
 .login-logo {
-  width: 240px;
-  height: 240px;
+  width: 200px;
+  height: 200px;
 }

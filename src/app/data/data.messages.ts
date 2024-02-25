@@ -36,3 +36,15 @@ export const postProgramaErrorMessage:MessageData = {
   body:'Revisa que tu código no se haya repetido antes.',
   type:'error'
 }
+
+export const postLoginSuccessMessage:MessageData = {
+  message:'Bienvenido',
+  body:'Has iniciado sesión correctamente.',
+  type:'success'
+}
+
+export const postLoginErrorMessage:MessageData = {
+  message:'Error al iniciar sesión',
+  body:'Revisa que tu correo y contraseña sean correctos.',
+  type:'error'
+}

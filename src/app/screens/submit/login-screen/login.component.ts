@@ -7,15 +7,26 @@ import { Component, inject } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { injectMutation } from '@tanstack/angular-query-experimental';
 
 // Actions
 import { setUserDataAction } from '../../../state/actions/login.actions';
+import { setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
+
+// Components
+import { ContextContainerComponent } from '../../../components/context-container/context-container.component';
+
+// Messages
+import { postLoginErrorMessage, postLoginSuccessMessage } from '../../../data/data.messages';
 
 // Services
 import { LoginService } from '../../../api/login/login.service';
 
+// Texts
+import { continentalToken } from '../../../data/data.texts';
+
 // Types
-import { GetUser, PostLoginResponse } from '../../../api/login/login.types';
+import { PostLoginData } from '../../../api/login/login.types';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +35,8 @@ import { GetUser, PostLoginResponse } from '../../../api/login/login.types';
     ButtonModule, 
     InputTextModule, 
     CardModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ContextContainerComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -32,52 +44,46 @@ import { GetUser, PostLoginResponse } from '../../../api/login/login.types';
 
 export class LoginComponent {
 
-  loginForm: FormGroup;
+  // Forms
+  loginForm:FormGroup;
+  loginService = inject(LoginService);
 
-  private store = inject(Store);
+  loginMutation = injectMutation(() => ({
+
+    mutationFn: (data:PostLoginData) => this.loginService.loginApi(data),
+
+    onSuccess: (response) => {
+      this.loginForm.enable();
+      this.store.dispatch(setUserDataAction({ user:response.user }));
+      this.store.dispatch(setMessageFromUiDataAction({ message:postLoginSuccessMessage }));
+      localStorage.setItem(continentalToken, response.accessToken);
+      this.router.navigate(['/']);
+    },
+
+    onError: () => {
+      this.loginForm.enable();
+      this.store.dispatch(setMessageFromUiDataAction({ message:postLoginErrorMessage }));
+    }
+
+  }));
 
   constructor (
     private fb:FormBuilder,
-    private loginService:LoginService,
-    private router:Router
+    private router:Router,
+    private store:Store
   ) {
 
     this.loginForm = this.fb.group({
-      correo: ['demo@gmail.com', Validators.required],
-      contrasena: ['Continental321', Validators.required],
+      email: ['alan@gmail.com', Validators.required],
+      password: ['12345678', Validators.required],
     });
 
   }
-  
 
   onSubmitLogin () {
-
     this.loginForm.disable();
-
-    this.loginService
-      .createPost(this.loginForm.value)
-      .subscribe({ 
-        next:(response) => this.onSuccessSubmitLogin(response),
-        error:(err) => this.onErrorSubmitLogin(err)
-    });
-
+    const formValue = this.loginForm.value;
+    this.loginMutation.mutate({ email:formValue.email, password:formValue.password });
   }
 
-  onSuccessSubmitLogin (response:PostLoginResponse) {
-    this.store.dispatch(setUserDataAction({ user:demoUserData }));
-    localStorage.setItem('continental-token', response.token);
-    this.router.navigate(['/users']);
-  }
-
-  onErrorSubmitLogin (error:any) {
-    this.loginForm.enable();
-  }
-
-}
-
-const demoUserData:GetUser = {
-  id:'1',
-  nombre:'Demo',
-  apellido:'Demo demo',
-  correo:'demo@gmail.com',
 }

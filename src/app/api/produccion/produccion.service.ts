@@ -36,8 +36,9 @@ export class ProduccionService {
     return lastValueFrom(this.http.get<GetSilabosFromProduccionGeneralResponse>(`${apiUrl}/detalle-silabo/${id}`));
   }
 
-  putProduccionGeneral (id:string, data:PutProduccionGeneralData) {
-    return lastValueFrom(this.http.put(`${apiUrl}/produccion-general/${id}`, data));
+  putProduccionGeneral (data:PutProduccionGeneralData) {
+    const { id, ...restData } = data;
+    return lastValueFrom(this.http.put(`${apiUrl}/produccion-general/${id}`, restData));
   }
 
   submitProduccionGeneralFile (data:PostProduccionGeneralFileData) {

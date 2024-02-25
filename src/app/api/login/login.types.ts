@@ -1,16 +1,17 @@
-export type PostLogin = {
-  correo: string;
-  contrasena: string;
+export type PostLoginData = {
+  email: string;
+  password: string;
 }
 
 export type PostLoginResponse = {
-  token:string;
+  accessToken:string;
   user:GetUser;
 }
 
 export type GetUser = {
+  apellidos:string;
+  nombres:string;
+  email:string;
   id:string;
-  nombre:string;
-  apellido:string;
-  correo:string;
+  rol:number;
 }

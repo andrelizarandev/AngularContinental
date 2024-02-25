@@ -1,71 +1,70 @@
-<div class="navigation-container">
 
-  <nav class="top-bar">
+  <div class="navigation-container">
 
-    <div class="top-bar-padding-container">
+    <nav class="top-bar">
 
-      <div class="h-flex-align-center">
+      <div class="top-bar-padding-container">
+
+        <div class="h-flex-align-center">
+
+          <p-button
+            icon="pi pi-bars"
+            size="small"
+            (onClick)="toggleSidebar()"
+          />
+
+          <h3 class="c-white">Continental</h3>
+
+        </div>
 
         <p-button
-          icon="pi pi-bars"
+          label="Cerrar sesión"
           size="small"
-          (onClick)="toggleSidebar()"
+          icon="pi pi-sign-out"
+          severity="danger"
         />
-
-        <h3 class="c-white">Continental</h3>
 
       </div>
 
-      <p-button
-        label="Cerrar sesión"
-        size="small"
-        icon="pi pi-sign-out"
-        severity="danger"
-      />
+    </nav>
+
+    <div class="main-container">
+
+      @if (shouldShowSidebar) {
+
+        <nav class="sidebar-container">
+
+          <div class="sidebar-padding-container">
+    
+            <h3 style="color: var(--surface-600)">Menú</h3>
+    
+            @for (route of routeList; track $index) {
+              <p-button
+                label="{{ route.name }}"
+                size="small"
+                icon="{{ route.icon }}"
+                severity="secondary"
+                [rounded]="true"
+                (onClick)="redirectTo(route.route)"
+              ></p-button>
+            }
+    
+          </div>
+    
+        </nav>
+
+      }
+
+      <main [ngClass]="shouldShowSidebar ? 'main-content-container-with-sidebar' : 'main-content-container-without-sidebar'">
+
+        <div class="main-content-padding-container">
+
+          <ng-content/>
+
+        </div>
+
+      </main>
 
     </div>
 
-  </nav>
-
-  <div class="main-container">
-
-    @if (shouldShowSidebar) {
-
-      <nav class="sidebar-container">
-
-        <div class="sidebar-padding-container">
-  
-          <h3 style="color: var(--surface-600)">Menú</h3>
-  
-          @for (route of routeList; track $index) {
-            <p-button
-              label="{{ route.name }}"
-              size="small"
-              icon="{{ route.icon }}"
-              severity="secondary"
-              [rounded]="true"
-              (onClick)="redirectTo(route.route)"
-            ></p-button>
-          }
-  
-        </div>
-  
-      </nav>
-
-    }
-
-    <main [ngClass]="shouldShowSidebar ? 'main-content-container-with-sidebar' : 'main-content-container-without-sidebar'">
-
-      <div class="main-content-padding-container">
-
-        <ng-content/>
-
-      </div>
-
-    </main>
-
   </div>
-
-</div>
-
-<p-toast position="bottom-right"></p-toast>

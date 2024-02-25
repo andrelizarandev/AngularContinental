@@ -1,13 +1,16 @@
-// Api
-import { apiUrl } from '..';
-
 // Modules
-import { Observable } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+// Api
+import { apiUrl } from '..';
+
+// Texts
+import { continentalToken } from '../../data/data.texts';
+
 // Types
-import { PostLogin, PostLoginResponse } from './login.types';
+import { PostLoginData, PostLoginResponse } from './login.types';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +19,15 @@ export class LoginService {
 
   constructor (private http:HttpClient) {}
 
-  createPost(form:PostLogin): Observable<PostLoginResponse> {
-    return this.http.post<PostLoginResponse>(`${apiUrl}/login`, form);
+  loginApi (form:PostLoginData) {
+    return lastValueFrom(this.http.post<PostLoginResponse>(`${apiUrl}/login`, form));
+  }
+
+  validateTokenApi () {
+    const currentToken = localStorage.getItem(continentalToken);
+    return lastValueFrom(this.http.get<PostLoginResponse>(`${apiUrl}/validate-token`, {
+      headers: { 'Authorization': `Bearer ${currentToken}` }
+    }));
   }
 
 }

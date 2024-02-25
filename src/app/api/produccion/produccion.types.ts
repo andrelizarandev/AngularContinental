@@ -69,7 +69,7 @@ export type PostProduccionGeneralFileData = {
   file:File;
 }
 
-export type PutProduccionGeneralData = Omit<GetProduccionGeneralData, 'id'>;
+export type PutProduccionGeneralData = GetProduccionGeneralData;
 
 export type PostSilaboFileData = {
   file:File;
