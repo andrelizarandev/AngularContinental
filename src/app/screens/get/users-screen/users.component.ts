@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Component, inject } from '@angular/core';
+import { injectQuery } from '@tanstack/angular-query-experimental';
 
 // Classes
 import BreadcrumbItemsClass from '../../../utils/breadcrumb-items';
@@ -18,7 +19,6 @@ import { RegisterProgramaComponentDialog } from '../../../dialogs/submit/registe
 
 // Services
 import { UsersService } from '../../../api/users/users.service';
-import { injectQuery } from '@tanstack/angular-query-experimental';
 
 @Component({
   selector: 'app-users',

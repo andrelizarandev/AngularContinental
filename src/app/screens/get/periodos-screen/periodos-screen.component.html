@@ -2,7 +2,7 @@
   
   <app-custom-breadcrumb [items]="breadcrumbItems"/>
   
-  <app-card-with-skeleton>
+  <app-card-with-skeleton [isLoading]="getPeriodoQuery.isLoading()">
 
     <div class="h-flex-justify-between-align-center">
     
@@ -17,7 +17,7 @@
   
     </div>
   
-    <p-table [value]="[]">
+    <p-table [value]="getPeriodoQuery.data() || []">
   
       <ng-template pTemplate="header">
   
@@ -46,12 +46,14 @@
             <div class="h-flex">
   
               <p-button 
+                label="Editar"
                 icon="pi pi-pencil" 
                 size="small"
                 (onClick)="toggleOpenRegister()"
               />
   
               <p-button 
+                label="Eliminar"
                 icon="pi pi-trash" 
                 size="small"
                 (onClick)="toggleOpenDelete()"

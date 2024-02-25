@@ -1,18 +1,21 @@
 // Types
 import { MessageData } from '../state/reducers/ui.reducer';
 
+// Post Archivo
 export const postArchivoSuccessMessage:MessageData = { 
   message:'Archivo subido con éxito', 
   body:'Tu archivo se ha procesado correctamente.',
   type:'success' 
 }
 
+// Post Produccion General
 export const putProduccionGeneralSuccessMessage:MessageData = { 
   message:'Producción Actualizada', 
   body:'Tu registro de producción se ha actualizado correctamente.',
   type:'success' 
 }
 
+// Post User
 export const postUserSuccessMessage:MessageData = {
   message:'Usuario registrado con éxito',
   body:'Se ha agregado tu usuario a la plataforma.',
@@ -25,6 +28,7 @@ export const postUserErrorMessage:MessageData = {
   type:'error'
 }
 
+// Post Programa
 export const postProgramaSuccessMessage:MessageData = {
   message:'Programa registrado con éxito',
   body:'Se ha agregado tu programa a la plataforma.',
@@ -37,6 +41,20 @@ export const postProgramaErrorMessage:MessageData = {
   type:'error'
 }
 
+// Put Programa
+export const putProgramaSuccessMessage:MessageData = {
+  message:'Programa actualizado con éxito',
+  body:'Se ha actualizado tu programa en la plataforma.',
+  type:'success'
+}
+
+export const putProgramaErrorMessage:MessageData = {
+  message:'Error al actualizar programa',
+  body:'Revisa que tu código no se haya repetido antes.',
+  type:'error'
+}
+
+// Post Login
 export const postLoginSuccessMessage:MessageData = {
   message:'Bienvenido',
   body:'Has iniciado sesión correctamente.',
@@ -47,4 +65,18 @@ export const postLoginErrorMessage:MessageData = {
   message:'Error al iniciar sesión',
   body:'Revisa que tu correo y contraseña sean correctos.',
   type:'error'
+}
+
+// Post Periodo
+export const postPeriodoSuccessMessage:MessageData = {
+  message:'Periodo registrado con éxito',
+  body:'Se ha agregado tu periodo a la plataforma.',
+  type:'success'
+}
+
+// Put Periodo
+export const putPeriodoSuccessMessage:MessageData = {
+  message:'Periodo actualizado con éxito',
+  body:'Se ha actualizado tu periodo en la plataforma.',
+  type:'success'
 }

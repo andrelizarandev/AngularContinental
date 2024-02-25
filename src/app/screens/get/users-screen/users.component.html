@@ -17,10 +17,17 @@
       <ng-template pTemplate="header">
   
         <tr>
-          <th>Id</th>
+          
           <th>Nombre</th>
+          
           <th>Apellido</th>
+          
           <th>Correo</th>
+          
+          <th>Rol</th>
+          
+          <th>Acciones</th>
+
         </tr>
   
       </ng-template>
@@ -28,10 +35,33 @@
       <ng-template pTemplate="body" let-user>
   
         <tr>
-          <td>{{ user.id }}</td>
+
           <td>{{ user.nombres }}</td>
+
           <td>{{ user.apellidos }}</td>
+
           <td>{{ user.email }}</td>
+
+          <td>{{ user.nombre_rol }}</td>
+
+          <td>
+
+            <div class="h-flex">
+
+              <p-button 
+                label="Editar" 
+                icon="pi pi-pencil" 
+                size="small"
+              />
+
+              <p-button 
+                label="Eliminar" 
+                icon="pi pi-trash" 
+                size="small" 
+              />
+
+            </div>
+          
         </tr>
         
       </ng-template>

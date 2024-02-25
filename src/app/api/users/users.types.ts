@@ -7,7 +7,10 @@ export type PostUserData = {
   rol:string;
 }
 
-export type GetUserData = { id:number; } & PostUserData;
+export type GetUserData = { 
+  id:number; 
+  nombre_rol:string 
+} & PostUserData;
 
 export type PostUserResponse = { data:GetUserData; };
 

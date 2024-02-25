@@ -23,8 +23,6 @@
 
         <tr>
 
-          <th>ID</th>
-
           <th>NOMBRE</th>
 
           <th>ACCIONES</th>
@@ -37,8 +35,6 @@
 
         <tr>
 
-          <td>{{ programa.id }}</td>
-
           <td>{{ programa.nombre }}</td>
 
           <td>
@@ -46,12 +42,14 @@
             <div class="h-flex">
 
               <p-button 
+                label="Editar"
                 icon="pi pi-pencil" 
                 size="small"
                 (onClick)="toggleOpenRegister()"
               ></p-button>
 
               <p-button 
+                label="Eliminar"
                 icon="pi pi-trash" 
                 size="small"
                 (onClick)="toggleOpenDelete()"

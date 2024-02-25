@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { injectMutation } from '@tanstack/angular-query-experimental';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 
@@ -10,13 +11,13 @@ import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
 
 // Messages
-import { postProgramaErrorMessage, postProgramaSuccessMessage } from '../../../data/data.messages';
+import { postProgramaErrorMessage, postProgramaSuccessMessage, putProgramaErrorMessage, putProgramaSuccessMessage } from '../../../data/data.messages';
 
 // Services
 import { ProgramasService } from '../../../api/programas/programas.service';
 
 // Types
-import { PostProgramaData } from '../../../api/programas/programas.types';
+import { PostProgramaData, PutProgramaData } from '../../../api/programas/programas.types';
 
 @Component({
   selector: 'app-register-programa-dialog',
@@ -29,25 +30,66 @@ import { PostProgramaData } from '../../../api/programas/programas.types';
 export class RegisterProgramaComponentDialog {
 
   // Params
-  @Input() isRegisterOpen: boolean = true;
+  @Input() id:string | null = null;
+  @Input() isPostRequest = true;
+  @Input() isRegisterOpen = true;
   @Output() toggleOpenRegister = new EventEmitter();
+
+  submitProgramaForm:FormGroup;
 
   // Services
   programasService = inject(ProgramasService);
 
-  constructor (private store:Store) {}
+  constructor (private store:Store, private fb:FormBuilder) {
+    this.submitProgramaForm = this.fb.group({
+      nombre: ['', Validators.required],
+    });
+  }
 
   submitProgramaMutation = injectMutation((client) => ({
-    mutationFn:(data:PostProgramaData) => this.programasService.submitProgramaApi(data),
-    onSuccess:() => {
-      this.closeRegisterDialog();
-      client.invalidateQueries({ queryKey:['get-programas'] });
-      this.store.dispatch(setMessageFromUiDataAction({ message:postProgramaSuccessMessage }));
+
+    mutationFn:(data:PostProgramaData | PutProgramaData) => {
+      return (this.isPostRequest) 
+        ? this.programasService.postProgramaApi(data as PostProgramaData) 
+        : this.programasService.putProgramaApi(data as PutProgramaData);
     },
+
+    onSuccess:() => {
+
+      this.submitProgramaForm.reset();
+
+      this.closeRegisterDialog();
+
+      client.invalidateQueries({ queryKey:['get-programas'] });
+
+      (this.isPostRequest)
+        ? this.store.dispatch(setMessageFromUiDataAction({ message:postProgramaSuccessMessage }))
+        : this.store.dispatch(setMessageFromUiDataAction({ message:putProgramaSuccessMessage }));
+
+    },
+
     onError:() => {
-      this.store.dispatch(setMessageFromUiDataAction({ message:postProgramaErrorMessage }));
+
+      (this.isPostRequest)
+        ? this.store.dispatch(setMessageFromUiDataAction({ message:postProgramaErrorMessage }))
+        : this.store.dispatch(setMessageFromUiDataAction({ message:putProgramaErrorMessage }));
+
     }
+
   }));
+
+  startSubmitPrograma () {
+
+    const { nombre } = this.submitProgramaForm.value;
+    
+    const payload:PostProgramaData | PutProgramaData = (this.isPostRequest)
+      ? { nombre } as PostProgramaData
+      : { nombre, id:this.id } as PutProgramaData;
+
+    this.submitProgramaMutation.mutate(payload);
+
+  }
+
 
   closeRegisterDialog () {
     this.toggleOpenRegister.emit();

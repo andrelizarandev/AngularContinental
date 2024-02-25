@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { apiUrl } from '..';
 
 // Types
-import { GetProgramaResponse, PostProgramaData } from './programas.types';
+import { GetProgramaResponse, PostProgramaData, PutProgramaData } from './programas.types';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +20,13 @@ export class ProgramasService {
     return lastValueFrom(this.http.get<GetProgramaResponse[]>(`${apiUrl}/programas`));
   }
 
-  submitProgramaApi (data:PostProgramaData) {
+  postProgramaApi (data:PostProgramaData) {
     return lastValueFrom(this.http.post(`${apiUrl}/programas`, data));
+  }
+
+  putProgramaApi (data:PutProgramaData) {
+    const { id, ...restData } = data;
+    return lastValueFrom(this.http.put(`${apiUrl}/programas/${data.id}`, restData));
   }
   
 }

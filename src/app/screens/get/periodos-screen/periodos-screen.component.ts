@@ -3,6 +3,7 @@ import { MenuItem } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Component, inject } from '@angular/core';
+import { injectQuery } from '@tanstack/angular-query-experimental';
 
 // Classes
 import BreadcrumbItemsClass from '../../../utils/breadcrumb-items';
@@ -41,13 +42,18 @@ export class PeriodosScreenComponent {
   confirmDeletePayload:ConfirmDialogPayload | null = null
 
   // Services
-  periodoListService = inject(PeriodoService);
+  periodosService = inject(PeriodoService);
 
   // Breadcrumb
   breadcrumbItems:MenuItem[] = [
     BreadcrumbItemsClass.homeItem,
     BreadcrumbItemsClass.periodosItem
-  ]
+  ];
+
+  getPeriodoQuery = injectQuery(() => ({
+    queryKey: ['get-periodos'],
+    queryFn: () => this.periodosService.getPeriodosApi()
+  }))
 
   // Toggle
   toggleOpenRegister () {
