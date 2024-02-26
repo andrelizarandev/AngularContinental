@@ -4,6 +4,64 @@
 
     <h3 class="c-title">Inicio</h3>
 
+    <div class="grid">
+
+      @for (counter of countersList; track $index) {
+
+        <div class="col-4 md:col-3 lg:col-2">
+
+          <div class="bg-blue-400 p-2 border border-round shadow-1 text-white text-center flex flex-column">
+
+            <span>{{ counter.title }}</span>
+          
+            <span class="font-semibold">{{ counter.counter }}</span>
+
+          </div>
+        
+        </div>
+
+      }
+
+    </div>
+
   </app-card-with-skeleton>
+
+  <div class="grid">
+
+    <div class="col-12 md:col-6">
+
+      <app-card-with-skeleton>
+
+        <p-chart 
+          type="pie" 
+          [data]="pieData" 
+          [options]="pieOptions"
+          height="340px"
+        />
+  
+      </app-card-with-skeleton>
+
+    </div>
+
+    <div class="col-12 md:col-6">
+
+      <app-card-with-skeleton>
+
+        <div class="v-flex-justify-center-align-center">
+
+          <p-chart 
+            type="bar" 
+            [data]="barData" 
+            [options]="barOptions"
+            height="340px"
+          />
+
+        </div>
+
+      </app-card-with-skeleton>
+
+    </div>
+
+  </div>
 
 </app-navigation-container>

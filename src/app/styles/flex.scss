@@ -21,6 +21,13 @@
   column-gap: 16px;
 }
 
+.flex-wrap {
+  display: flex;
+  flex-direction: row;
+  column-gap: 16px;
+  flex-wrap: wrap;
+}
+
 .h-flex-align-center {
   display: flex;
   flex-direction: row;

@@ -139,14 +139,14 @@ export class SubmitReportesComponent {
     };
 
     this.pieOptions = {
-        plugins: {
-            legend: {
-                labels: {
-                    usePointStyle: true,
-                    color: textColor
-                }
-            }
+      plugins: {
+        legend: {
+          labels: {
+            usePointStyle: true,
+            color: textColor
+          }
         }
+      }
     };
 
     this.filterFormGroup = new FormGroup({

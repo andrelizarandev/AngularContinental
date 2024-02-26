@@ -7,7 +7,11 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 
 // Actions
+import { setUserDataAction } from '../../state/actions/login.actions';
 import { setShowSidebarAction } from '../../state/actions/ui-actions';
+
+// Data
+import { continentalToken } from '../../data/data.texts';
 
 // Components
 import { ContextContainerComponent } from '../context-container/context-container.component';
@@ -39,17 +43,24 @@ export class NavigationContainerComponent  {
   shouldShowSidebar:boolean = true;
 
   constructor (private router:Router) {
-
     this.store.pipe(select(showSidebarSelector)).subscribe((showSidebar) => {
       this.shouldShowSidebar = showSidebar;
     });
-
   }
 
+  // Signout
+  signOut () {
+    this.router.navigate(['/login']);
+    localStorage.removeItem(continentalToken);
+    this.store.dispatch(setUserDataAction({ user:null }));
+  }
+
+  // Redirect
   redirectTo (route:string) {
     this.router.navigate([route]);
   }
 
+  // Toggle
   toggleSidebar () {
     this.store.dispatch(setShowSidebarAction({ showSidebar: !this.shouldShowSidebar }));
   }
