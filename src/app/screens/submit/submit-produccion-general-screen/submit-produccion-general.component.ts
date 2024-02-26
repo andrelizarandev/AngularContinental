@@ -39,8 +39,8 @@ import { ModalidadesService } from '../../../api/modalidades/modalidades.service
 import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-curso/diseno-curso.service';
 
 // Types
+import { GetDataSilabosData, PutProduccionGeneralData } from '../../../api/produccion/produccion.types';
 import { OptionData, OptionDataIdNumber } from '../submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
-import { GetDataSilabosData, ModalidadEnum, PutProduccionGeneralData } from '../../../api/produccion/produccion.types';
 
 @Component({
   selector: 'app-submit-produccion-general',
@@ -69,14 +69,15 @@ export class SubmitProduccionGeneralComponent {
 
   // Vars
   isUploadSilaboDialogOpen = false;
+
+  currentModalidadForScreen:string | null = null;
+  currentModalidadNameForScreen:string | null = null;
+  currentModalidadForModalidad:string | null = null;
+  currentModalidadNameForModalidad:string | null = null;
+
   isRegisterPeriodoGeneralDialogOpen = false;
   lastSilaboData:GetDataSilabosData | null = null;
   silabosInThisPeriodoGeneral:GetDataSilabosData[] = [];
-  extraData:any = null;
-
-  // Modalidad
-  modalidadName:ModalidadEnum | null = null;
-  currentModalidadForModal:ModalidadEnum | null = null;
 
   // Forms
   registerProduccionGeneralForm: FormGroup;
@@ -264,22 +265,8 @@ export class SubmitProduccionGeneralComponent {
           correo_finalizacion,
 
           // Extras
-          adistancia,
-          autor,
-          ciclo,
-          contiverso,
-          dias_extra,
-          facultad,
-          id,
           modalidad,
-          nombre_formato_adistancia,
-          nombre_formato_presencial,
-          nombre_formato_semipresencial,
-          presencial,
-          realidad_aumentada,
-          semipresencial,
-          solicitud_id,
-          nombre_modalidad,
+          nombre_modalidad
 
         } = result.datos_produccion_general;
 
@@ -343,7 +330,8 @@ export class SubmitProduccionGeneralComponent {
 
         });
 
-        this.modalidadName = nombre_modalidad;
+        this.currentModalidadForScreen = modalidad;
+        this.currentModalidadNameForScreen = nombre_modalidad;
 
         return result;
 
@@ -412,8 +400,12 @@ export class SubmitProduccionGeneralComponent {
   }
 
   // Toggle
-  toggleIsRegisterPeriodoGeneralDialogOpen (modalidad:ModalidadEnum | null = null) {
-    this.currentModalidadForModal = modalidad;
+  toggleIsRegisterPeriodoGeneralDialogOpen (
+    currentModalidad:string | null = null, 
+    currentModalidadName:string | null = null
+  ) {
+    this.currentModalidadForModalidad = currentModalidad;
+    this.currentModalidadNameForModalidad = currentModalidadName; 
     this.isRegisterPeriodoGeneralDialogOpen = !this.isRegisterPeriodoGeneralDialogOpen;
   }
   
@@ -431,11 +423,6 @@ export class SubmitProduccionGeneralComponent {
     const slicedDate = date.slice(0, 10);
     const restDate = date.slice(11, 16);
     return HandleDates.parseDateFormat1ToFormat2(slicedDate, 'YYYY-MM-DD', 'DD/MM/YYYY') + ' ' + restDate;
-  }
-
-  // Getters
-  public get modalidadEnum (): typeof ModalidadEnum {
-    return ModalidadEnum;
   }
 
 }

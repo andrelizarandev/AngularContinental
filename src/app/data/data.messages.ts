@@ -94,3 +94,17 @@ export const deletePeriodoSuccessMessage:MessageData = {
   body:'Se ha eliminado tu periodo de la plataforma.',
   type:'success'
 }
+
+// Post Rol
+export const postRolSuccessMessage:MessageData = {
+  message:'Rol registrado con éxito',
+  body:'Se ha agregado tu rol a la plataforma.',
+  type:'success'
+}
+
+// Delete Rol
+export const deleteRolSuccessMessage:MessageData = {
+  message:'Rol eliminado con éxito',
+  body:'Se ha eliminado tu rol de la plataforma.',
+  type:'success'
+}

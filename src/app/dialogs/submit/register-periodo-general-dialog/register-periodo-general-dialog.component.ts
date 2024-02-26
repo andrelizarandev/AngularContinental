@@ -3,14 +3,11 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 // Data
 import { ratingOptions } from '../../../data/data.options';
-
-// Types
-import { ModalidadEnum } from '../../../api/produccion/produccion.types';
 
 @Component({
   selector: 'app-register-periodo-general-dialog',
@@ -30,7 +27,8 @@ export class RegisterPeriodoGeneralDialogComponent {
 
   // Inputs
   @Input() isDialogOpen = false;
-  @Input() currentModalidad:ModalidadEnum | null = null;
+  @Input() currentModalidad:string | null = null;
+  @Input() currentModalidadName:string | null = null;
 
   // Outputs
   @Output() closeDialogEmitter = new EventEmitter(); 
@@ -39,8 +37,8 @@ export class RegisterPeriodoGeneralDialogComponent {
 
   formatoForm = this.fb.group ({
 
-    horas_asincronas: ['Hello', Validators.required],
-    horas_sincronas: ['World', Validators.required],
+    horas_asincronas: ['', Validators.required],
+    horas_sincronas: ['', Validators.required],
     intro_evaluacion_entrada: [null, Validators.required],
     intro_hoja_calendario: [null, Validators.required],
 

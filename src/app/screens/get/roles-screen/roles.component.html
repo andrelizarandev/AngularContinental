@@ -45,7 +45,7 @@
                 label="Editar"
                 icon="pi pi-pencil" 
                 size="small"
-                (onClick)="toggleOpenRegister()"
+                (onClick)="toggleOpenRegister(false, role)"
               />
               
               <p-button 
@@ -70,6 +70,8 @@
 </app-navigation-container>
 
 <app-register-rol-dialog
+  [selectedRol]="selectedRol"
+  [isPostRequest]="isPostRequest"
   [isRegisterOpen]="isRegisterOpen"
   (toggleOpenRegister)="toggleOpenRegister()"
 />

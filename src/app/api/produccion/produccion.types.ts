@@ -25,11 +25,11 @@ export type GetProduccionGeneralData = {
   fecha_presentacion_di: string;
   fecha_programada: string;
   id: number;
-  modalidad: string;
-  nombre_formato_adistancia: ModalidadEnum | null;
-  nombre_formato_presencial: ModalidadEnum | null;
-  nombre_formato_semipresencial: ModalidadEnum | null;
-  nombre_modalidad: ModalidadEnum;
+  modalidad:string;
+  nombre_formato_adistancia: string | null;
+  nombre_formato_presencial: string | null;
+  nombre_formato_semipresencial: string | null;
+  nombre_modalidad: string;
   numero_formatos: string;
   observacion_designacion: string;
   observaciones: string;
@@ -53,12 +53,6 @@ export type GetProduccionGeneralData = {
   unidad3: string;
   unidad4: string;
   video_presentacion: string;
-}
-
-export enum ModalidadEnum {
-  Presencial = 'Presencial',
-  Semipresencial = 'Semipresencial',
-  ADistancia = 'ADistancia'
 }
 
 export type GetProduccionGeneralDataById = {

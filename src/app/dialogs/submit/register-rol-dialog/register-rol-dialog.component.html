@@ -1,6 +1,7 @@
 <p-dialog 
+  (onShow)="onShow()"
   class="sm:w-12" 
-  header="Registrar Nuevo Rol" 
+  [header]="isPostRequest ? 'Registrar Rol' : 'Editar Rol'" 
   [style]="{width: '600px'}"
   [visible]="isRegisterOpen" 
   [modal]="true" 
@@ -13,6 +14,7 @@
     <input 
       type="text" 
       placeholder="Nombre del Rol"
+      formControlName="nombre"
       pInputText 
     />
 

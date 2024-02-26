@@ -147,7 +147,7 @@
                     <h3 class="c-title">Modalidad</h3>
 
                     <span>
-                      {{ modalidadName || '-' }}
+                      {{ currentModalidadNameForScreen }}
                     </span>
 
                   </div>
@@ -158,9 +158,12 @@
 
                   <div class="v-flex">
 
-                    <h3 class="c-title">Modalidad</h3>
+                    <h3 class="c-title">Formato</h3>
 
-                    @if (modalidadName == "Presencial") {
+                    @if (
+                      currentModalidadForScreen === '1' || 
+                      currentModalidadForScreen === '4'
+                    ) {
 
                       <div class="h-flex-align-center">
 
@@ -170,31 +173,34 @@
                           label="Cargar" 
                           size="small" 
                           severity="secondary"
-                          (onClick)="toggleIsRegisterPeriodoGeneralDialogOpen(modalidadEnum.Presencial)"
+                          (onClick)="toggleIsRegisterPeriodoGeneralDialogOpen('1', 'Presencial')"
                         />
 
                       </div>
 
                     } 
                     
-                    @if (modalidadName == "Semipresencial") {
+                    @if (currentModalidadForScreen === '2') {
 
                       <div class="h-flex-align-center">
 
-                        <label>Presencial</label>
+                        <label>Semipresencial</label>
                         
                         <p-button 
                           label="Cargar" 
                           size="small" 
                           severity="secondary"
-                          (onClick)="toggleIsRegisterPeriodoGeneralDialogOpen(modalidadEnum.Presencial)"
+                          (onClick)="toggleIsRegisterPeriodoGeneralDialogOpen('2', 'Semipresencial')"
                         />
 
                       </div>
 
                     } 
 
-                    @else if (modalidadName == "ADistancia") {
+                    @else if (
+                      currentModalidadForScreen === '3' || 
+                      currentModalidadForScreen === '4'
+                    ) {
 
                       <div class="h-flex-align-center">
 
@@ -204,12 +210,13 @@
                           label="Cargar" 
                           size="small" 
                           severity="secondary"
-                          (onClick)="toggleIsRegisterPeriodoGeneralDialogOpen(modalidadEnum.ADistancia)"
+                          (onClick)="toggleIsRegisterPeriodoGeneralDialogOpen('3', 'A Distancia')"
                         />
 
                       </div>
 
-                    } 
+                    }
+
 
                   </div>
   
@@ -677,8 +684,9 @@
 <!-- Input en el dialog, Vars en la pantalla -->
 <!-- Emitter en el dialog, Toggle en la pantalla -->
 <app-register-periodo-general-dialog 
+  [currentModalidad]="currentModalidadForModalidad"
+  [currentModalidadName]="currentModalidadNameForModalidad"
   [isDialogOpen]="isRegisterPeriodoGeneralDialogOpen"
-  [currentModalidad]="currentModalidadForModal"
   (closeDialogEmitter)="toggleIsRegisterPeriodoGeneralDialogOpen()"
 />
 
