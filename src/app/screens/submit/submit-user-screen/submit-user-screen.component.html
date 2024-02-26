@@ -6,7 +6,7 @@
 
       <app-card-with-skeleton>
 
-        <form class="v-flex" [formGroup]="registerUserForm" (ngSubmit)="onSubmitUser()">
+        <form class="v-flex" [formGroup]="registerUserForm" (ngSubmit)="startSubmitUser()">
 
           <h3 class="c-title">Registro de Usuarios</h3>
   
@@ -47,7 +47,7 @@
   
           <p-dropdown 
             formControlName="rol" 
-            [options]="[]"
+            [options]="getRolesOptions()"
             placeholder="Selecciona un Rol"
             [style]="{'width':'100%'}"
           />
@@ -58,7 +58,7 @@
               label="Cancelar" 
               size="small" 
               severity="secondary"
-              (onClick)="onRedirectToUsersTable()"
+              (onClick)="redirectToUsersTable()"
             />
               
             <p-button 

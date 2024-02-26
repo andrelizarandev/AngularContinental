@@ -23,6 +23,8 @@
 
         <tr>
 
+          <th>Código</th>
+
           <th>Nombre</th>
 
           <th>Acciones</th>
@@ -35,6 +37,8 @@
 
         <tr>
 
+          <td>{{ programa.codigo }}</td>
+          
           <td>{{ programa.nombre }}</td>
 
           <td>
@@ -72,6 +76,7 @@
   </app-navigation-container>
 
 <app-register-programa-dialog 
+  [selectedPrograma]="selectedPrograma"
   [isPostRequest]="isPostRequest"
   [isRegisterOpen]="isRegisterOpen"
   (toggleOpenRegister)="toggleOpenRegister()"

@@ -5,9 +5,10 @@
   [visible]="isRegisterOpen" 
   [modal]="true" 
   [closable]="false"
+  [draggable]="false"
 >
 
-  <div class="v-flex mt-1">
+  <form class="v-flex mt-1" (ngSubmit)="startSubmitRol()" [formGroup]="submitRolForm">
 
     <input 
       type="text" 
@@ -16,10 +17,22 @@
     />
 
     <div class="h-flex">
-      <p-button label="Cancelar" size="small" severity="secondary" (onClick)="closeRegisterDialog()"/>
-      <p-button label="Registrar" size="small"/>
+
+      <p-button 
+        label="Cancelar" 
+        size="small" 
+        severity="secondary" 
+        (onClick)="closeRegisterDialog()"
+      />
+
+      <p-button 
+        label="Registrar" 
+        size="small"
+        type="submit"
+      />
+
     </div>
 
-  </div>
+  </form>
   
 </p-dialog>

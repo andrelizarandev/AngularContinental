@@ -4,7 +4,7 @@ export type PostUserData = {
   email:string;
   password:string;
   email_personal:string;
-  rol:string;
+  rol:number;
 }
 
 export type GetUserData = { 

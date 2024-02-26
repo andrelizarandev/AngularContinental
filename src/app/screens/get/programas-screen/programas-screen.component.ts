@@ -20,13 +20,15 @@ import { NavigationContainerComponent } from '../../../components/navigation-con
 // Dialogs
 import { RegisterProgramaComponentDialog } from '../../../dialogs/submit/register-programa-dialog/register-programa.component-dialog';
 
-// Service
+// Messages
+import { deleteProgramaSuccessMessage } from '../../../data/data.messages';
+
+// Services
 import { ProgramasService } from '../../../api/programas/programas.service';
 
 // Types
 import { GetProgramaData } from '../../../api/programas/programas.types';
-import { ConfirmDialogComponent, ConfirmDialogPayload } from '../../../dialogs/shared/confirm-dialog/confirm-dialog.component';
-import { deleteProgramaSuccessMessage } from '../../../data/data.messages';
+import { ConfirmDialogComponent } from '../../../dialogs/shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-programas-screen',
@@ -49,6 +51,7 @@ export class ProgramasScreenComponent {
   // Vars
   isPostRequest = true;
   isRegisterOpen = false;
+  selectedPrograma:GetProgramaData | null = null;
 
   // Services
   programasService = inject(ProgramasService);
@@ -89,7 +92,8 @@ export class ProgramasScreenComponent {
   }
 
   // Toggle
-  toggleOpenRegister (isPostRequest = true) {
+  toggleOpenRegister (isPostRequest = true, selectedPrograma:GetProgramaData | null = null) {
+    this.selectedPrograma = selectedPrograma;
     this.isPostRequest = isPostRequest;
     this.isRegisterOpen = !this.isRegisterOpen;
   }

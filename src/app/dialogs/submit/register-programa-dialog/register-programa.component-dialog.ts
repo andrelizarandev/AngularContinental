@@ -4,20 +4,25 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { injectMutation } from '@tanstack/angular-query-experimental';
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 // Actions
 import { setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
 
 // Messages
-import { postProgramaErrorMessage, postProgramaSuccessMessage, putProgramaErrorMessage, putProgramaSuccessMessage } from '../../../data/data.messages';
+import { 
+  postProgramaErrorMessage, 
+  postProgramaSuccessMessage, 
+  putProgramaErrorMessage, 
+  putProgramaSuccessMessage
+} from '../../../data/data.messages';
 
 // Services
 import { ProgramasService } from '../../../api/programas/programas.service';
 
 // Types
-import { PostProgramaData, PutProgramaData } from '../../../api/programas/programas.types';
+import { GetProgramaData, PostProgramaData, PutProgramaData } from '../../../api/programas/programas.types';
 
 @Component({
   selector: 'app-register-programa-dialog',
@@ -35,9 +40,10 @@ import { PostProgramaData, PutProgramaData } from '../../../api/programas/progra
 export class RegisterProgramaComponentDialog {
 
   // Params
-  @Input() id:string | null = null;
   @Input() isPostRequest = true;
   @Input() isRegisterOpen = true;
+  @Input() id:string | null = null;
+  @Input() selectedPrograma:GetProgramaData | null = null;
   @Output() toggleOpenRegister = new EventEmitter();
 
   submitProgramaForm:FormGroup;
@@ -46,9 +52,27 @@ export class RegisterProgramaComponentDialog {
   programasService = inject(ProgramasService);
 
   constructor (private store:Store, private fb:FormBuilder) {
+
     this.submitProgramaForm = this.fb.group({
+
       nombre: ['', Validators.required],
+
+      codigo: ['', Validators.required],
+
     });
+
+  }
+
+  ngOnInit () {
+
+    if (this.selectedPrograma) {
+
+      const { nombre, codigo } = this.selectedPrograma;
+
+      this.submitProgramaForm.setValue({ nombre, codigo });
+
+    }
+
   }
 
   submitProgramaMutation = injectMutation((client) => ({
@@ -85,17 +109,18 @@ export class RegisterProgramaComponentDialog {
 
   startSubmitPrograma () {
 
-    const { nombre } = this.submitProgramaForm.value;
+    const { nombre, codigo } = this.submitProgramaForm.value;
     
     const payload:PostProgramaData | PutProgramaData = (this.isPostRequest)
-      ? { nombre } as PostProgramaData
-      : { nombre, id:Number(this.id) } as PutProgramaData;
+      ? { nombre, codigo } as PostProgramaData
+      : { nombre, id:Number(this.id), codigo } as PutProgramaData;
 
     this.submitProgramaMutation.mutate(payload);
 
   }
 
   closeRegisterDialog () {
+    this.submitProgramaForm.reset();
     this.toggleOpenRegister.emit();
   }
 

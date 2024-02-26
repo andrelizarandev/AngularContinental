@@ -7,7 +7,7 @@ import { Component, inject } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { injectMutation } from '@tanstack/angular-query-experimental';
+import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
 
 // Actions
 import { setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
@@ -16,12 +16,16 @@ import { setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
 import { CardWithSkeletonComponent } from '../../../components/card-with-skeleton/card-with-skeleton.component';
 import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
 
+// Messages
+import { postUserErrorMessage, postUserSuccessMessage } from '../../../data/data.messages';
+
 // Services
 import { UsersService } from '../../../api/users/users.service';
+import { RolesService } from '../../../api/roles/roles.service';
 
 // Types
 import { PostUserData } from '../../../api/users/users.types';
-import { postUserErrorMessage, postUserSuccessMessage } from '../../../data/data.messages';
+import { OptionDataIdNumber } from '../submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
 
 @Component({
   selector: 'app-submit-user-screen',
@@ -40,21 +44,12 @@ import { postUserErrorMessage, postUserSuccessMessage } from '../../../data/data
 
 export class SubmitUserScreenComponent {
 
-  userServices = inject(UsersService)
-
-  submitUserMutation = injectMutation(() => ({
-    mutationFn: (data:PostUserData) => this.userServices.submitUser(data),
-    onSuccess: () => {
-      this.store.dispatch(setMessageFromUiDataAction({ message:postUserSuccessMessage }));
-      this.registerUserForm.enable();
-    },
-    onError: () => {
-      this.store.dispatch(setMessageFromUiDataAction({ message:postUserErrorMessage }));
-      this.registerUserForm.enable();
-    }
-  }))
-
-  registerUserForm: FormGroup
+  // Inject
+  rolServices = inject(RolesService);
+  userServices = inject(UsersService);
+  
+  // Forms
+  registerUserForm:FormGroup;
 
   constructor (
     private fb:FormBuilder, 
@@ -68,25 +63,50 @@ export class SubmitUserScreenComponent {
       correoInst: ['andrelizaran@continental.com', Validators.required],
       correoPers: ['andrelizaran@gmail.com', Validators.required],
       contrasena: ['1234567890', Validators.required],
-      rol: ['2', Validators.required],
+      rol: [null, Validators.required],
     });
 
   }
 
-  onRedirectToUsersTable () {
-    this.router.navigate(['/users']);
+  getRolesQuery = injectQuery(() => ({
+    queryKey:['get-roles'],
+    queryFn: () => this.rolServices.getRolesApi()
+  }));
+
+  submitUserMutation = injectMutation(() => ({
+
+    mutationFn: (data:PostUserData) => this.userServices.submitUser(data),
+
+    onSuccess: () => {
+      this.store.dispatch(setMessageFromUiDataAction({ message:postUserSuccessMessage }));
+      this.registerUserForm.enable();
+      this.redirectToUsersTable();
+    },
+
+    onError: () => {
+      this.store.dispatch(setMessageFromUiDataAction({ message:postUserErrorMessage }));
+      this.registerUserForm.enable();
+    }
+
+  }));
+
+  // Get
+  getRolesOptions () {
+    const result = this.getRolesQuery.data();
+    if (!result) return [];
+    const options:OptionDataIdNumber[] = result.map(({ id, nombre }) => ({ label:nombre, id:Number(id) }));
+    return options;
   }
 
-  async onSubmitUser () {
+  // Redirect
+  redirectToUsersTable () {
+    this.router.navigate(['/users']);
+  }
+  
+  // Start
+  startSubmitUser () {
 
-    const { 
-      nombres, 
-      apellidos, 
-      correoInst, 
-      correoPers, 
-      contrasena, 
-      rol 
-    } = this.registerUserForm.value;
+    const { nombres, apellidos, correoInst, correoPers, contrasena, rol } = this.registerUserForm.value;
 
     const userPayload:PostUserData = {
       apellidos,
@@ -94,7 +114,7 @@ export class SubmitUserScreenComponent {
       email_personal:correoPers,
       nombres,
       password:contrasena,
-      rol
+      rol:rol.id
     }
 
     this.registerUserForm.disable();
@@ -102,11 +122,5 @@ export class SubmitUserScreenComponent {
     this.submitUserMutation.mutate(userPayload);
 
   }
-
-  onSuccessSubmitUser () {
-    this.onRedirectToUsersTable();
-  }
-
-  onErrorSubmit () {}
 
 }

@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { apiUrl } from '..';
 
 // Types
-import { GetRoleData, PostRoleData, PostRoleResponse } from './roles.types';
+import { GetRoleData, PostRoleData, PostRoleResponse, PutRoleData } from './roles.types';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +16,17 @@ export class RolesService {
 
   constructor (private http:HttpClient) {}
 
-  getRolApi () {
+  getRolesApi () {
     return lastValueFrom(this.http.get<GetRoleData[]>(`${apiUrl}/roles`));
   }
 
   postRol (data:PostRoleData) {
     return lastValueFrom(this.http.post<PostRoleResponse>(`${apiUrl}/roles`, data));
+  }
+
+  putRolApi (data:PutRoleData) {
+    const { id, ...restData } = data;
+    return lastValueFrom(this.http.put(`${apiUrl}/roles/${id}`, restData));
   }
 
   deleteRolApi (id:number) {

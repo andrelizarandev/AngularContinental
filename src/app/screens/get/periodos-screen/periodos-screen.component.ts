@@ -1,4 +1,5 @@
 // Modules
+import { of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
 import { TableModule } from 'primeng/table';
@@ -50,6 +51,7 @@ export class PeriodosScreenComponent {
   // Vars
   isPostRequest = true;
   isRegisterOpen = false;
+  selectedPeriodo: GetPeriodoData | null = null;
 
   // Services
   periodosService = inject(PeriodoService);
@@ -85,13 +87,14 @@ export class PeriodosScreenComponent {
       title: 'Eliminar periodo',
       message: `¿Estás seguro de que quieres eliminar el periodo ${data.nombre}?`,
       actionLabel: 'Eliminar',
-      action: () => {},
+      action: () => this.deletePeriodoMutation.mutate(Number(data.id)),
       cancelAction: () => this.store.dispatch(setConfirmDialogPayloadAction({ confirmDialogPayload: null }))
     }}));
   }
 
   // Toggle
-  toggleOpenRegister (isPostRequest:boolean) {
+  toggleOpenRegister (isPostRequest:boolean, selectedPeriodo:GetPeriodoData | null = null) {
+    this.selectedPeriodo = selectedPeriodo;
     this.isPostRequest = isPostRequest;
     this.isRegisterOpen = !this.isRegisterOpen;
   }

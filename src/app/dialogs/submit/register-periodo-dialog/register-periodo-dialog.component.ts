@@ -1,4 +1,5 @@
 // Modules
+import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
@@ -17,7 +18,7 @@ import { postPeriodoSuccessMessage, putPeriodoSuccessMessage } from '../../../da
 import { PeriodoService } from '../../../api/periodo/periodo.service';
 
 // Types
-import { PostPeriodoData, PutPeriodoData } from '../../../api/periodo/periodo.types';
+import { GetPeriodoData, PostPeriodoData, PutPeriodoData } from '../../../api/periodo/periodo.types';
 
 @Component({
   selector: 'app-register-periodo-dialog',
@@ -46,7 +47,10 @@ export class RegisterPeriodoDialogComponent {
   // Forms
   submitPeriodoForm:FormGroup;
 
-  constructor(private fb:FormBuilder, private store:Store) {
+  constructor(
+    private fb:FormBuilder, 
+    private store:Store,
+  ) {
 
     this.submitPeriodoForm = this.fb.group({
       nombre: ['', Validators.required],

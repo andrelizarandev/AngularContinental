@@ -56,7 +56,7 @@ export class RolesComponent {
 
   getRolesQuery = injectQuery(() => ({
     queryKey: ['get-roles'],
-    queryFn: () => this.rolesService.getRolApi()
+    queryFn: () => this.rolesService.getRolesApi()
   }));
 
   deleteRolMutation = injectMutation((client) => ({
