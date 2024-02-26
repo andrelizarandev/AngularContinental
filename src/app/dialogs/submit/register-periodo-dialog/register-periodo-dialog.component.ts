@@ -1,5 +1,4 @@
 // Modules
-import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
@@ -38,8 +37,14 @@ export class RegisterPeriodoDialogComponent {
   // Params
   @Input() isPostRequest = true;
   @Input() isRegisterOpen = false;
-  @Input() id:string | null = null;
+  @Input() selectedPeriodo:GetPeriodoData | null = null;
   @Output() toggleOpenRegister = new EventEmitter();
+
+  onShow () {
+    if (this.isPostRequest) return;
+    const { nombre, codigo, id } = this.selectedPeriodo!
+    this.submitPeriodoForm.patchValue({ nombre, codigo });
+  }
 
   // Services
   periodosService = inject(PeriodoService);
@@ -92,7 +97,7 @@ export class RegisterPeriodoDialogComponent {
 
     const payload:PostPeriodoData | PutPeriodoData = (this.isPostRequest) 
       ? { nombre, codigo } as PostPeriodoData
-      : { id: this.id, nombre, codigo } as PutPeriodoData;
+      : { id: this.selectedPeriodo!.id, nombre, codigo } as PutPeriodoData;
 
     this.submitPostMutation.mutate(payload);
 

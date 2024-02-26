@@ -42,37 +42,26 @@ export class RegisterProgramaComponentDialog {
   // Params
   @Input() isPostRequest = true;
   @Input() isRegisterOpen = true;
-  @Input() id:string | null = null;
   @Input() selectedPrograma:GetProgramaData | null = null;
   @Output() toggleOpenRegister = new EventEmitter();
 
+  // Forms
   submitProgramaForm:FormGroup;
 
   // Services
   programasService = inject(ProgramasService);
 
   constructor (private store:Store, private fb:FormBuilder) {
-
     this.submitProgramaForm = this.fb.group({
-
       nombre: ['', Validators.required],
-
       codigo: ['', Validators.required],
-
     });
-
   }
 
-  ngOnInit () {
-
-    if (this.selectedPrograma) {
-
-      const { nombre, codigo } = this.selectedPrograma;
-
-      this.submitProgramaForm.setValue({ nombre, codigo });
-
-    }
-
+  onShow () {
+    if (this.isPostRequest) return;
+    const { nombre, codigo } = this.selectedPrograma!
+    this.submitProgramaForm.patchValue({ nombre, codigo });
   }
 
   submitProgramaMutation = injectMutation((client) => ({
@@ -84,25 +73,18 @@ export class RegisterProgramaComponentDialog {
     },
 
     onSuccess:() => {
-
       this.submitProgramaForm.reset();
-
       this.closeRegisterDialog();
-
       client.invalidateQueries({ queryKey:['get-programas'] });
-
       (this.isPostRequest)
         ? this.store.dispatch(setMessageFromUiDataAction({ message:postProgramaSuccessMessage }))
         : this.store.dispatch(setMessageFromUiDataAction({ message:putProgramaSuccessMessage }));
-
     },
 
     onError:() => {
-
       (this.isPostRequest)
         ? this.store.dispatch(setMessageFromUiDataAction({ message:postProgramaErrorMessage }))
         : this.store.dispatch(setMessageFromUiDataAction({ message:putProgramaErrorMessage }));
-
     }
 
   }));
@@ -113,7 +95,7 @@ export class RegisterProgramaComponentDialog {
     
     const payload:PostProgramaData | PutProgramaData = (this.isPostRequest)
       ? { nombre, codigo } as PostProgramaData
-      : { nombre, id:Number(this.id), codigo } as PutProgramaData;
+      : { nombre, id:Number(this.selectedPrograma!.id), codigo } as PutProgramaData;
 
     this.submitProgramaMutation.mutate(payload);
 

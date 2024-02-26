@@ -49,7 +49,7 @@
                 label="Editar"
                 icon="pi pi-pencil" 
                 size="small"
-                (onClick)="toggleOpenRegister(false)"
+                (onClick)="toggleOpenRegister(false, programa)"
               ></p-button>
 
               <p-button 
@@ -73,7 +73,7 @@
 
   </app-card-with-skeleton>
     
-  </app-navigation-container>
+</app-navigation-container>
 
 <app-register-programa-dialog 
   [selectedPrograma]="selectedPrograma"

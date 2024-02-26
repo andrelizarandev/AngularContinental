@@ -28,7 +28,6 @@ import { ProgramasService } from '../../../api/programas/programas.service';
 
 // Types
 import { GetProgramaData } from '../../../api/programas/programas.types';
-import { ConfirmDialogComponent } from '../../../dialogs/shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-programas-screen',
@@ -38,7 +37,6 @@ import { ConfirmDialogComponent } from '../../../dialogs/shared/confirm-dialog/c
     TableModule, 
     NavigationContainerComponent, 
     RegisterProgramaComponentDialog, 
-    ConfirmDialogComponent,
     CardWithSkeletonComponent,
     CustomBreadcrumbComponent
   ],
@@ -58,21 +56,19 @@ export class ProgramasScreenComponent {
 
   constructor (private store:Store) {}
 
+  // Queries
   getProgramasQuery = injectQuery(() => ({
     queryKey: ['get-programas'],
     queryFn: () => this.programasService.getProgramasApi()
   }));
 
   deleteProgramaMutation = injectMutation((client) => ({
-
     mutationFn: (id:number) => this.programasService.deleteProgramaApi(id),
-    
     onSuccess: () => {
       client.invalidateQueries({ queryKey:['get-programas'] });
       this.store.dispatch(setConfirmDialogPayloadAction({ confirmDialogPayload:null }));
       this.store.dispatch(setMessageFromUiDataAction({ message:deleteProgramaSuccessMessage }));
     }
-
   }));
 
   // Breadcrumb
