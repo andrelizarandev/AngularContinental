@@ -17,7 +17,7 @@
   
     </div>
   
-    <p-table [value]="roleList">
+    <p-table [value]="getRolesQuery.data() || []">
   
       <ng-template pTemplate="header">
   
@@ -74,8 +74,6 @@
   </app-card-with-skeleton>
 
 </app-navigation-container>
-
-<app-confirm-dialog [confirmDeletePayload]="confirmDeletePayload"/>
 
 <app-register-rol-dialog
   [isRegisterOpen]="isRegisterOpen"

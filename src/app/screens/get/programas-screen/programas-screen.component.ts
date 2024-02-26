@@ -39,6 +39,7 @@ import { injectQuery } from '@tanstack/angular-query-experimental';
 export class ProgramasScreenComponent {
 
   // Vars
+  isPostRequest = true;
   isRegisterOpen = false;
   confirmDeletePayload:ConfirmDialogPayload | null = null;
 
@@ -57,7 +58,8 @@ export class ProgramasScreenComponent {
   ];
 
   // Toggle
-  toggleOpenRegister () {
+  toggleOpenRegister (isPostRequest = true) {
+    this.isPostRequest = isPostRequest;
     this.isRegisterOpen = !this.isRegisterOpen;
   }
 

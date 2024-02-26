@@ -1,7 +1,11 @@
 // Modules
+import { Store, select } from '@ngrx/store';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
-import { Component, Input } from '@angular/core';
+import { Component, inject } from '@angular/core';
+
+// Selector
+import { confirmDialogPayloadSelector } from '../../../state/selectors/ui.selector';
 
 @Component({
   selector: 'app-confirm-dialog',
@@ -13,7 +17,16 @@ import { Component, Input } from '@angular/core';
 
 export class ConfirmDialogComponent {
 
-  @Input() confirmDeletePayload:ConfirmDialogPayload | null = null
+  confirmDeletePayload:ConfirmDialogPayload | null = null;
+
+  store = inject(Store);
+
+  constructor () {
+    this.store.pipe(select(confirmDialogPayloadSelector)).subscribe((confirmDialogPayload) => {
+      console.log('confirmDeletePayload', confirmDialogPayload);
+      this.confirmDeletePayload = confirmDialogPayload;
+    });
+  }
 
 }
 

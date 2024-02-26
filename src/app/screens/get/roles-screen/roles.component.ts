@@ -19,6 +19,7 @@ import { GetRoleData } from '../../../api/roles/roles.types';
 import { ConfirmDialogComponent, ConfirmDialogPayload } from '../../../dialogs/shared/confirm-dialog/confirm-dialog.component';
 import { MenuItem } from 'primeng/api';
 import BreadcrumbItemsClass from '../../../utils/breadcrumb-items';
+import { injectQuery } from '@tanstack/angular-query-experimental';
 
 @Component({
   selector: 'app-roles',
@@ -55,6 +56,11 @@ export class RolesComponent {
     BreadcrumbItemsClass.rolesItem
   ]
 
+  getRolesQuery = injectQuery(() => ({
+    queryKey: ['get-roles'],
+    queryFn: () => this.rolesService.getRolApi()
+  }))
+
   constructor (private rolesService:RolesService) {}
 
   // Toggle
@@ -74,10 +80,7 @@ export class RolesComponent {
 
   // Submit
   submitRol () {
-    this.rolesService.postRol({ description:'', name:'' }).subscribe({
-      next:(response) => this.onSuccessSubmitRol(response.data),
-      error:() => this.onErrorSubmitRol()
-    });
+    
   }
 
   // On Success

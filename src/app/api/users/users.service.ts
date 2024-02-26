@@ -24,4 +24,8 @@ export class UsersService {
     return lastValueFrom(this.http.post(`${apiUrl}/register`, data));
   }
 
+  deleteUserApi (id:number) {
+    return lastValueFrom(this.http.delete(`${apiUrl}/usuarios/${id}`));
+  }
+
 }

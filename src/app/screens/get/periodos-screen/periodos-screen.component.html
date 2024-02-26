@@ -12,7 +12,7 @@
         label="Registar Periodo"
         icon="pi pi-plus"
         size="small"
-        (onClick)="toggleOpenRegister()"
+        (onClick)="toggleOpenRegister(true)"
       />
   
     </div>
@@ -23,11 +23,11 @@
   
         <tr>
   
-          <th>ID</th>
+          <th>Código</th>
   
-          <th>NOMBRE</th>
+          <th>Nombre</th>
   
-          <th>ACCIONES</th>
+          <th>Acciones</th>
   
         </tr>
   
@@ -37,7 +37,7 @@
   
         <tr>
   
-          <td>{{ periodo.id }}</td>
+          <td>{{ periodo.codigo }}</td>
   
           <td>{{ periodo.nombre }}</td>
   
@@ -49,7 +49,7 @@
                 label="Editar"
                 icon="pi pi-pencil" 
                 size="small"
-                (onClick)="toggleOpenRegister()"
+                (onClick)="toggleOpenRegister(false)"
               />
   
               <p-button 
@@ -73,10 +73,8 @@
 
 </app-navigation-container>
 
-
-<app-confirm-dialog [confirmDeletePayload]="confirmDeletePayload"/>
-
 <app-register-periodo-dialog 
+  [isPostRequest]="isPostRequest"
   [isRegisterOpen]="isRegisterOpen" 
-  (toggleOpenRegister)="toggleOpenRegister()"
+  (toggleOpenRegister)="toggleOpenRegister(true)"
 />

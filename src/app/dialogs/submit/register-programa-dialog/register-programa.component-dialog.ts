@@ -3,9 +3,9 @@ import { Store } from '@ngrx/store';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { injectMutation } from '@tanstack/angular-query-experimental';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 // Actions
 import { setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
@@ -22,7 +22,12 @@ import { PostProgramaData, PutProgramaData } from '../../../api/programas/progra
 @Component({
   selector: 'app-register-programa-dialog',
   standalone: true,
-  imports: [DialogModule, InputTextModule, ButtonModule],
+  imports: [
+    DialogModule, 
+    InputTextModule, 
+    ButtonModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './register-programa.component-dialog.html',
   styleUrl: './register-programa.component-dialog.scss'
 })
@@ -89,7 +94,6 @@ export class RegisterProgramaComponentDialog {
     this.submitProgramaMutation.mutate(payload);
 
   }
-
 
   closeRegisterDialog () {
     this.toggleOpenRegister.emit();

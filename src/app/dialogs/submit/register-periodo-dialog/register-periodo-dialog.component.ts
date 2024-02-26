@@ -43,12 +43,14 @@ export class RegisterPeriodoDialogComponent {
   // Services
   periodosService = inject(PeriodoService);
 
+  // Forms
   submitPeriodoForm:FormGroup;
 
   constructor(private fb:FormBuilder, private store:Store) {
 
     this.submitPeriodoForm = this.fb.group({
       nombre: ['', Validators.required],
+      codigo: ['', Validators.required],
     });
 
   }
@@ -82,11 +84,11 @@ export class RegisterPeriodoDialogComponent {
 
   startSubmitPeriodo () {
 
-    const { nombre  } = this.submitPeriodoForm.value;
+    const { nombre, codigo } = this.submitPeriodoForm.value;
 
     const payload:PostPeriodoData | PutPeriodoData = (this.isPostRequest) 
-      ? { nombre } as PostPeriodoData
-      : { id: this.id, nombre: nombre } as PutPeriodoData;
+      ? { nombre, codigo } as PostPeriodoData
+      : { id: this.id, nombre, codigo } as PutPeriodoData;
 
     this.submitPostMutation.mutate(payload);
 

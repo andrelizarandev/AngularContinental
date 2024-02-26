@@ -9,6 +9,9 @@ import { injectMutation } from '@tanstack/angular-query-experimental';
 // Actions
 import { setUserDataAction } from '../../state/actions/login.actions';
 
+// Components
+import { ConfirmDialogComponent } from '../../dialogs/shared/confirm-dialog/confirm-dialog.component';
+
 // Selectors
 import { messageSelector } from '../../state/selectors/ui.selector';
 import { loginSelectorUser } from '../../state/selectors/login.selector';
@@ -24,6 +27,7 @@ import { continentalToken } from '../../data/data.texts';
   standalone: true,
   imports: [
     ToastModule,
+    ConfirmDialogComponent
   ],
   providers: [MessageService],
   templateUrl: './context-container.component.html',
@@ -31,6 +35,7 @@ import { continentalToken } from '../../data/data.texts';
 })
 export class ContextContainerComponent {
 
+  // Injects
   store = inject(Store);
   loginService = inject(LoginService);
 
@@ -39,17 +44,12 @@ export class ContextContainerComponent {
     mutationFn: () => this.loginService.validateTokenApi(),
 
     onSuccess: (data) =>  {
-
       this.store.dispatch(setUserDataAction({ user:data.user }));
-
       localStorage.setItem(continentalToken, data.accessToken);
-
     },
 
     onError: () => {
-
       this.router.navigate(['/login']);
-
     }
 
   }));
@@ -66,7 +66,7 @@ export class ContextContainerComponent {
 
     this.store.pipe(select(loginSelectorUser)).subscribe((user) => {
 
-      if (!user) this.validateTokenMutation.mutate();
+      // if (!user) this.validateTokenMutation.mutate();
       
     });
 

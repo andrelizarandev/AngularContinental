@@ -12,7 +12,7 @@
         label="Registrar Programa"
         icon="pi pi-plus"
         size="small"
-        (onClick)="toggleOpenRegister()"
+        (onClick)="toggleOpenRegister(true)"
       ></p-button>
 
     </div>
@@ -23,9 +23,9 @@
 
         <tr>
 
-          <th>NOMBRE</th>
+          <th>Nombre</th>
 
-          <th>ACCIONES</th>
+          <th>Acciones</th>
 
         </tr>
 
@@ -45,7 +45,7 @@
                 label="Editar"
                 icon="pi pi-pencil" 
                 size="small"
-                (onClick)="toggleOpenRegister()"
+                (onClick)="toggleOpenRegister(false)"
               ></p-button>
 
               <p-button 
@@ -72,8 +72,7 @@
   </app-navigation-container>
 
 <app-register-programa-dialog 
-  (toggleOpenRegister)="toggleOpenRegister()"
+  [isPostRequest]="isPostRequest"
   [isRegisterOpen]="isRegisterOpen"
+  (toggleOpenRegister)="toggleOpenRegister()"
 />
-
-<app-confirm-dialog [confirmDeletePayload]="confirmDeletePayload"/>

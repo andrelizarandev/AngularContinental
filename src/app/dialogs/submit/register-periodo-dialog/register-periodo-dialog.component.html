@@ -1,6 +1,6 @@
 <p-dialog 
   class="sm:w-12" 
-  header="Registrar Nuevo Periodo" 
+  [header]="isPostRequest ? 'Registrar Periodo' : 'Editar Periodo'"
   [style]="{width: '600px'}"
   [visible]="isRegisterOpen" 
   [modal]="true" 
@@ -8,12 +8,24 @@
   [draggable]="false"
 >
 
-  <div class="v-flex mt-1">
+  <form 
+    class="v-flex mt-1" 
+    [formGroup]="submitPeriodoForm" 
+    (ngSubmit)="startSubmitPeriodo()"
+  >
 
     <input 
       type="text" 
       placeholder="Nombre del Periodo"
-      pInputText 
+      formControlName="nombre"
+      pInputText
+    />
+
+    <input 
+      type="text" 
+      placeholder="Código"
+      formControlName="codigo"
+      pInputText
     />
 
     <div class="h-flex">
@@ -28,10 +40,11 @@
       <p-button 
         label="Registrar" 
         size="small"
+        type="submit"
       />
       
     </div>
 
-  </div>
+  </form>
   
 </p-dialog>

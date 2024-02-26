@@ -38,7 +38,8 @@ import { PeriodoService } from '../../../api/periodo/periodo.service';
 export class PeriodosScreenComponent {
 
   // Vars
-  isRegisterOpen: boolean = false;
+  isPostRequest = true;
+  isRegisterOpen = false;
   confirmDeletePayload:ConfirmDialogPayload | null = null
 
   // Services
@@ -56,7 +57,8 @@ export class PeriodosScreenComponent {
   }))
 
   // Toggle
-  toggleOpenRegister () {
+  toggleOpenRegister (isPostRequest:boolean) {
+    this.isPostRequest = isPostRequest;
     this.isRegisterOpen = !this.isRegisterOpen;
   }
   

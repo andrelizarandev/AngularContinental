@@ -9,3 +9,5 @@ export const uiSelector = (state:AppState) => state.ui;
 export const messageSelector = createSelector(uiSelector, (ui) => ui.message);
 
 export const showSidebarSelector = createSelector(uiSelector, (ui) => ui.showSidebar);
+
+export const confirmDialogPayloadSelector = createSelector(uiSelector, (ui) => ui.confirmDialogPayload);

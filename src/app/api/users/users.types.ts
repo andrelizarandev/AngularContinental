@@ -8,7 +8,7 @@ export type PostUserData = {
 }
 
 export type GetUserData = { 
-  id:number; 
+  id_usuario:number; 
   nombre_rol:string 
 } & PostUserData;
 
