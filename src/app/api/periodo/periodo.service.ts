@@ -28,4 +28,8 @@ export class PeriodoService {
     return lastValueFrom(this.http.put(`${apiUrl}/periodos`, data));
   }
 
+  deletePeriodoApi (id:number) {
+    return lastValueFrom(this.http.delete(`${apiUrl}/periodos/${id}`));
+  }
+
 }

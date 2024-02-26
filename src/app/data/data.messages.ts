@@ -87,3 +87,10 @@ export const putPeriodoSuccessMessage:MessageData = {
   body:'Se ha actualizado tu periodo en la plataforma.',
   type:'success'
 }
+
+// Delete Periodo
+export const deletePeriodoSuccessMessage:MessageData = {
+  message:'Periodo eliminado con éxito',
+  body:'Se ha eliminado tu periodo de la plataforma.',
+  type:'success'
+}

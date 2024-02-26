@@ -4,10 +4,10 @@ import { MenuItem } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Component, inject } from '@angular/core';
-import { injectQuery } from '@tanstack/angular-query-experimental';
+import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
 
 // Actions
-import { setConfirmDialogPayloadAction } from '../../../state/actions/ui-actions';
+import { setConfirmDialogPayloadAction, setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
 
 // Classes
 import BreadcrumbItemsClass from '../../../utils/breadcrumb-items';
@@ -20,6 +20,9 @@ import { NavigationContainerComponent } from '../../../components/navigation-con
 // Dialogs
 import { ConfirmDialogComponent } from '../../../dialogs/shared/confirm-dialog/confirm-dialog.component';
 import { RegisterPeriodoDialogComponent } from '../../../dialogs/submit/register-periodo-dialog/register-periodo-dialog.component';
+
+// Messages
+import { deletePeriodoSuccessMessage } from '../../../data/data.messages';
 
 // Services
 import { PeriodoService } from '../../../api/periodo/periodo.service';
@@ -62,6 +65,18 @@ export class PeriodosScreenComponent {
   getPeriodoQuery = injectQuery(() => ({
     queryKey: ['get-periodos'],
     queryFn: () => this.periodosService.getPeriodosApi()
+  }));
+
+  deletePeriodoMutation = injectMutation((client) => ({
+
+    mutationFn: (id:number) => this.periodosService.deletePeriodoApi(id),
+
+    onSuccess: () => {
+      this.store.dispatch(setConfirmDialogPayloadAction({ confirmDialogPayload:null }));
+      this.store.dispatch(setMessageFromUiDataAction({ message:deletePeriodoSuccessMessage }));
+      client.invalidateQueries({ queryKey:['get-periodos'] });
+    }
+
   }));
 
   // Confirm
