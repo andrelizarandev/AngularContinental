@@ -1,8 +1,7 @@
 export type GetRoleData = { id: string; } & PostRoleData
 
 export type PostRoleData = {
-  name: string;
-  description: string;
+  nombre: string;
 }
 
 export type GetRoleResponse = {

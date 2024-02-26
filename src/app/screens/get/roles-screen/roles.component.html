@@ -22,14 +22,10 @@
       <ng-template pTemplate="header">
   
         <tr>
+
+          <th>Nombre</th>
   
-          <th>ID</th>
-  
-          <th>NOMBRE</th>
-  
-          <th>DESCRIPCIÓN</th>
-  
-          <th>ACCIONES</th>
+          <th>Acciones</th>
   
         </tr>
   
@@ -38,27 +34,25 @@
       <ng-template pTemplate="body" let-role>
   
         <tr>
-          
-          <td>{{ role.id }}</td>
   
-          <td>{{ role.name }}</td>
-  
-          <td>{{ role.description }}</td>
+          <td>{{ role.nombre }}</td>
           
           <td>
   
             <div class="h-flex">
               
               <p-button 
+                label="Editar"
                 icon="pi pi-pencil" 
                 size="small"
                 (onClick)="toggleOpenRegister()"
               />
               
               <p-button 
+                label="Eliminar"
                 icon="pi pi-trash" 
                 size="small"
-                (onClick)="toggleOpenDeleteConfirm()"
+                (onClick)="confirmDeleteRol(role)"
               />
 
             </div>

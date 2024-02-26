@@ -54,6 +54,13 @@ export const putProgramaErrorMessage:MessageData = {
   type:'error'
 }
 
+// Delete Programa
+export const deleteProgramaSuccessMessage:MessageData = {
+  message:'Programa eliminado con éxito',
+  body:'Se ha eliminado tu programa de la plataforma.',
+  type:'success'
+}
+
 // Post Login
 export const postLoginSuccessMessage:MessageData = {
   message:'Bienvenido',

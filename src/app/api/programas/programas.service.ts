@@ -28,5 +28,9 @@ export class ProgramasService {
     const { id, ...restData } = data;
     return lastValueFrom(this.http.put(`${apiUrl}/programas/${data.id}`, restData));
   }
+
+  deleteProgramaApi (id:number) {
+    return lastValueFrom(this.http.delete(`${apiUrl}/programas/${id}`));
+  }
   
 }

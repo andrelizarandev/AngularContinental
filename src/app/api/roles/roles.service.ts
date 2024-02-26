@@ -24,4 +24,8 @@ export class RolesService {
     return lastValueFrom(this.http.post<PostRoleResponse>(`${apiUrl}/roles`, data));
   }
 
+  deleteRolApi (id:number) {
+    return lastValueFrom(this.http.delete(`${apiUrl}/roles/${id}`));
+  }
+
 }

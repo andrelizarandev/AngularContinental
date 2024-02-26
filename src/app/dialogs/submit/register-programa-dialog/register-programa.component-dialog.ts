@@ -89,7 +89,7 @@ export class RegisterProgramaComponentDialog {
     
     const payload:PostProgramaData | PutProgramaData = (this.isPostRequest)
       ? { nombre } as PostProgramaData
-      : { nombre, id:this.id } as PutProgramaData;
+      : { nombre, id:Number(this.id) } as PutProgramaData;
 
     this.submitProgramaMutation.mutate(payload);
 
