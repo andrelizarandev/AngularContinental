@@ -18,8 +18,8 @@ import { SubmitProduccionGeneralComponent } from './screens/submit/submit-produc
 import { SubmitSolicitudDisenoCursoComponent } from './screens/submit/submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
 
 export const routes: Routes = [
-  { path:'', component:HomeComponent },
-  { path:'login', component:LoginComponent },
+  { path:'', component:LoginComponent },
+  { path:'home', component:HomeComponent },
   { path:'users', component:UsersComponent },
   { path:'roles', component:RolesComponent },
   { path:'periodos', component:PeriodosScreenComponent },

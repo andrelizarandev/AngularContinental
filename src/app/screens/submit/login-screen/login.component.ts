@@ -57,7 +57,7 @@ export class LoginComponent {
       this.store.dispatch(setUserDataAction({ user:response.user }));
       this.store.dispatch(setMessageFromUiDataAction({ message:postLoginSuccessMessage }));
       localStorage.setItem(continentalToken, response.accessToken);
-      this.router.navigate(['/']);
+      this.router.navigate(['/home']);
     },
 
     onError: () => {
