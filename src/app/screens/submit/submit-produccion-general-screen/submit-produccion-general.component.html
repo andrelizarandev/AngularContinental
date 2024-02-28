@@ -147,7 +147,7 @@
                     <h3 class="c-title">Modalidad</h3>
 
                     <span>
-                      {{ currentModalidadNameForScreen }}
+                      {{ currentModalidadName }}
                     </span>
 
                   </div>
@@ -161,8 +161,8 @@
                     <h3 class="c-title">Formato</h3>
 
                     @if (
-                      currentModalidadForScreen === '1' || 
-                      currentModalidadForScreen === '4'
+                      currentModalidad === '1' || 
+                      currentModalidad === '4'
                     ) {
 
                       <div class="h-flex-align-center">
@@ -180,7 +180,7 @@
 
                     } 
                     
-                    @if (currentModalidadForScreen === '2') {
+                    @if (currentModalidad === '2') {
 
                       <div class="h-flex-align-center">
 
@@ -197,10 +197,7 @@
 
                     } 
 
-                    @else if (
-                      currentModalidadForScreen === '3' || 
-                      currentModalidadForScreen === '4'
-                    ) {
+                    @else if (currentModalidad === '3' || currentModalidad === '4') {
 
                       <div class="h-flex-align-center">
 
@@ -683,8 +680,9 @@
 <!-- Input en el dialog, Vars en la pantalla -->
 <!-- Emitter en el dialog, Toggle en la pantalla -->
 <app-register-periodo-general-dialog 
-  [currentModalidad]="currentModalidadForModalidad"
-  [currentModalidadName]="currentModalidadNameForModalidad"
+  [currentModalidad]="currentModalidad"
+  [currentFormato]="currentFormato"
+  [currentFormatoName]="currentFormatoName"
   [isDialogOpen]="isRegisterPeriodoGeneralDialogOpen"
   (closeDialogEmitter)="toggleIsRegisterPeriodoGeneralDialogOpen()"
 />

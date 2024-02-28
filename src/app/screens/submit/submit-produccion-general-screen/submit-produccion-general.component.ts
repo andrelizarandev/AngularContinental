@@ -70,10 +70,10 @@ export class SubmitProduccionGeneralComponent {
   // Vars
   isUploadSilaboDialogOpen = false;
 
-  currentModalidadForScreen:string | null = null;
-  currentModalidadNameForScreen:string | null = null;
-  currentModalidadForModalidad:string | null = null;
-  currentModalidadNameForModalidad:string | null = null;
+  currentModalidad:string | null = null;
+  currentModalidadName:string | null = null;
+  currentFormato:string | null = null;
+  currentFormatoName:string | null = null;
 
   isRegisterPeriodoGeneralDialogOpen = false;
   lastSilaboData:GetDataSilabosData | null = null;
@@ -330,8 +330,8 @@ export class SubmitProduccionGeneralComponent {
 
         });
 
-        this.currentModalidadForScreen = modalidad;
-        this.currentModalidadNameForScreen = nombre_modalidad;
+        this.currentModalidad = modalidad;
+        this.currentModalidadName = nombre_modalidad;
 
         return result;
 
@@ -400,12 +400,9 @@ export class SubmitProduccionGeneralComponent {
   }
 
   // Toggle
-  toggleIsRegisterPeriodoGeneralDialogOpen (
-    currentModalidad:string | null = null, 
-    currentModalidadName:string | null = null
-  ) {
-    this.currentModalidadForModalidad = currentModalidad;
-    this.currentModalidadNameForModalidad = currentModalidadName; 
+  toggleIsRegisterPeriodoGeneralDialogOpen (currentFormato:string | null = null, currentFormatoName:string | null = null) {
+    this.currentFormato = currentFormato;
+    this.currentFormatoName = currentFormatoName; 
     this.isRegisterPeriodoGeneralDialogOpen = !this.isRegisterPeriodoGeneralDialogOpen;
   }
   

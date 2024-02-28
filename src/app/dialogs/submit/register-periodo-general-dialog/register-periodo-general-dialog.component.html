@@ -1,6 +1,6 @@
 <p-dialog 
   class="sm:w-12"
-  header="Formato - {{ currentModalidadName }}"
+  header="Formato - {{ currentFormatoName }}"
   [style]="{width: '600px'}"
   [visible]="isDialogOpen"
   [modal]="true"
@@ -8,7 +8,7 @@
   [draggable]="false"
 >
 
-  <form class="v-flex" [formGroup]="formatoForm">
+  <form class="v-flex" [formGroup]="formatoForm" (ngSubmit)="startSubmitMetodo()">
 
     <h3 class="c-title">Presencial</h3>
 
@@ -94,7 +94,6 @@
     <p-dropdown 
       [options]="ratingOptions" 
       placeholder="Seleccione" 
-      optionLabel="name" 
       [style]="{'width':'100%'}"
       formControlName="u2_autoevaluacion"
     />
@@ -104,7 +103,6 @@
     <p-dropdown 
       [options]="ratingOptions" 
       placeholder="Seleccione" 
-      optionLabel="name" 
       [style]="{'width':'100%'}"
       formControlName="u2_ppt"
     />
@@ -178,8 +176,8 @@
 
       <p-button 
         label="Guardar" 
-        (onClick)="closeRegister()"
         size="small"
+        type="submit"
       />
 
     </div>
