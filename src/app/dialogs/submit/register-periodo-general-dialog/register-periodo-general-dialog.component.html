@@ -6,6 +6,7 @@
   [modal]="true"
   [closable]="false"
   [draggable]="false"
+  (onShow)="getMetodoQuery.refetch()"
 >
 
   <form class="v-flex" [formGroup]="formatoForm" (ngSubmit)="startSubmitMetodo()">

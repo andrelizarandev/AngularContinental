@@ -108,3 +108,16 @@ export const deleteRolSuccessMessage:MessageData = {
   body:'Se ha eliminado tu rol de la plataforma.',
   type:'success'
 }
+
+// Get Método
+export const getMetodoErrorMessage:MessageData = {
+  message:'Error al obtener método',
+  body:'Revisa que tu método no se haya repetido antes.',
+  type:'error'
+}
+
+export const getMetodoSuccessMessage:MessageData = {
+  message:'Método obtenido con éxito',
+  body:'Se ha obtenido tu método con tu modalidad y formato.',
+  type:'success'
+}

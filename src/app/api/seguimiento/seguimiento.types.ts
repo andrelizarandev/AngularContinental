@@ -17,5 +17,5 @@ export type GetSeguimientoData = {
 }
 
 export type GetSeguimientoResponse = {
-  seguimiento: GetSeguimientoData;
+  data: GetSeguimientoData[];
 }
