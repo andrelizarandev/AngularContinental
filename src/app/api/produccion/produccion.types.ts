@@ -85,3 +85,18 @@ export type GetTipoDisenoData = {
   id:number;
   nombre:string;
 }
+
+export type GetPorcentajesAvanceByProduccionGeneralData = {
+  id:number;
+  id_metodo:number;
+  id_produccion_general:number;
+  fecha_inicio:string;
+  fecha_registro:string;
+  porcentaje:number;
+  modalidad:number;
+  formato:number;
+}
+
+export type GetPorcentajesAvanceByProduccionGeneraResponse = {
+  resultado:GetPorcentajesAvanceByProduccionGeneralData[];
+}

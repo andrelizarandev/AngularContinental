@@ -68,7 +68,7 @@ export class ProduccionComponent {
   // Redirect
   redirectToProductionForm = (id:string) => this.router.navigate([`/submit-produccion-general/${id}`]);
 
-  redirectToSeguimiento = (id:string) => this.router.navigate([`/submit-seguimiento/${id}`]);
+  redirectToSeguimiento = (id:string, idModalidad:string) => this.router.navigate([`/submit-seguimiento/${id}/${idModalidad}`]);
 
   redirectToValidacion = (id:string) => this.router.navigate([`/submit-validacion/${id}`]);
 

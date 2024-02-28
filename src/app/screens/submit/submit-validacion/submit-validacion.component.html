@@ -6,7 +6,7 @@
 
     <h3 class="c-title">Validación</h3>
 
-    <p-table [value]="validacionList || []">
+    <p-table [value]="validationQuery.data() || []">
   
       <ng-template pTemplate="header">
   
@@ -16,15 +16,11 @@
           
           <th>Asignatura</th>
           
+          <th>Tipo de diseño</th>
+
           <th>Modalidad</th>
           
-          <th>Tipo de diseño</th>
-          
-          <th>Formato presencial</th>
-          
-          <th>Formato semipresencial</th>
-          
-          <th>Formato distancia</th>
+          <th>Formato</th>
           
           <th>Número de formato</th>
           
@@ -60,15 +56,13 @@
           
           <td>{{validacion.asignatura}}</td>
           
-          <td>{{validacion.modalidad}}</td>
-          
           <td>{{validacion.tipo_diseno}}</td>
+
+          <td>{{matchModalidadById(validacion.modalidad)}}</td>
           
-          <td>{{validacion.presencial}}</td>
-          
-          <td>{{validacion.semipresencial}}</td>
-          
-          <td>{{validacion.adistancia}}</td>
+          <td>
+            {{getCurrentFormato(validacion.presencial, validacion.adistancia, validacion.semipresencial)}}
+          </td>
           
           <td>{{validacion.numero_formatos}}</td>
           
@@ -97,12 +91,6 @@
       </ng-template>
   
     </p-table>
-
-    <p-button 
-      label="Confirmar" 
-      size="small"
-      icon="pi pi-check"
-    />
 
   </app-card-with-skeleton>
 

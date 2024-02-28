@@ -29,7 +29,7 @@ export const routes: Routes = [
   { path:'produccion-general', component:ProduccionComponent },
   { path:'submit-solicitud-diseno-curso', component:SubmitSolicitudDisenoCursoComponent },
   { path:'submit-produccion-general/:id', component:SubmitProduccionGeneralComponent },
-  { path:'submit-seguimiento/:id', component:SubmitSeguimientoComponent },
+  { path:'submit-seguimiento/:id/:idModalidad', component:SubmitSeguimientoComponent },
   { path:'submit-validacion/:id', component:SubmitValidacionComponent },
   { path:'submit-reportes/:id', component:SubmitReportesComponent },
   { path:'', redirectTo:'/login', pathMatch:'full' }

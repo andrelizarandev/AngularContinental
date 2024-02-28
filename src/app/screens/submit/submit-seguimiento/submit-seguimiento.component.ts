@@ -34,6 +34,7 @@ export class SubmitSeguimientoComponent {
   seguimientoService = inject(SeguimientoService);
 
   currentId = this.activatedRoute.snapshot.params['id'];
+  currentModalidadId  = this.activatedRoute.snapshot.params['idModalidad'];
 
   breadcrumbItems = [
     BreadcrumbItemsClass.homeItem,
@@ -45,7 +46,7 @@ export class SubmitSeguimientoComponent {
   
   getSeguimientoWithProduccionQuery = injectQuery(() => ({
     queryKey: ['get-seguimiento-with-produccion'],
-    queryFn: () => this.seguimientoService.getSeguimientoList(this.currentId)
+    queryFn: () => this.seguimientoService.getSeguimientoList(this.currentId, this.currentModalidadId)
   }));
 
 }

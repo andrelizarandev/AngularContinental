@@ -16,8 +16,8 @@ export class SeguimientoService {
 
   constructor (private http:HttpClient) {}
 
-  getSeguimientoList (id:string) {
-    return lastValueFrom(this.http.get<GetSeguimientoResponse>(`${apiUrl}/seguimiento/${id}`));
+  getSeguimientoList (id:string, idModalidad:string) {
+    return lastValueFrom(this.http.get<GetSeguimientoResponse>(`${apiUrl}/seguimiento/${id}/${idModalidad}`));
   }
   
 }

@@ -23,12 +23,19 @@
       <ng-template pTemplate="header">
   
         <tr>
+
           <th>Plan</th>
+
           <th>Asignatura</th>
+
           <th>Asesor</th>
+
           <th>Decano</th>
+
           <th>Modalidad</th>
+
           <th>Acciones</th>
+
         </tr>
   
       </ng-template>
@@ -70,7 +77,7 @@
               <p-button 
                 label="Seguimiento" 
                 size="small" 
-                (onClick)="redirectToSeguimiento(produccion.id)"
+                (onClick)="redirectToSeguimiento(produccion.id, produccion.modalidad)"
                 icon="pi pi-folder"
                 severity="secondary"
               />

@@ -19,12 +19,12 @@ import { CardWithSkeletonComponent } from '../../../components/card-with-skeleto
 import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
 
 // Helpers
-import TextHelper from '../../../helpers/text-helpers';
 import HandleDates from '../../../helpers/handle-dates';
 
 // Services
 import { ReportesService } from '../../../api/reportes/reportes.service';
 import { FormatosService } from '../../../api/formatos/formatos.service';
+import { ProduccionService } from '../../../api/produccion/produccion.service';
 import { ModalidadesService } from '../../../api/modalidades/modalidades.service';
 
 // Types
@@ -54,6 +54,7 @@ export class SubmitReportesComponent {
   formatosService = inject(FormatosService);
   reportesService = inject(ReportesService);
   modalidadesService = inject(ModalidadesService);
+  produccionGeneralService = inject(ProduccionService);
 
   // Vars
   facultadesList:GetFacultadData[] = [];
@@ -61,6 +62,9 @@ export class SubmitReportesComponent {
 
   // Utils
   documentStyle = getComputedStyle(document.documentElement);
+  textColor = this.documentStyle.getPropertyValue('--text-color');
+  surfaceBorder = this.documentStyle.getPropertyValue('--surface-border');
+  textColorSecondary = this.documentStyle.getPropertyValue('--text-color-secondary');
 
   // Charts
   barData: any;
@@ -84,34 +88,12 @@ export class SubmitReportesComponent {
   constructor (private activatedRoute:ActivatedRoute) {}
 
   ngOnInit() {
-    
-    const textColor = this.documentStyle.getPropertyValue('--text-color');
-    const surfaceBorder = this.documentStyle.getPropertyValue('--surface-border');
-    const textColorSecondary = this.documentStyle.getPropertyValue('--text-color-secondary');
-
-    this.barData = {
-        labels: ['23/02/2024', '24/02/2024', '25/02/2024', '26/02/2024', '27/02/2024'],
-        datasets: [
-            {
-              label: 'Porcentaje Avance',
-              data: [23, 45, 59, 70, 94, 100],
-              backgroundColor: [
-                this.documentStyle.getPropertyValue('--blue-500'), 
-                this.documentStyle.getPropertyValue('--red-500'), 
-                this.documentStyle.getPropertyValue('--green-500'),
-                this.documentStyle.getPropertyValue('--gray-500'),
-                this.documentStyle.getPropertyValue('--yellow-500'),
-                this.documentStyle.getPropertyValue('--purple-500')
-              ]
-            }
-        ]
-    };
 
     this.barOptions = {
         plugins: {
             legend: {
                 labels: {
-                    color: textColor
+                    color: this.textColor
                 }
             }
         },
@@ -119,19 +101,19 @@ export class SubmitReportesComponent {
             y: {
                 beginAtZero: true,
                 ticks: {
-                    color: textColorSecondary
+                    color: this.textColorSecondary
                 },
                 grid: {
-                    color: surfaceBorder,
+                    color: this.surfaceBorder,
                     drawBorder: false
                 }
             },
             x: {
                 ticks: {
-                    color: textColorSecondary
+                    color: this.textColorSecondary
                 },
                 grid: {
-                    color: surfaceBorder,
+                    color: this.surfaceBorder,
                     drawBorder: false
                 }
             }
@@ -143,7 +125,7 @@ export class SubmitReportesComponent {
         legend: {
           labels: {
             usePointStyle: true,
-            color: textColor
+            color: this.textColor
           }
         }
       }
@@ -185,6 +167,50 @@ export class SubmitReportesComponent {
   getModalidadesQuery = injectQuery(() => ({
     queryKey: ['get-modalidades'],
     queryFn: () => this.modalidadesService.getModalidadesApi()
+  }));
+
+  getPorcentajesAvanceByProduccionGeneraApi = injectQuery(() => ({
+
+    queryKey:['get-porcentajes-avance-by-produccion-general', this.currentId],
+
+    queryFn: async () => {
+
+      try {
+
+        const result = await this.produccionGeneralService.getPorcentajesAvanceByProduccionGeneraApi(this.currentId);
+
+        const dates = result.resultado.map(({ fecha_registro }) => HandleDates.parseDateFormat1ToFormat2(fecha_registro.slice(0, 10), 'YYYY-MM-DD', 'DD/MM/YYYY'));
+
+        const percentages = result.resultado.map(({ porcentaje }) => porcentaje);
+
+        this.barData = {
+          labels: dates,
+          datasets: [
+              {
+                label: 'Porcentaje Avance',
+                data: percentages,
+                backgroundColor: [
+                  this.documentStyle.getPropertyValue('--blue-500'), 
+                  this.documentStyle.getPropertyValue('--red-500'), 
+                  this.documentStyle.getPropertyValue('--green-500'),
+                  this.documentStyle.getPropertyValue('--gray-500'),
+                  this.documentStyle.getPropertyValue('--yellow-500'),
+                  this.documentStyle.getPropertyValue('--purple-500')
+                ]
+              }
+          ]
+      };
+
+        return result;
+
+      } catch (err:any) {
+
+        return null
+        
+      }
+
+    }
+    
   }));
 
   // Getters

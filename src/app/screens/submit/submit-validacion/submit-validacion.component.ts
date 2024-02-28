@@ -19,6 +19,7 @@ import { ValidacionService } from '../../../api/validacion/validacion.service';
 
 // Types
 import { GetValidacionData } from '../../../api/validacion/validacion.types';
+import { ModalidadesService } from '../../../api/modalidades/modalidades.service';
 
 @Component({
   selector: 'app-submit-validacion',
@@ -35,7 +36,9 @@ import { GetValidacionData } from '../../../api/validacion/validacion.types';
 })
 export class SubmitValidacionComponent {
 
+  // Injects
   validationService = inject(ValidacionService);
+  modalidadService = inject(ModalidadesService);
 
   currentId = this.activatedRoute.snapshot.params['id'];
 
@@ -49,12 +52,33 @@ export class SubmitValidacionComponent {
 
   constructor (private activatedRoute: ActivatedRoute) {}
 
-  getValidationData = injectQuery(() => ({
+  validationQuery = injectQuery(() => ({
     queryKey: ['get-validation'],
     queryFn: async () => {
       const result = await this.validationService.getValidacionByProduccionGeneralId(this.currentId);
-      this.validacionList = [result.datos];
+      return [result.datos];
     }
   }));
+
+  getModalidadesQuery = injectQuery(() => ({
+    queryKey: ['get-modalidades'],
+    queryFn: async () => {
+      const result = await this.modalidadService.getModalidadesApi();
+      return result.modalidades;
+    }
+  }));
+
+  matchModalidadById (id:string) {
+    const modalidadesData = this.getModalidadesQuery.data();
+    if (!modalidadesData) return 'No Especificado';
+    return modalidadesData.find((modalidad) => String(modalidad.id) === id)?.nombre || 'No Especificado';
+  }
+
+  getCurrentFormato (idPresencial:string, idSemipresencial:string, idAdistancia:string) {
+    if (idPresencial) return 'Presencial';
+    else if (idSemipresencial) return 'Semipresencial';
+    else if (idAdistancia) return 'A Distancia';
+    else return 'No Especificado';
+  }
 
 }

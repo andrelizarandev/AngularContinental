@@ -8,6 +8,7 @@ import { apiUrl } from '..';
 
 // Types
 import { 
+  GetPorcentajesAvanceByProduccionGeneraResponse,
   GetProduccionGeneralData, 
   GetProduccionGeneralDataById, 
   GetSilabosFromProduccionGeneralResponse, 
@@ -56,6 +57,10 @@ export class ProduccionService {
 
   getTipoDisenosApi () {
     return lastValueFrom(this.http.get<GetTipoDisenoData[]>(`${apiUrl}/tipo-disenos`));
+  }
+
+  getPorcentajesAvanceByProduccionGeneraApi (id:string) {
+    return lastValueFrom(this.http.get<GetPorcentajesAvanceByProduccionGeneraResponse>(`${apiUrl}/porcentaje/${id}`));
   }
 
 }
