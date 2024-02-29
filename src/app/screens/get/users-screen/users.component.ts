@@ -72,7 +72,6 @@ export class UsersComponent {
 
   // Confirm
   confirmDeleteUser (user:GetUserData) {
-    console.log('user', user)
     this.store.dispatch(setConfirmDialogPayloadAction({ confirmDialogPayload: {
       title:'Eliminar usuario',
       message:`¿Está seguro que desea eliminar el usuario ${user.nombres} ${user.apellidos}?`,

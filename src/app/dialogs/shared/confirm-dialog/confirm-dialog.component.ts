@@ -23,7 +23,6 @@ export class ConfirmDialogComponent {
 
   constructor () {
     this.store.pipe(select(confirmDialogPayloadSelector)).subscribe((confirmDialogPayload) => {
-      console.log('confirmDeletePayload', confirmDialogPayload);
       this.confirmDeletePayload = confirmDialogPayload;
     });
   }

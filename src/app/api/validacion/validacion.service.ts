@@ -1,7 +1,7 @@
 // Modules
 import { lastValueFrom } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
 
 // Api
 import { apiUrl } from '..';
@@ -18,6 +18,9 @@ export class ValidacionService {
 
   getValidacionByProduccionGeneralId (id:string) {
     return lastValueFrom(this.http.get<GetValidacionResponse>(`${apiUrl}/validacion/${id}`))
+  }
 
+  putValidacionApi (id:number) {
+    return lastValueFrom(this.http.post(`${apiUrl}/validacion/${id}`, {}));
   }
 }

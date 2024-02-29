@@ -128,3 +128,10 @@ export const postMetodoSuccessMessage:MessageData = {
   body:'Se ha agregado tu método a la plataforma.',
   type:'success'
 }
+
+// Put Validación
+export const putValidacionSuccessMessage:MessageData = {
+  message:'Validación actualizada con éxito',
+  body:'Se ha actualizado tu validación en la plataforma.',
+  type:'success'
+}

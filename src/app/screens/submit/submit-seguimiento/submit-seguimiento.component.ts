@@ -15,6 +15,7 @@ import { NavigationContainerComponent } from '../../../components/navigation-con
 
 // Services
 import { SeguimientoService } from '../../../api/seguimiento/seguimiento.service';
+import CalculatePorcentajeAvanceHelper, { DataForCalculatePorcentajeAvance } from '../../../helpers/calculate-porcentaje-avance-helper';
 
 @Component({
   selector: 'app-submit-seguimiento',
@@ -43,6 +44,10 @@ export class SubmitSeguimientoComponent {
   ]
 
   constructor (private activatedRoute: ActivatedRoute,) {}
+
+  getPorcentajeReal (data:DataForCalculatePorcentajeAvance) {
+    return CalculatePorcentajeAvanceHelper.calculatePorcentajeAvance(data)
+  }
   
   getSeguimientoWithProduccionQuery = injectQuery(() => ({
     queryKey: ['get-seguimiento-with-produccion'],

@@ -1,3 +1,6 @@
+// Types
+import { DataForCalculatePorcentajeAvance } from '../../helpers/calculate-porcentaje-avance-helper';
+
 export type GetSeguimientoData = {
   id:number;
   codigo:string;
@@ -14,6 +17,7 @@ export type GetSeguimientoData = {
   fecha_finalizacion:string;
   fecha_presentacion_di:string
   observaciones:string;
+  metodos_data:DataForCalculatePorcentajeAvance;
 }
 
 export type GetSeguimientoResponse = {

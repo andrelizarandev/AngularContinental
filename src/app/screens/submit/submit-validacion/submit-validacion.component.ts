@@ -4,7 +4,7 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { ActivatedRoute } from '@angular/router';
 import { Component, inject } from '@angular/core';
-import { injectQuery } from '@tanstack/angular-query-experimental';
+import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
 
 // Classes
 import BreadcrumbItemsClass from '../../../utils/breadcrumb-items';
@@ -14,12 +14,16 @@ import { CustomBreadcrumbComponent } from '../../../components/custom-breadcrumb
 import { CardWithSkeletonComponent } from '../../../components/card-with-skeleton/card-with-skeleton.component';
 import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
 
+// Messages
+import { putValidacionSuccessMessage } from '../../../data/data.messages';
+
 // Services
 import { ValidacionService } from '../../../api/validacion/validacion.service';
+import { ModalidadesService } from '../../../api/modalidades/modalidades.service';
 
 // Types
-import { GetValidacionData } from '../../../api/validacion/validacion.types';
-import { ModalidadesService } from '../../../api/modalidades/modalidades.service';
+import { Store } from '@ngrx/store';
+import { setConfirmDialogPayloadAction, setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
 
 @Component({
   selector: 'app-submit-validacion',
@@ -40,18 +44,20 @@ export class SubmitValidacionComponent {
   validationService = inject(ValidacionService);
   modalidadService = inject(ModalidadesService);
 
+  // Vars
+  isValidated = false;
   currentId = this.activatedRoute.snapshot.params['id'];
 
-  validacionList:GetValidacionData[] = [];
-
+  // Breadcrumbs
   breadcrumbItems:MenuItem[] = [
     BreadcrumbItemsClass.homeItem,
     BreadcrumbItemsClass.produccionGeneral,
     { ...BreadcrumbItemsClass.validacionItem(this.currentId)}
   ]
 
-  constructor (private activatedRoute: ActivatedRoute) {}
+  constructor (private activatedRoute: ActivatedRoute, private store:Store) {}
 
+  // Queries
   validationQuery = injectQuery(() => ({
     queryKey: ['get-validation'],
     queryFn: async () => {
@@ -59,6 +65,14 @@ export class SubmitValidacionComponent {
       return [result.datos];
     }
   }));
+
+  putValidacionMutation = injectMutation(() => ({
+    mutationFn: (id:number) => this.validationService.putValidacionApi(id),
+    onSuccess: () => {
+      this.store.dispatch(setMessageFromUiDataAction({ message:putValidacionSuccessMessage }));
+      this.isValidated = true;
+    }
+  }))
 
   getModalidadesQuery = injectQuery(() => ({
     queryKey: ['get-modalidades'],
@@ -68,17 +82,29 @@ export class SubmitValidacionComponent {
     }
   }));
 
+  // Match
   matchModalidadById (id:string) {
     const modalidadesData = this.getModalidadesQuery.data();
     if (!modalidadesData) return 'No Especificado';
     return modalidadesData.find((modalidad) => String(modalidad.id) === id)?.nombre || 'No Especificado';
   }
 
+  // Get
   getCurrentFormato (idPresencial:string, idSemipresencial:string, idAdistancia:string) {
     if (idPresencial) return 'Presencial';
     else if (idSemipresencial) return 'Semipresencial';
     else if (idAdistancia) return 'A Distancia';
     else return 'No Especificado';
+  }
+
+  confirmValidacion () {
+    this.store.dispatch(setConfirmDialogPayloadAction({ confirmDialogPayload: {
+      title:'Confirmar Validación',
+      message:'¿Estás seguro de que deseas validar esta producción?',
+      action:() => this.putValidacionMutation.mutate(this.currentId),
+      actionLabel:'Validar',
+      cancelAction: () => this.store.dispatch(setConfirmDialogPayloadAction({ confirmDialogPayload:null })),
+    }}));
   }
 
 }
