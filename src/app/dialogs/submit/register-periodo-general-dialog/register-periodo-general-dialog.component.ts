@@ -44,6 +44,7 @@ export class RegisterPeriodoGeneralDialogComponent {
   // Inputs
   @Input() isDialogOpen = false;
   @Input() currentFormato:string | null = null;
+  @Input() currentInitDate:string | null = null;
   @Input() currentModalidad:string | null = null;
   @Input() currentFormatoName:string | null = null;
   @Output() closeDialogEmitter = new EventEmitter(); 
@@ -277,7 +278,7 @@ export class RegisterPeriodoGeneralDialogComponent {
 
     }
 
-    const calculo = CalculatePorcentajeAvanceHelper.calculatePorcentajeAvance(calculoPayload);
+    const porcentaje = CalculatePorcentajeAvanceHelper.calculatePorcentajeAvance(calculoPayload);
 
     const payload:PostMetodoWithCalculoData = {
 
@@ -314,7 +315,8 @@ export class RegisterPeriodoGeneralDialogComponent {
       u4_pa4:u4_pa4!.value,
       u4_recurso_innovador:u4_recurso_innovador!.value,
 
-      calculo
+      porcentaje,
+      fecha_inicio:this.currentInitDate!,
 
     }
 

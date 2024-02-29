@@ -70,10 +70,11 @@ export class SubmitProduccionGeneralComponent {
   // Vars
   isUploadSilaboDialogOpen = false;
 
-  currentModalidad:string | null = null;
-  currentModalidadName:string | null = null;
   currentFormato:string | null = null;
+  currentInitDate:string | null = null;
+  currentModalidad:string | null = null;
   currentFormatoName:string | null = null;
+  currentModalidadName:string | null = null;
 
   isRegisterPeriodoGeneralDialogOpen = false;
   lastSilaboData:GetDataSilabosData | null = null;
@@ -266,7 +267,7 @@ export class SubmitProduccionGeneralComponent {
 
           // Extras
           modalidad,
-          nombre_modalidad
+          nombre_modalidad,
 
         } = result.datos_produccion_general;
 
@@ -331,6 +332,7 @@ export class SubmitProduccionGeneralComponent {
         });
 
         this.currentModalidad = modalidad;
+        this.currentInitDate = fecha_inicio;
         this.currentModalidadName = nombre_modalidad;
 
         return result;

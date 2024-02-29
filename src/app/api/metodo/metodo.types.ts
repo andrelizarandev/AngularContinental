@@ -37,7 +37,8 @@ export type PostMetodoData = {
 }
 
 export type PostMetodoWithCalculoData = {
-  calculo:number;
+  porcentaje:number;
+  fecha_inicio:string;
 } & PostMetodoData;
 
 export type GetMetodoByProduccionGeneralIdModalidadAndFormatoData = {
