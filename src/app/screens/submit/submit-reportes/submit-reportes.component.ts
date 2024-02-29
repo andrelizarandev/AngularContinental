@@ -222,15 +222,17 @@ export class SubmitReportesComponent {
           const percentage = selectedRows.map((row2) => row2.porcentaje); 
 
           return ({
-            label:String(row1),
+            label:this.matchFormato(row1),
             data:percentage,
             backgroundColor:this.barColors[key], 
           });
 
         });
 
+        const parsedDates = nonRepeatedDates.map((date) => HandleDates.parseDateFormat1ToFormat2(date, 'YYYY-MM-DD', 'DD/MM/YYYY'));
+
         this.barData = {
-          labels:nonRepeatedDates,
+          labels:parsedDates,
           datasets
         };
 
