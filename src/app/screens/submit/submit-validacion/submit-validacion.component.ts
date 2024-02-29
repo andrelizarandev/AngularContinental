@@ -66,14 +66,6 @@ export class SubmitValidacionComponent {
     }
   }));
 
-  putValidacionMutation = injectMutation(() => ({
-    mutationFn: (id:number) => this.validationService.putValidacionApi(id),
-    onSuccess: () => {
-      this.store.dispatch(setMessageFromUiDataAction({ message:putValidacionSuccessMessage }));
-      this.isValidated = true;
-    }
-  }))
-
   getModalidadesQuery = injectQuery(() => ({
     queryKey: ['get-modalidades'],
     queryFn: async () => {
@@ -81,6 +73,15 @@ export class SubmitValidacionComponent {
       return result.modalidades;
     }
   }));
+
+  putValidacionMutation = injectMutation(() => ({
+    mutationFn: (id:number) => this.validationService.putValidacionApi(id),
+    onSuccess: () => {
+      this.store.dispatch(setMessageFromUiDataAction({ message:putValidacionSuccessMessage }));
+      this.isValidated = true;
+      this.store.dispatch(setConfirmDialogPayloadAction({ confirmDialogPayload:null }));
+    }
+  }))
 
   // Match
   matchModalidadById (id:string) {
@@ -102,7 +103,7 @@ export class SubmitValidacionComponent {
       title:'Confirmar Validación',
       message:'¿Estás seguro de que deseas validar esta producción?',
       action:() => this.putValidacionMutation.mutate(this.currentId),
-      actionLabel:'Validar',
+      actionLabel:'Confirmar',
       cancelAction: () => this.store.dispatch(setConfirmDialogPayloadAction({ confirmDialogPayload:null })),
     }}));
   }

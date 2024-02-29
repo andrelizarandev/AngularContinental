@@ -8,12 +8,6 @@
 
         <div class="h-flex-align-center">
 
-          <p-button
-            icon="pi pi-bars"
-            size="small"
-            (onClick)="toggleSidebar()"
-          />
-
           <h3 class="c-white">Continental</h3>
 
         </div>
@@ -39,14 +33,14 @@
           <div class="sidebar-padding-container">
     
             <h3 style="color: var(--surface-600)">Menú</h3>
-    
+
             @for (route of routeList; track $index) {
               <p-button
                 label="{{ route.name }}"
                 size="small"
                 icon="{{ route.icon }}"
                 severity="secondary"
-                [rounded]="true"
+
                 (onClick)="redirectTo(route.route)"
               ></p-button>
             }
