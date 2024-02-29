@@ -16,13 +16,13 @@ import { setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
 import { RatingValue, ratingOptions } from '../../../data/data.options';
 
 // Messages
-import { getMetodoSuccessMessage, postMetodoSuccessMessage } from '../../../data/data.messages';
+import { getMetodoSuccessMessage, postMetodoEveryRegisterIsAt100PercentSuccessMessage, postMetodoEveryRegisterIsNotAt100PercentSuccessMessage, postMetodoSuccessMessage } from '../../../data/data.messages';
 
 // Services
 import { MetodoService } from '../../../api/metodo/metodo.service';
 
 // Types
-import { PostMetodoWithCalculoData } from '../../../api/metodo/metodo.types';
+import { GetAllMetodosData, PostMetodoWithCalculoData } from '../../../api/metodo/metodo.types';
 import CalculatePorcentajeAvanceHelper, { DataForCalculatePorcentajeAvance } from '../../../helpers/calculate-porcentaje-avance-helper';
 
 @Component({
@@ -47,6 +47,7 @@ export class RegisterPeriodoGeneralDialogComponent {
   @Input() currentInitDate:string | null = null;
   @Input() currentModalidad:string | null = null;
   @Input() currentFormatoName:string | null = null;
+  @Input() allFormatosFromModalidad:GetAllMetodosData[] = [];
   @Output() closeDialogEmitter = new EventEmitter(); 
 
   // Vars
@@ -61,14 +62,56 @@ export class RegisterPeriodoGeneralDialogComponent {
     private store:Store
   ) {}
 
+  // Forms
+  formatoForm = this.fb.group ({
+
+    horas_sincronas: ['', Validators.required],
+    horas_asincronas: ['', Validators.required],
+    intro_evaluacion_entrada: [null as RatingValue | null, Validators.required],
+    intro_hoja_calendario: [null as RatingValue | null, Validators.required],
+    lecturas: [null as RatingValue | null, Validators.required],
+
+    u1_autoevaluaciones: [null as RatingValue | null, Validators.required],
+    u1_ppt: [null as RatingValue | null, Validators.required],
+    u1_guia: [null as RatingValue | null, Validators.required],
+    u1_pa1: [null as RatingValue | null, Validators.required],
+    u1_recurso_innovador: [null as RatingValue | null, Validators.required],
+
+    u2_autoevaluaciones: [null as RatingValue | null, Validators.required],
+    u2_ppt: [null as RatingValue | null, Validators.required],
+    u2_guia: [null as RatingValue | null, Validators.required],
+    u2_pa2: [null as RatingValue | null, Validators.required],
+    u2_recurso_innovador: [null as RatingValue | null, Validators.required],
+
+    u3_autoevaluaciones: [null as RatingValue | null, Validators.required],
+    u3_ppt: [null as RatingValue | null, Validators.required],
+    u3_guia: [null as RatingValue | null, Validators.required],
+    u3_pa3: [null as RatingValue | null, Validators.required],
+    u3_recurso_innovador: [null as RatingValue | null, Validators.required],
+
+    u4_autoevaluaciones: [null as RatingValue | null, Validators.required],
+    u4_ppt: [null as RatingValue | null, Validators.required],
+    u4_guia: [null as RatingValue | null, Validators.required],
+    u4_pa4: [null as RatingValue | null, Validators.required],
+    u4_recurso_innovador: [null as RatingValue | null, Validators.required],
+
+  });
+
   // Queries
   postMetodoMutation = injectMutation(() => ({
+
     mutationFn: (data:PostMetodoWithCalculoData) => this.metodoServices.patchMetodoFromProduccionGeneralApi(data),
+
     onSuccess: () => {
+
+      this.showMessageIfEveryRegisterIsAt100Percentage();
+
       this.formatoForm.enable();
-      this.store.dispatch(setMessageFromUiDataAction({ message:postMetodoSuccessMessage }));
+
       this.closeRegister();
+
     }
+
   }));
 
   getMetodoQuery = injectQuery(() => ({
@@ -163,40 +206,6 @@ export class RegisterPeriodoGeneralDialogComponent {
 
   }));
 
-  formatoForm = this.fb.group ({
-
-    horas_sincronas: ['', Validators.required],
-    horas_asincronas: ['', Validators.required],
-    intro_evaluacion_entrada: [null as RatingValue | null, Validators.required],
-    intro_hoja_calendario: [null as RatingValue | null, Validators.required],
-    lecturas: [null as RatingValue | null, Validators.required],
-
-    u1_autoevaluaciones: [null as RatingValue | null, Validators.required],
-    u1_ppt: [null as RatingValue | null, Validators.required],
-    u1_guia: [null as RatingValue | null, Validators.required],
-    u1_pa1: [null as RatingValue | null, Validators.required],
-    u1_recurso_innovador: [null as RatingValue | null, Validators.required],
-
-    u2_autoevaluaciones: [null as RatingValue | null, Validators.required],
-    u2_ppt: [null as RatingValue | null, Validators.required],
-    u2_guia: [null as RatingValue | null, Validators.required],
-    u2_pa2: [null as RatingValue | null, Validators.required],
-    u2_recurso_innovador: [null as RatingValue | null, Validators.required],
-
-    u3_autoevaluaciones: [null as RatingValue | null, Validators.required],
-    u3_ppt: [null as RatingValue | null, Validators.required],
-    u3_guia: [null as RatingValue | null, Validators.required],
-    u3_pa3: [null as RatingValue | null, Validators.required],
-    u3_recurso_innovador: [null as RatingValue | null, Validators.required],
-
-    u4_autoevaluaciones: [null as RatingValue | null, Validators.required],
-    u4_ppt: [null as RatingValue | null, Validators.required],
-    u4_guia: [null as RatingValue | null, Validators.required],
-    u4_pa4: [null as RatingValue | null, Validators.required],
-    u4_recurso_innovador: [null as RatingValue | null, Validators.required],
-
-  });
-
   // Close
   closeRegister () {
     this.closeDialogEmitter.emit();
@@ -210,8 +219,23 @@ export class RegisterPeriodoGeneralDialogComponent {
 
   // Start
   startSubmitMetodo () {
-
     this.formatoForm.disable();
+    const payload = this.getFormValue();
+    this.postMetodoMutation.mutate(payload);
+  }
+
+  // Parse
+  parseValueToOption (value:number) {
+    switch (value) {
+      case 0: return ratingOptions[0];
+      case 0.5: return ratingOptions[1];
+      case 1: return ratingOptions[2];
+      default: return ratingOptions[0];
+    }
+  }
+
+  // Get Value
+  getFormValue () {
 
     const { 
       
@@ -320,17 +344,33 @@ export class RegisterPeriodoGeneralDialogComponent {
 
     }
 
-    this.postMetodoMutation.mutate(payload);
+    return payload;
 
   }
 
-  parseValueToOption (value:number) {
-    switch (value) {
-      case 0: return ratingOptions[0];
-      case 0.5: return ratingOptions[1];
-      case 1: return ratingOptions[2];
-      default: return ratingOptions[0];
-    }
+  // Show
+  showMessageIfEveryRegisterIsAt100Percentage () {
+    const result = this.validateIsEveryRegisterAt100PercentagePost();
+    (result) 
+      ? this.store.dispatch(setMessageFromUiDataAction({ message:postMetodoEveryRegisterIsAt100PercentSuccessMessage }))
+      : this.store.dispatch(setMessageFromUiDataAction({ message:postMetodoEveryRegisterIsNotAt100PercentSuccessMessage }));
+  }
+
+  // Validate
+  validateIsEveryRegisterAt100PercentagePost () {
+
+    const { porcentaje } = this.getFormValue();
+
+    const formatosAndPercentages = this.allFormatosFromModalidad
+      .filter(({ formato }) => formato !== Number(this.currentFormato!))
+      .map(({ metodos_data, formato }) => {
+        const porcentaje = CalculatePorcentajeAvanceHelper.calculatePorcentajeAvance(metodos_data);
+        return ({ formato, porcentaje });
+      })
+      .filter(({ porcentaje }) => porcentaje !== 100);
+
+    return (formatosAndPercentages.length === 0) && (porcentaje === 100);
+
   }
   
 }

@@ -1,3 +1,6 @@
+// Types
+import { DataForCalculatePorcentajeAvance } from '../../helpers/calculate-porcentaje-avance-helper';
+
 export type PostMetodoData = {
 
   id_produccion_general:string | number;
@@ -49,4 +52,29 @@ export type GetMetodoByProduccionGeneralIdModalidadAndFormatoData = {
 
 export type GetMetodoData = {
   data:PostMetodoData[];
+}
+
+export type GetAllMetodosData = {
+  asignatura:string;
+  ciclo:string;
+  codigo:string;
+  correo_instruccional:string;
+  disenador_instruccional:string;
+  docente_disenador:string;
+  email_docente:string;
+  fecha_finalizacion:string;
+  fecha_inicio:string;
+  fecha_presentacion_di:string;
+  formato:number;
+  id_produccion_general:number;
+  metodos_data:DataForCalculatePorcentajeAvance;
+  modalidad:number;
+  observaciones:string | null;
+  responsable:string;
+  telefono_docente:string;
+  telefono_instruccional:string;
+}
+
+export type GetAllMetodosResponse = {
+  data:GetAllMetodosData[];
 }

@@ -34,11 +34,13 @@ import HandleDates from '../../../helpers/handle-dates';
 import { putProduccionGeneralSuccessMessage } from '../../../data/data.messages';
 
 // Service
+import { MetodoService } from '../../../api/metodo/metodo.service';
 import { ProduccionService } from '../../../api/produccion/produccion.service';
 import { ModalidadesService } from '../../../api/modalidades/modalidades.service';
 import { SolicitudDisenoCursoService } from '../../../api/solicitudes-diseno-curso/diseno-curso.service';
 
 // Types
+import { GetAllMetodosData } from '../../../api/metodo/metodo.types';
 import { GetDataSilabosData, PutProduccionGeneralData } from '../../../api/produccion/produccion.types';
 import { OptionData, OptionDataIdNumber } from '../submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
 
@@ -69,21 +71,21 @@ export class SubmitProduccionGeneralComponent {
 
   // Vars
   isUploadSilaboDialogOpen = false;
-
   currentFormato:string | null = null;
   currentInitDate:string | null = null;
   currentModalidad:string | null = null;
   currentFormatoName:string | null = null;
   currentModalidadName:string | null = null;
-
   isRegisterPeriodoGeneralDialogOpen = false;
   lastSilaboData:GetDataSilabosData | null = null;
   silabosInThisPeriodoGeneral:GetDataSilabosData[] = [];
+  allFormatosFromModalidad:GetAllMetodosData[] = [];
 
   // Forms
   registerProduccionGeneralForm: FormGroup;
 
   // Services
+  metodoService = inject(MetodoService);
   modalidadesService = inject(ModalidadesService);
   produccionGeneralService = inject(ProduccionService);
   solicitudDisenoCursoService = inject(SolicitudDisenoCursoService);
@@ -335,6 +337,8 @@ export class SubmitProduccionGeneralComponent {
         this.currentInitDate = fecha_inicio;
         this.currentModalidadName = nombre_modalidad;
 
+        this.getAllFormatosFromModalidadQuery.refetch();
+
         return result;
 
       } catch (err:any) {
@@ -370,6 +374,16 @@ export class SubmitProduccionGeneralComponent {
   getEapQuery = injectQuery(() => ({
     queryKey: ['get-eap'],
     queryFn: () => this.solicitudDisenoCursoService.getEapApi()
+  }));
+
+  getAllFormatosFromModalidadQuery = injectQuery(() => ({
+    queryKey: ['get-all-formatos-from-modalidad', this.currentModalidad],
+    queryFn: async () => {
+      const result = await this.metodoService.getAllMetodosFromModalidad(this.currentId, this.currentModalidad!);
+      this.allFormatosFromModalidad = result.data;
+      return result.data;
+    },
+    enabled:false
   }));
 
   // Submit

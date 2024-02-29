@@ -8,6 +8,7 @@ import { apiUrl } from '..';
 
 // Types
 import { 
+  GetAllMetodosResponse,
   GetMetodoByProduccionGeneralIdModalidadAndFormatoData, 
   GetMetodoData, 
   PostMetodoData, 
@@ -28,6 +29,10 @@ export class MetodoService {
   getMetodoWithModalidadAndFormato (data:GetMetodoByProduccionGeneralIdModalidadAndFormatoData) {
     const { formato, id_produccion_general, modalidad } = data;
     return lastValueFrom(this.http.get<GetMetodoData>(`${apiUrl}/metodos/${id_produccion_general}/${modalidad}/${formato}`));
+  }
+  
+  getAllMetodosFromModalidad (idProduccionGeneral:string, idModalidad:string) {
+    return lastValueFrom(this.http.get<GetAllMetodosResponse>(`${apiUrl}/seguimiento/${idProduccionGeneral}/${idModalidad}`));
   }
   
 }

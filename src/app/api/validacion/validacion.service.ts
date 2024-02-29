@@ -21,6 +21,6 @@ export class ValidacionService {
   }
 
   putValidacionApi (id:number) {
-    return lastValueFrom(this.http.post(`${apiUrl}/validacion/${id}`, {}));
+    return lastValueFrom(this.http.put(`${apiUrl}/validacion/${id}`, {}));
   }
 }

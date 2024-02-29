@@ -29,7 +29,9 @@ import { ModalidadesService } from '../../../api/modalidades/modalidades.service
 
 // Types
 import { GetFacultadData, GetMetodoData } from '../../../api/reportes/reportes.types';
+import { GetPorcentajesAvanceByProduccionGeneralData } from '../../../api/produccion/produccion.types';
 import { OptionDataIdNumber } from '../submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
+import CalculatePorcentajeAvanceHelper, { DataForCalculatePorcentajeAvance } from '../../../helpers/calculate-porcentaje-avance-helper';
 
 @Component({
   selector: 'app-submit-reportes',
@@ -65,6 +67,12 @@ export class SubmitReportesComponent {
   textColor = this.documentStyle.getPropertyValue('--text-color');
   surfaceBorder = this.documentStyle.getPropertyValue('--surface-border');
   textColorSecondary = this.documentStyle.getPropertyValue('--text-color-secondary');
+
+  barColors = [
+    this.documentStyle.getPropertyValue('--blue-500'), 
+    this.documentStyle.getPropertyValue('--yellow-500'), 
+    this.documentStyle.getPropertyValue('--green-500')
+  ]
 
   // Charts
   barData: any;
@@ -179,27 +187,52 @@ export class SubmitReportesComponent {
 
         const result = await this.produccionGeneralService.getPorcentajesAvanceByProduccionGeneraApi(this.currentId);
 
-        const dates = result.resultado.map(({ fecha_registro }) => HandleDates.parseDateFormat1ToFormat2(fecha_registro.slice(0, 10), 'YYYY-MM-DD', 'DD/MM/YYYY'));
+        const data = result.resultado;
 
-        const percentages = result.resultado.map(({ porcentaje }) => porcentaje);
+        var resultadoHelper:GetPorcentajesAvanceByProduccionGeneralData[] = [];
+
+        const dates = data.map((row) => row.fecha_registro.slice(0,10));
+
+        const formatos = data.map((row) => row.formato);
+
+        const nonRepeatedDates = [...new Set(dates)]
+
+        const nonRepeatedFormatos = [...new Set(formatos)];
+
+        data.forEach((row1) => {
+
+          const gotFormatoInDate = resultadoHelper.some((row2) => (row2.fecha_registro.slice(0,10) === row1.fecha_registro.slice(0,10)) && (row2.formato === row1.formato));
+
+          if (!gotFormatoInDate) resultadoHelper.push(row1);
+
+          else {
+
+            const selectedRow = resultadoHelper.findIndex((row2) => (row2.fecha_registro.slice(0,10) === row1.fecha_registro.slice(0,10)) && (row2.formato === row1.formato))!;
+
+            resultadoHelper[selectedRow] = row1;
+
+          }          
+
+        });
+
+        const datasets = nonRepeatedFormatos.map((row1, key) => {
+
+          const selectedRows = resultadoHelper.filter((row2) => row2.formato === row1);
+
+          const percentage = selectedRows.map((row2) => row2.porcentaje); 
+
+          return ({
+            label:String(row1),
+            data:percentage,
+            backgroundColor:this.barColors[key], 
+          });
+
+        });
 
         this.barData = {
-          labels: dates,
-          datasets: [
-              {
-                label: 'Porcentaje Avance',
-                data: percentages,
-                backgroundColor: [
-                  this.documentStyle.getPropertyValue('--blue-500'), 
-                  this.documentStyle.getPropertyValue('--red-500'), 
-                  this.documentStyle.getPropertyValue('--green-500'),
-                  this.documentStyle.getPropertyValue('--gray-500'),
-                  this.documentStyle.getPropertyValue('--yellow-500'),
-                  this.documentStyle.getPropertyValue('--purple-500')
-                ]
-              }
-          ]
-      };
+          labels:nonRepeatedDates,
+          datasets
+        };
 
         return result;
 
@@ -244,13 +277,14 @@ export class SubmitReportesComponent {
 
     const result = this.getReportesQuery.data()
 
-    if (!result) return '-';
+    if (!result) return null;
 
     const selectedRow = result.metodo.find(({ id:rowId }) => rowId === id);
 
-    if (!selectedRow) return '-';
+    if (!selectedRow) return null;
 
     const { 
+      evaluacion_entrada,
       u1_autoevaluaciones,
       u1_guia,
       hoja_calendario,
@@ -258,10 +292,7 @@ export class SubmitReportesComponent {
       u1_pa1,
       u1_ppt,
       u1_recurso_innovador
-   } = selectedRow;
-
-    const sum = (u1_autoevaluaciones + u1_guia + hoja_calendario + lecturas + u1_pa1 + u1_ppt + u1_recurso_innovador);  
-    const porcentajeReal = (sum * 25 / 8);
+    } = selectedRow;
 
     const {
       u2_autoevaluaciones,
@@ -271,9 +302,6 @@ export class SubmitReportesComponent {
       u2_recurso_innovador
     } = selectedRow;
 
-    const sum2 = (u2_autoevaluaciones + u2_guia + u2_pa2 + u2_ppt + u2_recurso_innovador);
-    const porcentajeReal2 = (sum2 * 25 / 5);
-
     const {
       u3_autoevaluaciones,
       u3_guia,
@@ -282,9 +310,6 @@ export class SubmitReportesComponent {
       u3_recurso_innovador
     } = selectedRow;
 
-    const sum3 = (u3_autoevaluaciones + u3_guia + u3_pa3 + u3_ppt + u3_recurso_innovador);
-    const porcentajeReal3 = (sum3 * 25 / 5);
-
     const {
       u4_autoevaluaciones,
       u4_guia,
@@ -292,11 +317,39 @@ export class SubmitReportesComponent {
       u4_ppt,
       u4_recurso_innovador
     } = selectedRow;
-    
-    const sum4 = (u4_autoevaluaciones + u4_guia + u4_pa4 + u4_ppt + u4_recurso_innovador);
-    const porcentajeReal4 = (sum4 * 25 / 5);
 
-    return porcentajeReal + porcentajeReal2 + porcentajeReal3 + porcentajeReal4;
+    const dataForCalculatePorcentajeAvance:DataForCalculatePorcentajeAvance = {
+
+      evaluacion_entrada,
+      hoja_calendario,
+      lecturas,
+      u1_autoevaluaciones,
+      u1_ppt,
+      u1_guia,
+      u1_pa1,
+      u1_recurso_innovador,
+
+      u2_autoevaluaciones,
+      u2_ppt,
+      u2_guia,
+      u2_pa2,
+      u2_recurso_innovador,
+
+      u3_autoevaluaciones,
+      u3_ppt,
+      u3_guia,
+      u3_pa3,
+      u3_recurso_innovador,
+
+      u4_autoevaluaciones,
+      u4_ppt,
+      u4_guia,
+      u4_pa4,
+      u4_recurso_innovador,
+
+    }
+
+    return CalculatePorcentajeAvanceHelper.calculatePorcentajeAvance(dataForCalculatePorcentajeAvance);
 
   }
 
@@ -353,30 +406,10 @@ export class SubmitReportesComponent {
 
     if (!data) return [];
 
-    // const rows = data.metodo.map(({ , id }) => {
-    //   const parsedDate = this.parseInitDate(fecha_inicio);
-    //   const porcentajeReal = this.calculatePorcentajeReal(id);
-    //   const parsedPorcentaje = TextHelper.returnJustNumber(porcentajeReal);
-    //   return ({ fecha_inicio:parsedDate, porcentajeReal:parsedPorcentaje });
-    // });
-
     return [];
 
   }
 
-  // Parse
-  parseFacultadesOptions () {
-    const result = this.getFacultadesQuery.data();
-    if (!result) return [];
-    const options:OptionDataIdNumber[] = result.map(({ id, nombre }) => ({ id, label:nombre }));
-    return options;
-  }
-
-  parseInitDate (date:string) {
-    return HandleDates.parseDateFormat1ToFormat2(date, 'YYYY-MM-DD', 'DD/MM/YYYY');
-  }
-
-  // Filter
   getFilteredReportRows () {  
     
     // const codigoFilter = this.filterFormGroup?.value.codigo;
@@ -395,6 +428,28 @@ export class SubmitReportesComponent {
 
     return metodos;
 
+  }
+
+  getPorcentajeTotal () {
+    const result = this.getReportesQuery.data();
+    if (!result) return '-';
+    const porcentajes = result.metodo.map((row) => this.calculatePorcentajeReal(row.id));
+    const notNullPorcentajes = porcentajes.flatMap((porcentaje) => porcentaje ? [porcentaje] : []);
+    const notNullPorcentajesLength = notNullPorcentajes.length;
+    const total = notNullPorcentajes.reduce((acc, porcentaje) => acc + porcentaje, 0);
+    return (total / notNullPorcentajesLength).toFixed(2);
+  }
+
+  // Parse
+  parseFacultadesOptions () {
+    const result = this.getFacultadesQuery.data();
+    if (!result) return [];
+    const options:OptionDataIdNumber[] = result.map(({ id, nombre }) => ({ id, label:nombre }));
+    return options;
+  }
+
+  parseInitDate (date:string) {
+    return HandleDates.parseDateFormat1ToFormat2(date, 'YYYY-MM-DD', 'DD/MM/YYYY');
   }
 
 }

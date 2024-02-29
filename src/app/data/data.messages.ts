@@ -129,6 +129,18 @@ export const postMetodoSuccessMessage:MessageData = {
   type:'success'
 }
 
+export const postMetodoEveryRegisterIsAt100PercentSuccessMessage:MessageData = {
+  message:'Método registrado con éxito',
+  body:'Todos los formatos están registrados al 100%.',
+  type:'success'
+}
+
+export const postMetodoEveryRegisterIsNotAt100PercentSuccessMessage:MessageData = {
+  message:'Método registrado con éxito',
+  body:'Algunos formatos no están registrados al 100%.',
+  type:'info'
+}
+
 // Put Validación
 export const putValidacionSuccessMessage:MessageData = {
   message:'Validación actualizada con éxito',
