@@ -1,8 +1,11 @@
-// Types
-import { OptionData } from '../screens/submit/submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
-
-export const ratingOptions:OptionData[] = [
-  { id: '1', label:'No' },
-  { id: '2', label:'Ep' },
-  { id: '3', label:'Sí' },
+export const ratingOptions:RatingValue[] = [
+  { id: '1', label:'No', value:0 },
+  { id: '2', label:'Ep', value:0.5 },
+  { id: '3', label:'Sí', value:1 },
 ];
+
+export type RatingValue = {
+  id:string;
+  label:string;
+  value:number;
+}

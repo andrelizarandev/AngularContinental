@@ -10,7 +10,8 @@ import { apiUrl } from '..';
 import { 
   GetMetodoByProduccionGeneralIdModalidadAndFormatoData, 
   GetMetodoData, 
-  PostMetodoData 
+  PostMetodoData, 
+  PostMetodoWithCalculoData
 } from './metodo.types';
 
 @Injectable({
@@ -20,7 +21,7 @@ export class MetodoService {
 
   constructor(private http:HttpClient) { }
 
-  patchMetodoFromProduccionGeneralApi (data:PostMetodoData) {
+  patchMetodoFromProduccionGeneralApi (data:PostMetodoWithCalculoData) {
     return lastValueFrom(this.http.patch(`${apiUrl}/metodo`, data));
   }
 

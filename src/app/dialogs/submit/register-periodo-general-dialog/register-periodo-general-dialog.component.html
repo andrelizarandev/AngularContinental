@@ -37,6 +37,7 @@
       placeholder="Seleccione" 
       [style]="{'width':'100%'}"
       formControlName="intro_evaluacion_entrada"
+      optionLabel="label"
     />
 
     <label>Hoja Calendario</label>
@@ -47,6 +48,18 @@
       [style]="{'width':'100%'}"
       class="mb-2"
       formControlName="intro_hoja_calendario"
+      optionLabel="label"
+    />
+
+    <label>Lecturas</label>
+
+    <p-dropdown 
+      [options]="ratingOptions" 
+      placeholder="Seleccione" 
+      [style]="{'width':'100%'}"
+      class="mb-2"
+      formControlName="lecturas"
+      optionLabel="label"
     />
 
     <h3>Unidad 1</h3>
@@ -57,7 +70,8 @@
       [options]="ratingOptions" 
       placeholder="Seleccione" 
       [style]="{'width':'100%'}"
-      formControlName="u1_autoevaluacion"
+      formControlName="u1_autoevaluaciones"
+      optionLabel="label"
     />
 
     <label>PPT-Objecto de Aprendizaje / Tutorial</label>
@@ -67,6 +81,7 @@
       placeholder="Seleccione" 
       [style]="{'width':'100%'}"
       formControlName="u1_ppt"
+      optionLabel="label"
     />
 
     <label>Guía</label>
@@ -76,6 +91,7 @@
       placeholder="Seleccione" 
       [style]="{'width':'100%'}"
       formControlName="u1_guia"
+      optionLabel="label"
     />
 
     <label>PA2</label>
@@ -84,8 +100,18 @@
       [options]="ratingOptions" 
       placeholder="Seleccione" 
       [style]="{'width':'100%'}"
-      class="mb-2"
-      formControlName="u1_pa2"
+      formControlName="u1_pa1"
+      optionLabel="label"
+    />
+
+    <label>Recurso Innovador</label>
+
+    <p-dropdown 
+      [options]="ratingOptions" 
+      placeholder="Seleccione" 
+      [style]="{'width':'100%'}"
+      formControlName="u1_recurso_innovador"
+      optionLabel="label"
     />
 
     <h3>Unidad 2</h3>
@@ -96,7 +122,8 @@
       [options]="ratingOptions" 
       placeholder="Seleccione" 
       [style]="{'width':'100%'}"
-      formControlName="u2_autoevaluacion"
+      formControlName="u2_autoevaluaciones"
+      optionLabel="label"
     />
 
     <label>PPT-Objecto de Aprendizaje / Tutorial</label>
@@ -106,6 +133,7 @@
       placeholder="Seleccione" 
       [style]="{'width':'100%'}"
       formControlName="u2_ppt"
+      optionLabel="label"
     />
 
     <label>Guía</label>
@@ -115,6 +143,7 @@
       placeholder="Seleccione"
       [style]="{'width':'100%'}"
       formControlName="u2_guia"
+      optionLabel="label"
     />
 
     <label>PA2</label>
@@ -123,8 +152,19 @@
       [options]="ratingOptions" 
       placeholder="Seleccione" 
       [style]="{'width':'100%'}"
-      class="mb-2"
       formControlName="u2_pa2"
+      optionLabel="label"
+    />
+
+    <label>Recurso Innovador</label>
+
+    <p-dropdown 
+      [options]="ratingOptions" 
+      placeholder="Seleccione" 
+      [style]="{'width':'100%'}"
+      class="mb-2"
+      formControlName="u2_recurso_innovador"
+      optionLabel="label"
     />
 
     <h3>Unidad 3</h3>
@@ -135,7 +175,8 @@
       [options]="ratingOptions" 
       placeholder="Seleccione" 
       [style]="{'width':'100%'}"
-      formControlName="u3_autoevaluacion"
+      formControlName="u3_autoevaluaciones"
+      optionLabel="label"
     />
 
     <label>PPT-Objecto de Aprendizaje / Tutorial</label>
@@ -145,6 +186,7 @@
       placeholder="Seleccione" 
       [style]="{'width':'100%'}"
       formControlName="u3_ppt"
+      optionLabel="label"
     />
 
     <label>Guía</label>
@@ -154,6 +196,7 @@
       placeholder="Seleccione" 
       [style]="{'width':'100%'}"
       formControlName="u3_guia"
+      optionLabel="label"
     />
 
     <label>PA2</label>
@@ -162,8 +205,72 @@
       [options]="ratingOptions" 
       placeholder="Seleccione" 
       [style]="{'width':'100%'}"
+      formControlName="u3_pa3"
+      optionLabel="label"
+    />
+
+    <label>Recurso Innovador</label>
+
+    <p-dropdown 
+      [options]="ratingOptions" 
+      placeholder="Seleccione" 
+      [style]="{'width':'100%'}"
       class="mb-2"
-      formControlName="u3_pa2"
+      formControlName="u3_recurso_innovador"
+      optionLabel="label"
+    />
+
+    <h3>Unidad 4</h3>
+
+    <label>Autoevaluaciones</label>
+
+    <p-dropdown 
+      [options]="ratingOptions" 
+      placeholder="Seleccione" 
+      [style]="{'width':'100%'}"
+      formControlName="u4_autoevaluaciones"
+      optionLabel="label"
+    />
+
+    <label>PPT-Objecto de Aprendizaje / Tutorial</label>
+
+    <p-dropdown 
+      [options]="ratingOptions" 
+      placeholder="Seleccione" 
+      [style]="{'width':'100%'}"
+      formControlName="u4_ppt"
+      optionLabel="label"
+    />
+
+    <label>Guía</label>
+
+    <p-dropdown 
+      [options]="ratingOptions" 
+      placeholder="Seleccione" 
+      [style]="{'width':'100%'}"
+      formControlName="u4_guia"
+      optionLabel="label"
+    />
+
+    <label>PA2</label>
+
+    <p-dropdown 
+      [options]="ratingOptions" 
+      placeholder="Seleccione" 
+      [style]="{'width':'100%'}"
+      formControlName="u4_pa4"
+      optionLabel="label"
+    />
+
+    <label>Recurso Innovador</label>
+
+    <p-dropdown 
+      [options]="ratingOptions" 
+      placeholder="Seleccione" 
+      [style]="{'width':'100%'}"
+      class="mb-2"
+      formControlName="u4_recurso_innovador"
+      optionLabel="label"
     />
 
     <div class="h-flex">
