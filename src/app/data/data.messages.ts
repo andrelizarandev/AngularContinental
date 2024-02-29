@@ -121,3 +121,10 @@ export const getMetodoSuccessMessage:MessageData = {
   body:'Se ha obtenido tu método con tu modalidad y formato.',
   type:'success'
 }
+
+// Post Método
+export const postMetodoSuccessMessage:MessageData = {
+  message:'Método registrado con éxito',
+  body:'Se ha agregado tu método a la plataforma.',
+  type:'success'
+}

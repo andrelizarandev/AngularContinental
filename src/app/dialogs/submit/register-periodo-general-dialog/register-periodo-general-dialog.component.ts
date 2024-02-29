@@ -16,7 +16,7 @@ import { setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
 import { RatingValue, ratingOptions } from '../../../data/data.options';
 
 // Messages
-import { getMetodoSuccessMessage } from '../../../data/data.messages';
+import { getMetodoSuccessMessage, postMetodoSuccessMessage } from '../../../data/data.messages';
 
 // Services
 import { MetodoService } from '../../../api/metodo/metodo.service';
@@ -63,6 +63,11 @@ export class RegisterPeriodoGeneralDialogComponent {
   // Queries
   postMetodoMutation = injectMutation(() => ({
     mutationFn: (data:PostMetodoWithCalculoData) => this.metodoServices.patchMetodoFromProduccionGeneralApi(data),
+    onSuccess: () => {
+      this.formatoForm.enable();
+      this.store.dispatch(setMessageFromUiDataAction({ message:postMetodoSuccessMessage }));
+      this.closeRegister();
+    }
   }));
 
   getMetodoQuery = injectQuery(() => ({
@@ -205,6 +210,8 @@ export class RegisterPeriodoGeneralDialogComponent {
   // Start
   startSubmitMetodo () {
 
+    this.formatoForm.disable();
+
     const { 
       
       horas_sincronas,
@@ -318,8 +325,9 @@ export class RegisterPeriodoGeneralDialogComponent {
   parseValueToOption (value:number) {
     switch (value) {
       case 0: return ratingOptions[0];
+      case 0.5: return ratingOptions[1];
       case 1: return ratingOptions[2];
-      default: return ratingOptions[2];
+      default: return ratingOptions[0];
     }
   }
   
