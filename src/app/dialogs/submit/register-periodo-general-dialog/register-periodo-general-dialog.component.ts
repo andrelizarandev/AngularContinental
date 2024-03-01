@@ -16,7 +16,12 @@ import { setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
 import { RatingValue, ratingOptions } from '../../../data/data.options';
 
 // Messages
-import { getMetodoSuccessMessage, postMetodoEveryRegisterIsAt100PercentSuccessMessage, postMetodoEveryRegisterIsNotAt100PercentSuccessMessage, postMetodoSuccessMessage } from '../../../data/data.messages';
+import { 
+  getMetodoSuccessMessage, 
+  postMetodoErrorMessage,
+  postMetodoEveryRegisterIsAt100PercentSuccessMessage, 
+  postMetodoEveryRegisterIsNotAt100PercentSuccessMessage, 
+} from '../../../data/data.messages';
 
 // Services
 import { MetodoService } from '../../../api/metodo/metodo.service';
@@ -109,6 +114,14 @@ export class RegisterPeriodoGeneralDialogComponent {
       this.formatoForm.enable();
 
       this.closeRegister();
+
+    },
+
+    onError: () => {
+
+      this.formatoForm.enable();
+
+      this.store.dispatch(setMessageFromUiDataAction({ message:postMetodoErrorMessage }));
 
     }
 

@@ -44,6 +44,8 @@
           
           <th>Observaciones</th>
 
+          <th>Conformidad del jefe de virtualización</th>
+
         </tr>
   
       </ng-template>
@@ -85,6 +87,17 @@
           <td>{{validacion.fecha_finalizacion}}</td>
           
           <td>{{validacion.observaciones}}</td>
+
+          <td>
+            
+            <p-button 
+              [severity]="(getIsTableConfirmed() === 1) ? 'success' : 'primary'"
+              [label]="(getIsTableConfirmed() === 1) ? 'Confirmado' : 'Confirmar'"
+              size="small" 
+              (onClick)="(getIsTableConfirmed() === 1) ? showAlreadyConfirmedMessage() : confirmValidacion()"
+            />
+
+          </td>
           
         </tr>
         
@@ -92,12 +105,7 @@
   
     </p-table>
 
-    <p-button 
-      [severity]="(getIsTableConfirmed() === 1) ? 'success' : 'primary'"
-      [label]="(getIsTableConfirmed() === 1) ? 'Confirmado' : 'Confirmar'"
-      size="small" 
-      (onClick)="(getIsTableConfirmed() === 1) ? showAlreadyConfirmedMessage() : confirmValidacion()"
-    />
+    
 
   </app-card-with-skeleton>
 

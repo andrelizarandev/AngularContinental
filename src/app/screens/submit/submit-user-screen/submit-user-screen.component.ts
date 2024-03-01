@@ -6,7 +6,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { Component, inject } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
 
 // Actions
@@ -49,24 +49,20 @@ export class SubmitUserScreenComponent {
   userServices = inject(UsersService);
   
   // Forms
-  registerUserForm:FormGroup;
+  registerUserForm = this.fb.group({
+    nombres: ['', Validators.required],
+    apellidos: ['', Validators.required],
+    correoInst: ['', Validators.required, Validators.email],
+    correoPers: ['', Validators.required, Validators.email],
+    contrasena: ['', Validators.required],
+    rol: [null as OptionDataIdNumber | null, Validators.required],
+  });
 
   constructor (
     private fb:FormBuilder, 
     private router:Router,
     private store:Store
-  ) {
-
-    this.registerUserForm = this.fb.group({
-      nombres: ['Andre', Validators.required],
-      apellidos: ['Lizaran', Validators.required],
-      correoInst: ['andrelizaran@continental.com', Validators.required],
-      correoPers: ['andrelizaran@gmail.com', Validators.required],
-      contrasena: ['1234567890', Validators.required],
-      rol: [null, Validators.required],
-    });
-
-  }
+  ) {}
 
   getRolesQuery = injectQuery(() => ({
     queryKey:['get-roles'],
@@ -109,12 +105,12 @@ export class SubmitUserScreenComponent {
     const { nombres, apellidos, correoInst, correoPers, contrasena, rol } = this.registerUserForm.value;
 
     const userPayload:PostUserData = {
-      apellidos,
-      email:correoInst,
-      email_personal:correoPers,
-      nombres,
-      password:contrasena,
-      rol:rol.id
+      apellidos:apellidos!,
+      email:correoInst!,
+      email_personal:correoPers!,
+      nombres:nombres!,
+      password:contrasena!,
+      rol:rol!.id
     }
 
     this.registerUserForm.disable();

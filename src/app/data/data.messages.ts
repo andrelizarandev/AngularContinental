@@ -129,6 +129,12 @@ export const postMetodoSuccessMessage:MessageData = {
   type:'success'
 }
 
+export const postMetodoErrorMessage:MessageData = {
+  message:'Error al registrar método',
+  body:'Revisa que tu método no se haya repetido antes.',
+  type:'error'
+}
+
 export const postMetodoEveryRegisterIsAt100PercentSuccessMessage:MessageData = {
   message:'Método registrado con éxito',
   body:'Todos los formatos están registrados al 100%.',
