@@ -1,3 +1,6 @@
+// Types
+import { GetPorcentajesAvanceByProduccionGeneralData } from '../api/produccion/produccion.types';
+
 export default class CalculatePorcentajeAvanceHelper {
 
   public static calculatePorcentajeAvance (data:DataForCalculatePorcentajeAvance) {
@@ -51,6 +54,30 @@ export default class CalculatePorcentajeAvanceHelper {
   
     return (porcentajeReal + porcentajeReal2 + porcentajeReal3 + porcentajeReal4);
   
+  }
+
+  public static getPorcentajesAvanceAndFilterOnePerFormatoPerDate (data: GetPorcentajesAvanceByProduccionGeneralData[]) {
+
+    var resultadoHelper:GetPorcentajesAvanceByProduccionGeneralData[] = [];
+
+    data.forEach((row1) => {
+
+      const gotFormatoInDate = resultadoHelper.some((row2) => (row2.fecha_registro.slice(0,10) === row1.fecha_registro.slice(0,10)) && (row2.formato === row1.formato));
+
+      if (!gotFormatoInDate) resultadoHelper.push(row1);
+
+      else {
+
+        const selectedRow = resultadoHelper.findIndex((row2) => (row2.fecha_registro.slice(0,10) === row1.fecha_registro.slice(0,10)) && (row2.formato === row1.formato))!;
+
+        resultadoHelper[selectedRow] = row1;
+
+      }          
+
+    });
+
+    return resultadoHelper;
+
   }
   
 }

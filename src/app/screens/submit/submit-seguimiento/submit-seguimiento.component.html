@@ -14,6 +14,8 @@
 
           <th>Codigo</th>
 
+          <th>Formato</th>
+
           <th>Asignatura</th>
 
           <th>Docente Diseñador</th>
@@ -35,6 +37,10 @@
           <th>Observaciones</th>
 
           <th>Porcentaje Real</th>
+
+          @for (date of porcentajeDates; track date) {
+            <th>PORCENTAJE: {{ date }}</th>
+          }
           
         </tr>
   
@@ -45,6 +51,8 @@
         <tr>
 
           <td>{{ produccion.codigo }}</td>
+
+          <td>{{ matchFormatoName(produccion.formato) }}</td>
 
           <td>{{ produccion.asignatura }}</td>
 
@@ -66,7 +74,11 @@
 
           <td>{{ produccion.observaciones }}</td>
 
-          <td>{{ getPorcentajeReal(produccion.metodos_data) }}</td>
+          <td>{{ getPorcentajeReal(produccion.metodos_data) }}%</td>
+
+          @for (porcentaje of getSeguimientoColumns(produccion.formato); track porcentaje) {
+            <td>{{ porcentaje }}%</td>
+          }
           
         </tr>
         

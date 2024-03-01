@@ -189,8 +189,6 @@ export class SubmitReportesComponent {
 
         const data = result.resultado;
 
-        var resultadoHelper:GetPorcentajesAvanceByProduccionGeneralData[] = [];
-
         const dates = data.map((row) => row.fecha_registro.slice(0,10));
 
         const formatos = data.map((row) => row.formato);
@@ -199,25 +197,11 @@ export class SubmitReportesComponent {
 
         const nonRepeatedFormatos = [...new Set(formatos)];
 
-        data.forEach((row1) => {
-
-          const gotFormatoInDate = resultadoHelper.some((row2) => (row2.fecha_registro.slice(0,10) === row1.fecha_registro.slice(0,10)) && (row2.formato === row1.formato));
-
-          if (!gotFormatoInDate) resultadoHelper.push(row1);
-
-          else {
-
-            const selectedRow = resultadoHelper.findIndex((row2) => (row2.fecha_registro.slice(0,10) === row1.fecha_registro.slice(0,10)) && (row2.formato === row1.formato))!;
-
-            resultadoHelper[selectedRow] = row1;
-
-          }          
-
-        });
+        const finalResult = CalculatePorcentajeAvanceHelper.getPorcentajesAvanceAndFilterOnePerFormatoPerDate(data);
 
         const datasets = nonRepeatedFormatos.map((row1, key) => {
 
-          const selectedRows = resultadoHelper.filter((row2) => row2.formato === row1);
+          const selectedRows = finalResult.filter((row2) => row2.formato === row1);
 
           const percentage = selectedRows.map((row2) => row2.porcentaje); 
 
