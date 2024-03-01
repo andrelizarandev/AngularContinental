@@ -18,6 +18,7 @@ import { RatingValue, ratingOptions } from '../../../data/data.options';
 // Messages
 import { 
   getMetodoSuccessMessage, 
+  noMetodoAlreadySavedMessage, 
   postMetodoErrorMessage,
   postMetodoEveryRegisterIsAt100PercentSuccessMessage, 
   postMetodoEveryRegisterIsNotAt100PercentSuccessMessage, 
@@ -139,7 +140,7 @@ export class RegisterPeriodoGeneralDialogComponent {
         modalidad:this.currentModalidad!
       });
 
-      if (result.data.length === 0) return null;
+      if (result.data.length === 0) return this.store.dispatch(setMessageFromUiDataAction({ message:noMetodoAlreadySavedMessage }));
 
       const {
 

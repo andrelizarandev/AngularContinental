@@ -21,6 +21,7 @@ import { LoginService } from '../../api/login/login.service';
 
 // Texts
 import { continentalToken } from '../../data/data.texts';
+import { setMessageFromUiDataAction } from '../../state/actions/ui-actions';
 
 @Component({
   selector: 'app-context-container',
@@ -70,6 +71,11 @@ export class ContextContainerComponent {
       
     });
 
+  }
+
+  closeMessage () {
+    this.messageService.clear();
+    this.store.dispatch(setMessageFromUiDataAction({ message:null }));
   }
 
 

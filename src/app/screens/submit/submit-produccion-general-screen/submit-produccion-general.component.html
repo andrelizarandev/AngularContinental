@@ -162,7 +162,8 @@
 
                     @if (
                       currentModalidad === '1' || 
-                      currentModalidad === '4'
+                      currentModalidad === '4' ||
+                      currentModalidad === '7'
                     ) {
 
                       <div class="h-flex-align-center">
@@ -172,7 +173,6 @@
                         <p-button 
                           label="Cargar" 
                           size="small" 
-                          severity="secondary"
                           (onClick)="toggleIsRegisterPeriodoGeneralDialogOpen('1', 'Presencial')"
                         />
 
@@ -180,7 +180,10 @@
 
                     } 
                     
-                    @if (currentModalidad === '2') {
+                    @if (
+                      currentModalidad === '2' || 
+                      currentModalidad === '7'
+                    ) {
 
                       <div class="h-flex-align-center">
 
@@ -189,7 +192,6 @@
                         <p-button 
                           label="Cargar" 
                           size="small" 
-                          severity="secondary"
                           (onClick)="toggleIsRegisterPeriodoGeneralDialogOpen('2', 'Semipresencial')"
                         />
 
@@ -197,7 +199,9 @@
 
                     } 
 
-                    @else if (currentModalidad === '3' || currentModalidad === '4') {
+                    @if (
+                      currentModalidad === '7'
+                    ) {
 
                       <div class="h-flex-align-center">
 
@@ -206,14 +210,12 @@
                         <p-button 
                           label="Cargar" 
                           size="small" 
-                          severity="secondary"
                           (onClick)="toggleIsRegisterPeriodoGeneralDialogOpen('3', 'A Distancia')"
                         />
 
                       </div>
 
                     }
-
 
                   </div>
   

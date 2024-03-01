@@ -6,7 +6,7 @@ import { MessageData } from '../reducers/ui.reducer';
 import { ConfirmDialogPayload } from '../../dialogs/shared/confirm-dialog/confirm-dialog.component';
 
 export const setMessageFromUiDataAction = createAction(
-  '[Ui] Set Message', props<{ message:MessageData }>()
+  '[Ui] Set Message', props<{ message:MessageData | null }>()
 );
 
 export const setShowSidebarAction = createAction(

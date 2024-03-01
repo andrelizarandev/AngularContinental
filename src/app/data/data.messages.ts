@@ -122,6 +122,13 @@ export const getMetodoSuccessMessage:MessageData = {
   type:'success'
 }
 
+export const noMetodoAlreadySavedMessage:MessageData = {
+  message:'No tienes método registrado',
+  body:'No tienes método registrado con esta modalidad y formato.',
+  type:'info'
+
+}
+
 // Post Método
 export const postMetodoSuccessMessage:MessageData = {
   message:'Método registrado con éxito',
