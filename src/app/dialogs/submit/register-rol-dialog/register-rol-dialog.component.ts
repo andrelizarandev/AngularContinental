@@ -43,7 +43,9 @@ export class RegisterRolDialogComponent {
   rolesServices = inject(RolesService);
 
   // Forms
-  submitRolForm:FormGroup;
+  submitRolForm:FormGroup = this.fb.group({
+    nombre:['', Validators.required]
+  });
 
   // Queries
   submitRolMutation = injectMutation((client) => ({
@@ -78,13 +80,10 @@ export class RegisterRolDialogComponent {
     this.toggleOpenRegister.emit();
   }
 
-  constructor (private fb:FormBuilder, private store:Store) {
-
-    this.submitRolForm = this.fb.group({
-      nombre:['', Validators.required]
-    });
-
-  }
+  constructor (
+    private fb:FormBuilder, 
+    private store:Store
+  ) {}
 
   // Start
   startSubmitRol () {

@@ -46,17 +46,18 @@ export class RegisterProgramaComponentDialog {
   @Output() toggleOpenRegister = new EventEmitter();
 
   // Forms
-  submitProgramaForm:FormGroup;
+  submitProgramaForm = this.fb.group({
+    nombre: ['', Validators.required],
+    codigo: ['', Validators.required],
+  });
 
   // Services
   programasService = inject(ProgramasService);
 
-  constructor (private store:Store, private fb:FormBuilder) {
-    this.submitProgramaForm = this.fb.group({
-      nombre: ['', Validators.required],
-      codigo: ['', Validators.required],
-    });
-  }
+  constructor (
+    private store:Store, 
+    private fb:FormBuilder
+  ) {}
 
   onShow () {
     if (this.isPostRequest) return;

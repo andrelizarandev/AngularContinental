@@ -50,19 +50,15 @@ export class RegisterPeriodoDialogComponent {
   periodosService = inject(PeriodoService);
 
   // Forms
-  submitPeriodoForm:FormGroup;
+  submitPeriodoForm:FormGroup = this.fb.group({
+    nombre: ['', Validators.required],
+    codigo: ['', Validators.required],
+  });
 
   constructor(
     private fb:FormBuilder, 
     private store:Store,
-  ) {
-
-    this.submitPeriodoForm = this.fb.group({
-      nombre: ['', Validators.required],
-      codigo: ['', Validators.required],
-    });
-
-  }
+  ) {}
   submitPostMutation = injectMutation((client) => ({
 
     mutationFn: (data:PostPeriodoData | PutPeriodoData) => {
