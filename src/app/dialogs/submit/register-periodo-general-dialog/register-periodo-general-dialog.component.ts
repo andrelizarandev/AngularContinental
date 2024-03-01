@@ -71,35 +71,35 @@ export class RegisterPeriodoGeneralDialogComponent {
   // Forms
   formatoForm = this.fb.group ({
 
-    horas_sincronas: ['', Validators.required],
-    horas_asincronas: ['', Validators.required],
-    intro_evaluacion_entrada: [null as RatingValue | null, Validators.required],
-    intro_hoja_calendario: [null as RatingValue | null, Validators.required],
-    lecturas: [null as RatingValue | null, Validators.required],
+    horas_sincronas: [0],
+    horas_asincronas: [0],
+    intro_evaluacion_entrada: [null as RatingValue | null],
+    intro_hoja_calendario: [null as RatingValue | null],
+    lecturas: [null as RatingValue | null],
 
-    u1_autoevaluaciones: [null as RatingValue | null, Validators.required],
-    u1_ppt: [null as RatingValue | null, Validators.required],
-    u1_guia: [null as RatingValue | null, Validators.required],
-    u1_pa1: [null as RatingValue | null, Validators.required],
-    u1_recurso_innovador: [null as RatingValue | null, Validators.required],
+    u1_autoevaluaciones: [null as RatingValue | null],
+    u1_ppt: [null as RatingValue | null],
+    u1_guia: [null as RatingValue | null],
+    u1_pa1: [null as RatingValue | null],
+    u1_recurso_innovador: [null as RatingValue | null],
 
-    u2_autoevaluaciones: [null as RatingValue | null, Validators.required],
-    u2_ppt: [null as RatingValue | null, Validators.required],
-    u2_guia: [null as RatingValue | null, Validators.required],
-    u2_pa2: [null as RatingValue | null, Validators.required],
-    u2_recurso_innovador: [null as RatingValue | null, Validators.required],
+    u2_autoevaluaciones: [null as RatingValue | null],
+    u2_ppt: [null as RatingValue | null],
+    u2_guia: [null as RatingValue | null],
+    u2_pa2: [null as RatingValue | null],
+    u2_recurso_innovador: [null as RatingValue | null],
 
-    u3_autoevaluaciones: [null as RatingValue | null, Validators.required],
-    u3_ppt: [null as RatingValue | null, Validators.required],
-    u3_guia: [null as RatingValue | null, Validators.required],
-    u3_pa3: [null as RatingValue | null, Validators.required],
-    u3_recurso_innovador: [null as RatingValue | null, Validators.required],
+    u3_autoevaluaciones: [null as RatingValue | null],
+    u3_ppt: [null as RatingValue | null],
+    u3_guia: [null as RatingValue | null],
+    u3_pa3: [null as RatingValue | null],
+    u3_recurso_innovador: [null as RatingValue | null],
 
-    u4_autoevaluaciones: [null as RatingValue | null, Validators.required],
-    u4_ppt: [null as RatingValue | null, Validators.required],
-    u4_guia: [null as RatingValue | null, Validators.required],
-    u4_pa4: [null as RatingValue | null, Validators.required],
-    u4_recurso_innovador: [null as RatingValue | null, Validators.required],
+    u4_autoevaluaciones: [null as RatingValue | null],
+    u4_ppt: [null as RatingValue | null],
+    u4_guia: [null as RatingValue | null],
+    u4_pa4: [null as RatingValue | null],
+    u4_recurso_innovador: [null as RatingValue | null],
 
   });
 
@@ -140,7 +140,13 @@ export class RegisterPeriodoGeneralDialogComponent {
         modalidad:this.currentModalidad!
       });
 
-      if (result.data.length === 0) return this.store.dispatch(setMessageFromUiDataAction({ message:noMetodoAlreadySavedMessage }));
+      if (result.data.length === 0) {
+
+        this.store.dispatch(setMessageFromUiDataAction({ message:noMetodoAlreadySavedMessage }));
+
+        return null;
+        
+      }
 
       const {
 
@@ -178,8 +184,9 @@ export class RegisterPeriodoGeneralDialogComponent {
 
       this.formatoForm.patchValue({
 
-        horas_sincronas:horas_sincronas.toString(),
-        horas_asincronas:horas_asincronas.toString(),
+        horas_sincronas:horas_sincronas === '' ? 0 : Number(horas_sincronas),
+        horas_asincronas:horas_asincronas === '' ? 0 : Number(horas_asincronas),
+
         intro_evaluacion_entrada:this.parseValueToOption(evaluacion_entrada as number),
         intro_hoja_calendario:this.parseValueToOption(hoja_calendario as number),
         lecturas:this.parseValueToOption(lecturas as number),
@@ -287,75 +294,46 @@ export class RegisterPeriodoGeneralDialogComponent {
 
     const calculoPayload:DataForCalculatePorcentajeAvance = {
 
-      evaluacion_entrada:intro_evaluacion_entrada!.value,
-      hoja_calendario:intro_hoja_calendario!.value,
-      lecturas:lecturas!.value,
-      u1_autoevaluaciones:u1_autoevaluaciones!.value,
-      u1_ppt:u1_ppt!.value,
-      u1_guia:u1_guia!.value,
-      u1_pa1:u1_pa1!.value,
-      u1_recurso_innovador:u1_recurso_innovador!.value,
+      evaluacion_entrada:intro_evaluacion_entrada?.value || ratingOptions[0].value,
+      hoja_calendario:intro_hoja_calendario?.value || ratingOptions[0].value,
+      lecturas:lecturas?.value || ratingOptions[0].value,
+      u1_autoevaluaciones:u1_autoevaluaciones?.value || ratingOptions[0].value,
+      u1_ppt:u1_ppt?.value || ratingOptions[0].value,
+      u1_guia:u1_guia?.value || ratingOptions[0].value,
+      u1_pa1:u1_pa1?.value || ratingOptions[0].value,
+      u1_recurso_innovador:u1_recurso_innovador?.value || ratingOptions[0].value,
 
-      u2_autoevaluaciones:u2_autoevaluaciones!.value,
-      u2_ppt:u2_ppt!.value,
-      u2_guia:u2_guia!.value,
-      u2_pa2:u2_pa2!.value,
-      u2_recurso_innovador:u2_recurso_innovador!.value,
+      u2_autoevaluaciones:u2_autoevaluaciones?.value || ratingOptions[0].value,
+      u2_ppt:u2_ppt?.value || ratingOptions[0].value,
+      u2_guia:u2_guia?.value || ratingOptions[0].value,
+      u2_pa2:u2_pa2?.value || ratingOptions[0].value,
+      u2_recurso_innovador:u2_recurso_innovador?.value || ratingOptions[0].value,
 
-      u3_autoevaluaciones:u3_autoevaluaciones!.value,
-      u3_ppt:u3_ppt!.value,
-      u3_guia:u3_guia!.value,
-      u3_pa3:u3_pa3!.value,
-      u3_recurso_innovador:u3_recurso_innovador!.value,
+      u3_autoevaluaciones:u3_autoevaluaciones?.value || ratingOptions[0].value,
+      u3_ppt:u3_ppt?.value || ratingOptions[0].value,
+      u3_guia:u3_guia?.value || ratingOptions[0].value,
+      u3_pa3:u3_pa3?.value || ratingOptions[0].value,
+      u3_recurso_innovador:u3_recurso_innovador?.value || ratingOptions[0].value,
 
-      u4_autoevaluaciones:u4_autoevaluaciones!.value,
-      u4_ppt:u4_ppt!.value,
-      u4_guia:u4_guia!.value,
-      u4_pa4:u4_pa4!.value,
-      u4_recurso_innovador:u4_recurso_innovador!.value,
+      u4_autoevaluaciones:u4_autoevaluaciones?.value || ratingOptions[0].value,
+      u4_ppt:u4_ppt?.value || ratingOptions[0].value,
+      u4_guia:u4_guia?.value || ratingOptions[0].value,
+      u4_pa4:u4_pa4?.value || ratingOptions[0].value,
+      u4_recurso_innovador:u4_recurso_innovador?.value || ratingOptions[0].value,
 
     }
 
     const porcentaje = CalculatePorcentajeAvanceHelper.calculatePorcentajeAvance(calculoPayload);
 
     const payload:PostMetodoWithCalculoData = {
-
       id_produccion_general: this.activatedRoute.snapshot.params['id'],
       modalidad:this.currentModalidad!,
       formato:this.currentFormato!,
       horas_asincronas:horas_asincronas!,
       horas_sincronas:horas_sincronas!,
-
-      evaluacion_entrada:intro_evaluacion_entrada!.value,
-      hoja_calendario:intro_hoja_calendario!.value,
-      lecturas:lecturas!.value,
-      u1_autoevaluaciones:u1_autoevaluaciones!.value,
-      u1_ppt:u1_ppt!.value,
-      u1_guia:u1_guia!.value,
-      u1_pa1:u1_pa1!.value,
-      u1_recurso_innovador:u1_recurso_innovador!.value,
-
-      u2_autoevaluaciones:u2_autoevaluaciones!.value,
-      u2_ppt:u2_ppt!.value,
-      u2_guia:u2_guia!.value,
-      u2_pa2:u2_pa2!.value,
-      u2_recurso_innovador:u2_recurso_innovador!.value,
-
-      u3_autoevaluaciones:u3_autoevaluaciones!.value,
-      u3_ppt:u3_ppt!.value,
-      u3_guia:u3_guia!.value,
-      u3_pa3:u3_pa3!.value,
-      u3_recurso_innovador:u3_recurso_innovador!.value,
-
-      u4_autoevaluaciones:u4_autoevaluaciones!.value,
-      u4_ppt:u4_ppt!.value,
-      u4_guia:u4_guia!.value,
-      u4_pa4:u4_pa4!.value,
-      u4_recurso_innovador:u4_recurso_innovador!.value,
-
+      ...calculoPayload,
       porcentaje,
       fecha_inicio:this.currentInitDate!,
-
     }
 
     return payload;
