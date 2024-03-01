@@ -92,7 +92,12 @@
   
     </p-table>
 
-    <p-button label="Confirmar" size="small" (onClick)="confirmValidacion()"/>
+    <p-button 
+      [severity]="(getIsTableConfirmed() === 1) ? 'success' : 'primary'"
+      [label]="(getIsTableConfirmed() === 1) ? 'Confirmado' : 'Confirmar'"
+      size="small" 
+      (onClick)="(getIsTableConfirmed() === 1) ? showAlreadyConfirmedMessage() : confirmValidacion()"
+    />
 
   </app-card-with-skeleton>
 

@@ -15,7 +15,7 @@ import { CardWithSkeletonComponent } from '../../../components/card-with-skeleto
 import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
 
 // Messages
-import { putValidacionSuccessMessage } from '../../../data/data.messages';
+import { alreadyConfirmedMessage, putValidacionSuccessMessage } from '../../../data/data.messages';
 
 // Services
 import { ValidacionService } from '../../../api/validacion/validacion.service';
@@ -98,6 +98,7 @@ export class SubmitValidacionComponent {
     else return 'No Especificado';
   }
 
+  // Confirm
   confirmValidacion () {
     this.store.dispatch(setConfirmDialogPayloadAction({ confirmDialogPayload: {
       title:'Confirmar Validación',
@@ -106,6 +107,18 @@ export class SubmitValidacionComponent {
       actionLabel:'Confirmar',
       cancelAction: () => this.store.dispatch(setConfirmDialogPayloadAction({ confirmDialogPayload:null })),
     }}));
+  }
+
+  // Get
+  getIsTableConfirmed () {
+    const result =  this.validationQuery.data()
+    if (!result) return 0;
+    return result[0].validacion
+  }
+
+  // Show
+  showAlreadyConfirmedMessage () {
+    this.store.dispatch(setMessageFromUiDataAction({ message:alreadyConfirmedMessage }));
   }
 
 }

@@ -147,3 +147,10 @@ export const putValidacionSuccessMessage:MessageData = {
   body:'Se ha actualizado tu validación en la plataforma.',
   type:'success'
 }
+
+// Already confirmed message
+export const alreadyConfirmedMessage:MessageData = {
+  message:'Ya confirmado',
+  body:'Ya has confirmado esta validación.',
+  type:'info'
+}

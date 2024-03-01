@@ -19,6 +19,7 @@ export type GetValidacionData = {
   telefono_docente:string;
   telefono_instruccional:string;
   tipo_diseno:string;
+  validacion:number;
 }
 
 export type GetValidacionResponse = {
