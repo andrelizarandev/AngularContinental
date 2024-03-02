@@ -357,6 +357,19 @@ export class SubmitReportesComponent {
           totalPresencial++;
           totalADistancia++;
           break;  
+        case 5:
+          totalSemiprecencial++;
+          totalADistancia++;
+          break;
+        case 6:
+          totalPresencial++;
+          totalSemiprecencial++;
+          break;
+        case 7:
+          totalPresencial++;
+          totalSemiprecencial++;
+          totalADistancia++;
+          break;
       }
     });
 
