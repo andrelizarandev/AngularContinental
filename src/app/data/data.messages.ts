@@ -28,6 +28,13 @@ export const postUserErrorMessage:MessageData = {
   type:'error'
 }
 
+// Delete User
+export const deleteUserSuccessMessage:MessageData = {
+  message:'Usuario eliminado con éxito',
+  body:'Se ha eliminado tu usuario de la plataforma.',
+  type:'success'
+}
+
 // Post Programa
 export const postProgramaSuccessMessage:MessageData = {
   message:'Programa registrado con éxito',

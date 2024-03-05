@@ -15,12 +15,12 @@ import { NavigationContainerComponent } from '../../../components/navigation-con
 import HandleDates from '../../../helpers/handle-dates';
 
 // Services
+import { FormatosService } from '../../../api/formatos/formatos.service';
 import { ProduccionService } from '../../../api/produccion/produccion.service';
 import { SeguimientoService } from '../../../api/seguimiento/seguimiento.service';
 
 // Types
 import CalculatePorcentajeAvanceHelper, { DataForCalculatePorcentajeAvance } from '../../../helpers/calculate-porcentaje-avance-helper';
-import { FormatosService } from '../../../api/formatos/formatos.service';
 
 @Component({
   selector: 'app-submit-seguimiento',
@@ -69,13 +69,11 @@ export class SubmitSeguimientoComponent {
 
         const porcentajes = CalculatePorcentajeAvanceHelper.getPorcentajesAvanceAndFilterOnePerFormatoPerDate(result.resultado);
 
-        const porcentajesDates = porcentajes.map((item) => item.fecha_inicio.slice(0, 10));
+        const porcentajesDates = porcentajes.map((item) => item.fecha_registro);
 
         const uniqueDates = [...new Set(porcentajesDates)];
 
-        const parseDates = uniqueDates.map((date) => HandleDates.parseDateFormat1ToFormat2(date, 'YYYY-MM-DD', 'DD/MM/YYYY'));
-
-        this.porcentajeDates = parseDates;
+        this.porcentajeDates = uniqueDates;
 
         return porcentajes;
 
@@ -105,10 +103,26 @@ export class SubmitSeguimientoComponent {
   }
 
   getSeguimientoColumns (idFormato:number) {
+
     const data = this.porcentajesAvanceQuery.data();
+
+    console.log(data, this.porcentajeDates);
+
+
     if (!data) return [];
-    const rows = data.filter(({ formato }) => idFormato === formato);
-    return rows.map(({ porcentaje }) => porcentaje.toFixed(2));
+
+    return this.porcentajeDates.map((date) => {
+
+      const result = data.find((item) => item.formato === idFormato && item.fecha_registro === date);
+
+      return result ? result.porcentaje.toFixed(2) : '0.00';
+
+    });
+
+  }
+
+  getParsedDates () {
+    return this.porcentajeDates.map((date) => HandleDates.parseDateFormat1ToFormat2(date, 'YYYY-MM-DD HH:mm:ss', 'DD/MM/YYYY HH:mm:ss'));
   }
 
   // Match 

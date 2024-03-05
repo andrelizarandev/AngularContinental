@@ -1,11 +1,11 @@
 // Modules
 import { Store } from '@ngrx/store';
-import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { Component, inject } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
 
@@ -52,18 +52,20 @@ export class SubmitUserScreenComponent {
   registerUserForm = this.fb.group({
     nombres: ['', Validators.required],
     apellidos: ['', Validators.required],
-    correoInst: ['', Validators.required, Validators.email],
-    correoPers: ['', Validators.required, Validators.email],
+    correoInst: ['', Validators.required],
+    correoPers: ['', Validators.required],
     contrasena: ['', Validators.required],
     rol: [null as OptionDataIdNumber | null, Validators.required],
   });
 
   constructor (
     private fb:FormBuilder, 
-    private router:Router,
-    private store:Store
+    private router:Router, 
+    private store:Store, 
+    private activatedRoute:ActivatedRoute
   ) {}
 
+  // Queries
   getRolesQuery = injectQuery(() => ({
     queryKey:['get-roles'],
     queryFn: () => this.rolServices.getRolesApi()

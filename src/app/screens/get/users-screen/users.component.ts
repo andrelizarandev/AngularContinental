@@ -8,7 +8,7 @@ import { Component, inject } from '@angular/core';
 import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
 
 // Actions
-import { setConfirmDialogPayloadAction } from '../../../state/actions/ui-actions';
+import { setConfirmDialogPayloadAction, setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
 
 // Classes
 import BreadcrumbItemsClass from '../../../utils/breadcrumb-items';
@@ -20,6 +20,9 @@ import { NavigationContainerComponent } from '../../../components/navigation-con
 
 // Dialogs
 import { RegisterProgramaComponentDialog } from '../../../dialogs/submit/register-programa-dialog/register-programa.component-dialog';
+
+// Messages
+import { deleteUserSuccessMessage } from '../../../data/data.messages';
 
 // Services
 import { UsersService } from '../../../api/users/users.service';
@@ -44,10 +47,32 @@ import { GetUserData } from '../../../api/users/users.types';
 
 export class UsersComponent {
 
+  // Injects
   userService = inject(UsersService);
 
-  deleteUserMutation = injectMutation(() => ({
-    mutationFn: (id:number) =>this.userService.deleteUserApi(id),
+  // Breadcrumbs
+  breadcrumbItems:MenuItem[] = [
+    BreadcrumbItemsClass.homeItem,
+    BreadcrumbItemsClass.usersItem
+  ]
+
+  constructor (private router:Router, private store:Store) {}
+
+  // Queries
+  deleteUserMutation = injectMutation((client) => ({
+
+    mutationFn: (id:number) => this.userService.deleteUserApi(id),
+
+    onSuccess: () => {
+
+      this.store.dispatch(setConfirmDialogPayloadAction({ confirmDialogPayload:null }));
+
+      client.invalidateQueries({ queryKey: ['get-users'] });
+
+      this.store.dispatch(setMessageFromUiDataAction({ message:deleteUserSuccessMessage }));
+
+    }
+
   }));
 
   getUsersQuery = injectQuery(() => ({
@@ -55,19 +80,9 @@ export class UsersComponent {
     queryFn: () => this.userService.getUserApi()
   }));
 
-  breadcrumbItems:MenuItem[] = [
-    BreadcrumbItemsClass.homeItem,
-    BreadcrumbItemsClass.usersItem
-  ]
-
-  constructor (
-    private router:Router, 
-    private store:Store
-  ) {}
-
   // Redirect
-  redirectToRegisterUser () {
-    this.router.navigate(["/submit-user"]);
+  redirectToRegisterUser (id:number) {
+    this.router.navigate([`/submit-user/${id}`]);
   }
 
   // Confirm

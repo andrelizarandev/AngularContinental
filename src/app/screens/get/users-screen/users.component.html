@@ -8,7 +8,7 @@
 
       <h3 class="c-title fw-400">Usuarios</h3>
   
-      <p-button label="Registrar Usuario" icon="pi pi-plus" size="small" (onClick)="redirectToRegisterUser()"></p-button>
+      <p-button label="Registrar Usuario" icon="pi pi-plus" size="small" (onClick)="redirectToRegisterUser(0)"></p-button>
   
     </div>
 
@@ -52,6 +52,7 @@
                 label="Editar" 
                 icon="pi pi-pencil" 
                 size="small"
+                (onClick)="redirectToRegisterUser(user.id_usuario)"
               />
 
               <p-button 

@@ -24,7 +24,7 @@ export const routes: Routes = [
   { path:'roles', component:RolesComponent },
   { path:'periodos', component:PeriodosScreenComponent },
   { path:'programas', component:ProgramasScreenComponent },
-  { path:'submit-user', component:SubmitUserScreenComponent },
+  { path:'submit-user/:id', component:SubmitUserScreenComponent },
   { path:'solicitud-diseno-curso', component:SolicitudesDisenoCursoComponent },
   { path:'produccion-general', component:ProduccionComponent },
   { path:'submit-solicitud-diseno-curso', component:SubmitSolicitudDisenoCursoComponent },

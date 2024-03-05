@@ -12,7 +12,7 @@
 
           <div class="v-flex-low-gap">
 
-            <label>Nombre</label>
+            <label>Nombres</label>
   
             <input 
               type="text" 
@@ -38,10 +38,10 @@
 
           <div class="v-flex-low-gap">
 
-            <label>Documento</label>
+            <label>Correo Institucional</label>
     
             <input 
-              type="text" 
+              type="email" 
               placeholder="Correo Institucional" 
               pInputText 
               formControlName="correoInst"
@@ -54,7 +54,20 @@
             <label>Correo Personal</label>
   
             <input 
-              type="text" 
+              type="email" 
+              placeholder="Correo Personal" 
+              pInputText 
+              formControlName="correoPers"
+            />
+
+          </div>
+
+          <div class="v-flex-low-gap">
+
+            <label>Documento Identidad</label>
+  
+            <input 
+              type="email" 
               placeholder="Correo Personal" 
               pInputText 
               formControlName="correoPers"
@@ -67,7 +80,7 @@
             <label>Contraseña</label>
 
             <input 
-              type="text" 
+              type="password" 
               placeholder="Contraseña" 
               pInputText 
               formControlName="contrasena"
@@ -101,7 +114,6 @@
               label="Registrar" 
               size="small"
               type="submit"
-              [disabled]="!registerUserForm.valid"
             />
   
           </div>
