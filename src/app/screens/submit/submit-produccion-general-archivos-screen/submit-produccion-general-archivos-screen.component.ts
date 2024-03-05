@@ -2,28 +2,43 @@
 import { MenuItem } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
+import { MessageModule } from 'primeng/message';
+import { ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { injectQuery } from '@tanstack/angular-query-experimental';
+import { Component, ElementRef, ViewChild, inject } from '@angular/core';
+
+// Components
+import { CardWithSkeletonComponent } from '../../../components/card-with-skeleton/card-with-skeleton.component';
+import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
+
+// Services
+import { ProduccionService } from '../../../api/produccion/produccion.service';
 
 @Component({
-  selector: 'app-register-produccion-general-by-row',
+  selector: 'app-submit-produccion-general-archivos-screen',
   standalone: true,
   imports: [
+    NavigationContainerComponent,
+    CardWithSkeletonComponent,
     DialogModule, 
     ButtonModule,
     ReactiveFormsModule,
     BreadcrumbModule,
+    MessageModule
   ],
-  templateUrl: './register-produccion-general-by-row.component.html',
-  styleUrl: './register-produccion-general-by-row.component.scss'
+  templateUrl: './submit-produccion-general-archivos-screen.component.html',
+  styleUrl: './submit-produccion-general-archivos-screen.component.scss'
 })
-export class RegisterProduccionGeneralByRowComponent {
+export class SubmitProduccionGeneralArchivosScreenComponent {
 
-  // Props
-  @Input() isDialogOpen = false;
-  @Output() closeDialogEmitter = new EventEmitter();
+  // Inject
+  produccionGeneralService = inject(ProduccionService);
+
   @ViewChild('fileInput') fileInput:ElementRef | null = null;
+
+  currentId = this.activatedRow.snapshot.params['id'];
 
   // Vars
   currentAsignatura:null | string = null;
@@ -31,16 +46,53 @@ export class RegisterProduccionGeneralByRowComponent {
   currentFormato:null | string = null;
   currentUnidad:null | string = null;
   currentFile: File | null = null;
+
+  asignaturaOptions:string[] = [];
   
   // Breadcrumbs
   breadcrumbItems:MenuItem[] = [];
 
-  // Close
-  closeDialog () {
-    this.currentFile = null;
-    this.cleanTilAsignatura();
-    this.closeDialogEmitter.emit();
-  }
+  constructor (private activatedRow:ActivatedRoute) {}
+
+  getProductionGeneralByIdQuery = injectQuery(() => ({
+
+    queryKey:['get-produccion-general'],
+
+    queryFn: async () => {
+
+      try {
+
+        const result = await this.produccionGeneralService.getProduccionGeneralById(this.currentId);
+
+        const finalResult = result.datos_produccion_general;
+
+        if (!finalResult) return null;
+
+        const { 
+          asignatura, 
+          modalidad, 
+          nombre_formato_adistancia, 
+          nombre_formato_presencial, 
+          nombre_formato_semipresencial,
+          unidad1,
+          unidad2,
+          unidad3,
+          unidad4,
+        } = finalResult;
+
+        this.asignaturaOptions = [asignatura]
+
+        return finalResult;
+        
+      } catch (error) {
+
+        return null;
+
+      }
+
+    }
+
+  }));
 
   // Set
   setCurrentAsignatura (asignatura:string) {

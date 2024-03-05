@@ -101,7 +101,7 @@
               <p-button 
                 label="Subir Archivo" 
                 size="small" 
-                (onClick)="toggleIsProduccionGeneralByRowDialogOpen()"
+                (onClick)="redirectToProduccionGeneralByRowArchivos(produccion.id)"
                 icon="pi pi-upload"
                 severity="success"
               />
@@ -122,9 +122,4 @@
 <app-upload-produccion-general-file-dialog 
   [isDialogOpen]="isDialogOpen" 
   (closeDialogEmitter)="toggleIsDialogOpen()"
-/>
-
-<app-register-produccion-general-by-row 
-  [isDialogOpen]="isProduccionGeneralByRowDialog"
-  (closeDialogEmitter)="toggleIsProduccionGeneralByRowDialogOpen()"
 />

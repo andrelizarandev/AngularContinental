@@ -1,0 +1,154 @@
+<app-navigation-container>
+
+  <app-card-with-skeleton>
+
+    <h3 class="c-title">Producción General Singular</h3>
+
+    <div class="v-flex pt-1">
+
+      <input 
+        #fileInput 
+        type="file" 
+        style="display:none"
+        accept=".xlsx"
+        id="load-production-general-file"
+        (change)="onFileChange($event)"
+      >
+  
+      @if (breadcrumbItems.length > 0) {
+        <p-breadcrumb 
+          [model]="breadcrumbItems"
+          class="max-w-full"
+        />
+      }
+  
+      <div class="border-gray-container v-flex">
+  
+        @if (currentAsignatura === null) {
+  
+          <span class="text-gray-500">Selecciona una asignatura</span>
+  
+          <p-button 
+            label="Asignatura Demo"
+            size="small"
+            (onClick)="setCurrentAsignatura('Asignatura Demo')"
+          />
+  
+        }
+  
+        @else if (currentModalidad === null) {
+  
+          <span class="text-gray-500">Selecciona una modalidad</span>
+  
+          <p-button 
+            label="Modalidad Demo"
+            size="small"
+            (onClick)="setCurrentModalidad('Modalidad Demo')"
+          />
+  
+        }
+  
+        @else if (currentFormato === null) {
+  
+          <span class="text-gray-500">Selecciona un formato</span>
+  
+          <div class="flex-wrap">
+  
+            <p-button 
+              label="Formato Demo 1"
+              size="small"
+              (onClick)="setCurrentFormato('Formato Demo 1')"
+            />
+  
+            <p-button 
+              label="Formato Demo 2"
+              size="small"
+              (onClick)="setCurrentFormato('Formato Demo 2')"
+            />
+  
+          </div>
+  
+        }
+  
+        @else if (currentUnidad === null) {
+  
+          <span class="text-gray-500">Selecciona una unidad</span>
+  
+          <div class="flex-wrap">
+  
+            <p-button 
+              label="Unidad Demo 1"
+              size="small"
+              (onClick)="setCurrentUnidad('Unidad Demo 1')"
+            />
+  
+            <p-button 
+              label="Unidad Demo 2"
+              size="small"
+              (onClick)="setCurrentUnidad('Unidad Demo 2')"
+            />
+  
+          </div>
+        
+        } 
+  
+        @else () {
+  
+          <span class="text-gray-500">Selecciona un archivo</span>
+  
+          <div class="h-flex">
+  
+            <p-button 
+              [label]="currentFile ? currentFile.name : 'Seleccionar Archivo'"
+              size="small"
+              icon="pi pi-upload"
+              (onClick)="fileInput.click()"
+            />
+  
+            @if (currentFile != null) {
+  
+              <p-button
+                label="Limpiar"
+                size="small"
+                severity="danger"
+                icon="pi pi-times"
+                (onClick)="clearCurrentFile()"
+              />
+  
+            }
+            
+          </div>
+        }
+  
+      </div>
+  
+      <div class="h-flex">
+  
+        <p-button 
+          label="Cancelar" 
+          size="small" 
+          severity="secondary"/>
+    
+        <p-button 
+          label="Guardar" 
+          size="small"/>
+    
+      </div>
+      
+    </div>
+
+  </app-card-with-skeleton>
+
+  <app-card-with-skeleton>
+
+    <h3 class="c-title">Archivos Cargados</h3>
+
+    <p-message 
+      severity="info"
+      text="No has cargado ningún archivo"
+      [style]="{'width':'100%'}"
+    />
+
+  </app-card-with-skeleton>
+  
+</app-navigation-container>
