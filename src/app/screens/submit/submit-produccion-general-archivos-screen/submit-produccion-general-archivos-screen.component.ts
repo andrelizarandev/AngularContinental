@@ -5,9 +5,11 @@ import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FileUploadModule } from 'primeng/fileupload';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { injectQuery } from '@tanstack/angular-query-experimental';
 import { Component, ElementRef, ViewChild, inject } from '@angular/core';
+
 
 // Components
 import { CardWithSkeletonComponent } from '../../../components/card-with-skeleton/card-with-skeleton.component';
@@ -26,7 +28,8 @@ import { ProduccionService } from '../../../api/produccion/produccion.service';
     ButtonModule,
     ReactiveFormsModule,
     BreadcrumbModule,
-    MessageModule
+    MessageModule,
+    FileUploadModule
   ],
   templateUrl: './submit-produccion-general-archivos-screen.component.html',
   styleUrl: './submit-produccion-general-archivos-screen.component.scss'
@@ -45,7 +48,7 @@ export class SubmitProduccionGeneralArchivosScreenComponent {
   currentModalidad:null | string = null;
   currentFormato:null | string = null;
   currentUnidad:null | string = null;
-  currentFile: File | null = null;
+  currentFiles: File[] = [];
 
   asignaturaOptions:string[] = [];
   
@@ -147,14 +150,14 @@ export class SubmitProduccionGeneralArchivosScreenComponent {
   }
 
   clearCurrentFile () {
-    this.currentFile = null;
+    this.currentFiles = [];
   }
 
   // On Change
   onFileChange (event: Event) {
     const target = event.target as HTMLInputElement;
-    const file = (target.files as FileList)[0];
-    this.currentFile = file;
+    const files = (target.files as FileList).length > 0 ? Array.from(target.files as FileList) : [];
+    this.currentFiles = files;
     this.fileInput!!.nativeElement.value = '';
   }
 

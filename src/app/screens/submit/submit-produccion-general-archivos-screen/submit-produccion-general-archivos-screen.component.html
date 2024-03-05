@@ -7,6 +7,7 @@
     <div class="v-flex pt-1">
 
       <input 
+        multiple
         #fileInput 
         type="file" 
         style="display:none"
@@ -16,10 +17,12 @@
       >
   
       @if (breadcrumbItems.length > 0) {
+
         <p-breadcrumb 
           [model]="breadcrumbItems"
           class="max-w-full"
         />
+
       }
   
       <div class="border-gray-container v-flex">
@@ -99,13 +102,13 @@
           <div class="h-flex">
   
             <p-button 
-              [label]="currentFile ? currentFile.name : 'Seleccionar Archivo'"
+              label="Selecciona Archivos"
               size="small"
               icon="pi pi-upload"
               (onClick)="fileInput.click()"
             />
   
-            @if (currentFile != null) {
+            @if (currentFiles.length > 0) {
   
               <p-button
                 label="Limpiar"
@@ -118,6 +121,23 @@
             }
             
           </div>
+
+          @if (currentFiles.length > 0) {
+
+            <span class="c-title">Archivos Cargados</span>
+
+            <div class="v-flex-low-gap">
+
+              @for (route of currentFiles; track $index) {
+  
+                <span>{{ route.name }}</span>
+  
+              }
+  
+            </div>
+
+          }
+
         }
   
       </div>
@@ -136,18 +156,6 @@
       </div>
       
     </div>
-
-  </app-card-with-skeleton>
-
-  <app-card-with-skeleton>
-
-    <h3 class="c-title">Archivos Cargados</h3>
-
-    <p-message 
-      severity="info"
-      text="No has cargado ningún archivo"
-      [style]="{'width':'100%'}"
-    />
 
   </app-card-with-skeleton>
   
