@@ -78,7 +78,7 @@
                 label="Seguimiento" 
                 size="small" 
                 (onClick)="redirectToSeguimiento(produccion.id, produccion.modalidad)"
-                icon="pi pi-folder"
+                icon="pi pi-angle-double-right"
                 severity="secondary"
               />
 
@@ -98,6 +98,14 @@
                 severity="danger"
               />
 
+              <p-button 
+                label="Subir Archivo" 
+                size="small" 
+                (onClick)="toggleIsProduccionGeneralByRowDialogOpen()"
+                icon="pi pi-upload"
+                severity="success"
+              />
+
             </div>
           </td>
         </tr>
@@ -114,4 +122,9 @@
 <app-upload-produccion-general-file-dialog 
   [isDialogOpen]="isDialogOpen" 
   (closeDialogEmitter)="toggleIsDialogOpen()"
+/>
+
+<app-register-produccion-general-by-row 
+  [isDialogOpen]="isProduccionGeneralByRowDialog"
+  (closeDialogEmitter)="toggleIsProduccionGeneralByRowDialogOpen()"
 />

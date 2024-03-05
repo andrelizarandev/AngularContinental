@@ -16,6 +16,7 @@ import { NavigationContainerComponent } from '../../../components/navigation-con
 
 // Dialogs
 import { RegisterPeriodoGeneralDialogComponent } from '../../../dialogs/submit/register-periodo-general-dialog/register-periodo-general-dialog.component';
+import { RegisterProduccionGeneralByRowComponent } from '../../../dialogs/submit/register-produccion-general-by-row/register-produccion-general-by-row.component';
 import { UploadProduccionGeneralFileDialogComponent } from '../../../dialogs/submit/upload-produccion-general-file-dialog/upload-produccion-general-file-dialog.component';
 
 // Services
@@ -32,7 +33,8 @@ import { ModalidadesService } from '../../../api/modalidades/modalidades.service
     RegisterPeriodoGeneralDialogComponent,
     CardWithSkeletonComponent,
     UploadProduccionGeneralFileDialogComponent,
-    CustomBreadcrumbComponent
+    CustomBreadcrumbComponent,
+    RegisterProduccionGeneralByRowComponent
   ],
   templateUrl: './produccion.component.html',
   styleUrl: './produccion.component.scss'
@@ -46,6 +48,7 @@ export class ProduccionComponent {
 
   // Vars
   isDialogOpen = false;
+  isProduccionGeneralByRowDialog = false;
 
   // Static
   breadcrumbItems:MenuItem[] = [
@@ -76,6 +79,8 @@ export class ProduccionComponent {
 
   // Open Dialog
   toggleIsDialogOpen = () => this.isDialogOpen = !this.isDialogOpen;
+
+  toggleIsProduccionGeneralByRowDialogOpen = () => this.isProduccionGeneralByRowDialog = !this.isProduccionGeneralByRowDialog;
 
   // Match
   matchModalidad (id:string) {

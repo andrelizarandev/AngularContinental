@@ -1,0 +1,130 @@
+<p-dialog 
+  class="sm:w-12"
+  header="Producción General Singular"
+  [style]="{width: '800px'}"
+  [visible]="true"
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+>
+
+  <div class="v-flex pt-1">
+
+    <p-breadcrumb 
+      [model]="breadcrumbItems"
+      class="max-w-full"
+    />
+
+    <div class="border-gray-container v-flex">
+
+      @if (currentAsignatura === null) {
+
+        <span class="text-gray-500">Selecciona una asignatura</span>
+
+        <p-button 
+          label="Asignatura Demo"
+          size="small"
+          (onClick)="setCurrentAsignatura('Asignatura Demo')"
+        />
+
+      }
+
+      @else if (currentModalidad === null) {
+
+        <span class="text-gray-500">Selecciona una modalidad</span>
+
+        <p-button 
+          label="Modalidad Demo"
+          size="small"
+          (onClick)="setCurrentModalidad('Modalidad Demo')"
+        />
+
+      }
+
+      @else if (currentFormato === null) {
+
+        <span class="text-gray-500">Selecciona un formato</span>
+
+        <div class="flex-wrap">
+
+          <p-button 
+            label="Formato Demo 1"
+            size="small"
+            (onClick)="setCurrentFormato('Formato Demo 1')"
+          />
+
+          <p-button 
+            label="Formato Demo 2"
+            size="small"
+            (onClick)="setCurrentFormato('Formato Demo 2')"
+          />
+
+        </div>
+
+      }
+
+      @else if (currentUnidad === null) {
+
+        <span class="text-gray-500">Selecciona una unidad</span>
+
+        <div class="flex-wrap">
+
+          <p-button 
+            label="Unidad Demo 1"
+            size="small"
+            (onClick)="setCurrentUnidad('Unidad Demo 1')"
+          />
+
+          <p-button 
+            label="Unidad Demo 2"
+            size="small"
+            (onClick)="setCurrentUnidad('Unidad Demo 2')"
+          />
+
+        </div>
+      
+      } 
+
+      @else () {
+
+        <span class="text-gray-500">Selecciona un archivo</span>
+
+        <div class="h-flex">
+
+          <p-button 
+            label="Seleccionar Archivo"
+            size="small"
+            severity="success"
+            icon="pi pi-upload"
+          />
+
+          <p-button
+            label="Limpiar"
+            size="small"
+            severity="danger"
+            icon="pi pi-times"
+          />
+          
+        </div>
+      }
+
+    </div>
+
+    <div class="h-flex">
+
+      <p-button 
+        label="Cancelar" 
+        size="small" 
+        severity="secondary"
+        (onClick)="closeDialog()"/>
+  
+      <p-button 
+        label="Guardar" 
+        size="small"
+        (onClick)="closeDialog()"/>
+  
+    </div>
+    
+  </div>
+
+</p-dialog>
