@@ -10,6 +10,15 @@
 
   <div class="v-flex pt-1">
 
+    <input 
+      #fileInput 
+      type="file" 
+      style="display:none"
+      accept=".xlsx"
+      id="load-production-general-file"
+      (change)="onFileChange($event)"
+    >
+
     <p-breadcrumb 
       [model]="breadcrumbItems"
       class="max-w-full"
@@ -92,18 +101,23 @@
         <div class="h-flex">
 
           <p-button 
-            label="Seleccionar Archivo"
+            [label]="currentFile ? currentFile.name : 'Seleccionar Archivo'"
             size="small"
-            severity="success"
             icon="pi pi-upload"
+            (onClick)="fileInput.click()"
           />
 
-          <p-button
-            label="Limpiar"
-            size="small"
-            severity="danger"
-            icon="pi pi-times"
-          />
+          @if (currentFile != null) {
+
+            <p-button
+              label="Limpiar"
+              size="small"
+              severity="danger"
+              icon="pi pi-times"
+              (onClick)="clearCurrentFile()"
+            />
+
+          }
           
         </div>
       }
