@@ -15,3 +15,5 @@ export type GetUserData = {
 export type PostUserResponse = { data:GetUserData; };
 
 export type GetUserResponse = GetUserData[];
+
+export type GetUserByIdResponse = GetUserData;

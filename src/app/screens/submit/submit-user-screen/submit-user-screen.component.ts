@@ -58,6 +58,8 @@ export class SubmitUserScreenComponent {
     rol: [null as OptionDataIdNumber | null, Validators.required],
   });
 
+  currentId = this.activatedRoute.snapshot.params['id'];
+
   constructor (
     private fb:FormBuilder, 
     private router:Router, 
@@ -69,6 +71,48 @@ export class SubmitUserScreenComponent {
   getRolesQuery = injectQuery(() => ({
     queryKey:['get-roles'],
     queryFn: () => this.rolServices.getRolesApi()
+  }));
+
+  getUserByIdQuery = injectQuery(() => ({ 
+
+    queryKey:['get-user-by-id', this.currentId],
+
+    queryFn: async () => {
+
+      try {
+
+        const result = await this.userServices.getUserByIdApi(Number(this.activatedRoute.snapshot.params['id']));
+
+        const { 
+          apellidos, 
+          email, 
+          email_personal, 
+          nombres, 
+          password,
+          rol 
+        } = result;
+      
+        const currentRole = this.getRolesOptions().find(({ id }) => id === rol) || null
+
+        this.registerUserForm.patchValue({ 
+          apellidos, 
+          correoInst:email, 
+          correoPers:email_personal, 
+          nombres, 
+          contrasena:password,
+          rol:currentRole
+        });
+
+        return result;
+
+      } catch (err:any) {
+
+        return null;
+
+      }
+
+    }
+
   }));
 
   submitUserMutation = injectMutation(() => ({

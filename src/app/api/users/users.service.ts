@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { apiUrl } from '..';
 
 // Types
-import { GetUserResponse, PostUserData } from './users.types';
+import { GetUserByIdResponse, GetUserResponse, PostUserData } from './users.types';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +26,10 @@ export class UsersService {
 
   deleteUserApi (id:number) {
     return lastValueFrom(this.http.delete(`${apiUrl}/usuarios/${id}`));
+  }
+
+  getUserByIdApi (id:number) {
+    return lastValueFrom(this.http.get<GetUserByIdResponse>(`${apiUrl}/usuarios/${id}`));
   }
 
 }
