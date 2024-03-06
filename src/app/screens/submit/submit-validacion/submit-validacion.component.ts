@@ -9,10 +9,14 @@ import { injectMutation, injectQuery } from '@tanstack/angular-query-experimenta
 // Classes
 import BreadcrumbItemsClass from '../../../utils/breadcrumb-items';
 
+// Actions
+import { setConfirmDialogPayloadAction, setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
+
 // Components
 import { CustomBreadcrumbComponent } from '../../../components/custom-breadcrumb/custom-breadcrumb.component';
 import { CardWithSkeletonComponent } from '../../../components/card-with-skeleton/card-with-skeleton.component';
 import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
+import { RegisterValidacionDialogComponent } from '../../../dialogs/submit/register-validacion-dialog/register-validacion-dialog.component';
 
 // Messages
 import { alreadyConfirmedMessage, putValidacionSuccessMessage } from '../../../data/data.messages';
@@ -23,7 +27,6 @@ import { ModalidadesService } from '../../../api/modalidades/modalidades.service
 
 // Types
 import { Store } from '@ngrx/store';
-import { setConfirmDialogPayloadAction, setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
 
 @Component({
   selector: 'app-submit-validacion',
@@ -34,6 +37,7 @@ import { setConfirmDialogPayloadAction, setMessageFromUiDataAction } from '../..
     NavigationContainerComponent,
     TableModule,
     ButtonModule,
+    RegisterValidacionDialogComponent
   ],
   templateUrl: './submit-validacion.component.html',
   styleUrl: './submit-validacion.component.scss'
@@ -46,6 +50,7 @@ export class SubmitValidacionComponent {
 
   // Vars
   isValidated = false;
+  isSubmitValidationDialogOpen = false;
   currentId = this.activatedRoute.snapshot.params['id'];
 
   // Breadcrumbs
@@ -119,6 +124,10 @@ export class SubmitValidacionComponent {
   // Show
   showAlreadyConfirmedMessage () {
     this.store.dispatch(setMessageFromUiDataAction({ message:alreadyConfirmedMessage }));
+  }
+
+  toggleIsSubmitValidationDialogOpen () {
+    this.isSubmitValidationDialogOpen = !this.isSubmitValidationDialogOpen;
   }
 
 }

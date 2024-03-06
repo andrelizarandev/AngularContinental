@@ -44,6 +44,8 @@
           
           <th>Observaciones</th>
 
+          <th>Conformar</th>
+
           <th>Conformidad del jefe de virtualización</th>
 
         </tr>
@@ -89,14 +91,21 @@
           <td>{{validacion.observaciones}}</td>
 
           <td>
-            
+            <p-button
+              label="Conformar"
+              size="small"
+              severity="secondary"
+              (onClick)="toggleIsSubmitValidationDialogOpen()"
+            />
+          </td>
+
+          <td>
             <p-button 
               [severity]="(getIsTableConfirmed() === 1) ? 'success' : 'primary'"
               [label]="(getIsTableConfirmed() === 1) ? 'Confirmado' : 'Confirmar'"
               size="small" 
               (onClick)="(getIsTableConfirmed() === 1) ? showAlreadyConfirmedMessage() : confirmValidacion()"
             />
-
           </td>
           
         </tr>
@@ -105,8 +114,11 @@
   
     </p-table>
 
-    
-
   </app-card-with-skeleton>
 
 </app-navigation-container>
+
+<app-register-validacion-dialog
+  [isDialogOpen]="isSubmitValidationDialogOpen"
+  (closeDialogEmitter)="toggleIsSubmitValidationDialogOpen()"
+/>

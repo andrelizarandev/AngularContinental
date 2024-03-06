@@ -1,0 +1,57 @@
+<p-dialog 
+  class="sm:w-12"  
+  header="Registro Validación"
+  [style]="{width:'600px'}"
+  [visible]="isDialogOpen" 
+  [modal]="true" 
+  [closable]="false"
+  [draggable]="false"
+>
+
+ <div class="pt-1 v-flex">
+
+    <div class="v-flex-low-gap">
+      <label>Input 1</label>
+      <input type="text" pInputText/>
+    </div>
+
+    <div class="v-flex-low-gap">
+      <label>Input 2</label>
+      <input type="text" pInputText/>
+    </div>
+
+    <div class="v-flex-low-gap">
+      <label>Input 3</label>
+      <input type="text" pInputText/>
+    </div>
+
+    <div class="v-flex-low-gap">
+      <label>Input 4</label>
+      <input type="text" pInputText/>
+    </div>
+
+    <div class="v-flex-low-gap">
+      <label>Input 5</label>
+      <input type="text" pInputText/>
+    </div>
+
+    <div class="h-flex">
+
+      <p-button
+        size="small"
+        label="Cancelar"
+        severity="secondary"
+        (onClick)="closeDialog()"
+      />
+
+      <p-button
+        size="small"
+        label="Guardar"
+      />
+
+    </div>
+
+ </div>
+
+
+</p-dialog>
