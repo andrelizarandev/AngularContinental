@@ -66,11 +66,10 @@
 
             <label>Documento Identidad</label>
   
-            <input 
-              type="email" 
-              placeholder="Correo Personal" 
+            <input  
+              placeholder="Documento Identidad" 
               pInputText 
-              formControlName="correoPers"
+              formControlName="documentoIdentidad"
             />
 
           </div>
@@ -80,11 +79,23 @@
             <label>Contraseña</label>
 
             <input 
-              type="password" 
+              [type]="isPasswordVisible ? 'text' : 'password'"
               placeholder="Contraseña" 
               pInputText 
               formControlName="contrasena"
             />
+
+            <div class="h-flex-align-center-low-gap">
+              
+              <p-checkbox 
+                [binary]="true"
+                [value]="isPasswordVisible"
+                (onChange)="togglePasswordVisibility()"
+              />
+
+              <label>¿Es la contraseña visible?</label>
+
+            </div>
           
           </div>
 
@@ -114,6 +125,7 @@
               label="Registrar" 
               size="small"
               type="submit"
+              [disabled]="!registerUserForm.valid"
             />
   
           </div>

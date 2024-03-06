@@ -2,6 +2,7 @@
 import { Store } from '@ngrx/store';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
+import { CheckboxModule } from 'primeng/checkbox';
 import { Component, inject } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -17,7 +18,11 @@ import { CardWithSkeletonComponent } from '../../../components/card-with-skeleto
 import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
 
 // Messages
-import { postUserErrorMessage, postUserSuccessMessage } from '../../../data/data.messages';
+import { 
+  formErrorMessage, 
+  postUserErrorMessage, 
+  postUserSuccessMessage 
+} from '../../../data/data.messages';
 
 // Services
 import { UsersService } from '../../../api/users/users.service';
@@ -35,8 +40,9 @@ import { OptionDataIdNumber } from '../submit-solicitud-diseno-screen/submit-sol
     InputTextModule, 
     NavigationContainerComponent, 
     ReactiveFormsModule, 
+    CheckboxModule,
     DropdownModule,
-    CardWithSkeletonComponent
+    CardWithSkeletonComponent,
   ],
   templateUrl: './submit-user-screen.component.html',
   styleUrl: './submit-user-screen.component.scss'
@@ -47,18 +53,21 @@ export class SubmitUserScreenComponent {
   // Inject
   rolServices = inject(RolesService);
   userServices = inject(UsersService);
+
+  // Vars
+  isPasswordVisible = true;
+  currentId = this.activatedRoute.snapshot.params['id'];
   
   // Forms
   registerUserForm = this.fb.group({
     nombres: ['', Validators.required],
     apellidos: ['', Validators.required],
-    correoInst: ['', Validators.required],
-    correoPers: ['', Validators.required],
+    correoInst: ['', [Validators.required, Validators.email]],
+    correoPers: ['', [Validators.required, Validators.email]],
+    documentoIdentidad: ['', Validators.required],
     contrasena: ['', Validators.required],
     rol: [null as OptionDataIdNumber | null, Validators.required],
   });
-
-  currentId = this.activatedRoute.snapshot.params['id'];
 
   constructor (
     private fb:FormBuilder, 
@@ -148,6 +157,9 @@ export class SubmitUserScreenComponent {
   // Start
   startSubmitUser () {
 
+    if (this.registerUserForm.invalid)  
+      return this.store.dispatch(setMessageFromUiDataAction({ message:formErrorMessage }));
+
     const { nombres, apellidos, correoInst, correoPers, contrasena, rol } = this.registerUserForm.value;
 
     const userPayload:PostUserData = {
@@ -163,6 +175,11 @@ export class SubmitUserScreenComponent {
 
     this.submitUserMutation.mutate(userPayload);
 
+  }
+  
+  togglePasswordVisibility = () => {
+    this.isPasswordVisible = !this.isPasswordVisible;
+    console.log(this.isPasswordVisible);
   }
 
 }

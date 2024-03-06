@@ -35,6 +35,13 @@
   column-gap: 16px;
 }
 
+.h-flex-align-center-low-gap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 8px;
+}
+
 .h-flex-justify-end {
   display: flex;
   flex-direction: row;

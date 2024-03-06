@@ -31,7 +31,7 @@ import { UploadSilaboDialogComponent } from '../../../dialogs/submit/upload-sila
 import HandleDates from '../../../helpers/handle-dates';
 
 // Messages
-import { putProduccionGeneralSuccessMessage } from '../../../data/data.messages';
+import { getProduccionGeneralByIdSuccessMessage, putProduccionGeneralSuccessMessage } from '../../../data/data.messages';
 
 // Service
 import { MetodoService } from '../../../api/metodo/metodo.service';
@@ -336,8 +336,9 @@ export class SubmitProduccionGeneralComponent {
         this.currentModalidad = modalidad;
         this.currentInitDate = fecha_inicio;
         this.currentModalidadName = nombre_modalidad;
-
         this.getAllFormatosFromModalidadQuery.refetch();
+
+        this.store.dispatch(setMessageFromUiDataAction({ message:getProduccionGeneralByIdSuccessMessage }));
 
         return result;
 

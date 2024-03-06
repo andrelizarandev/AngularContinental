@@ -15,6 +15,13 @@ export const putProduccionGeneralSuccessMessage:MessageData = {
   type:'success' 
 }
 
+export const getProduccionGeneralByIdSuccessMessage:MessageData = {
+  message:'Producción obtenida con éxito',
+  body:'Se ha obtenido tu producción con éxito.',
+  type:'success'
+
+}
+
 // Post User
 export const postUserSuccessMessage:MessageData = {
   message:'Usuario registrado con éxito',
@@ -173,4 +180,11 @@ export const alreadyConfirmedMessage:MessageData = {
   message:'Ya confirmado',
   body:'Ya has confirmado esta validación.',
   type:'info'
+}
+
+// Form
+export const formErrorMessage:MessageData = {
+  message:'Error en formulario',
+  body:'Revisa que todos los campos estén correctamente llenos.',
+  type:'error'
 }
