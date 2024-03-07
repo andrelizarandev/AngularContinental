@@ -5,15 +5,17 @@ export type PostUserData = {
   password:string;
   email_personal:string;
   rol:number;
+  documento_identidad:string;
 }
 
-export type GetUserData = { 
-  id_usuario:number; 
-  nombre_rol:string 
-} & PostUserData;
+export type GetUserData = PostUserData & { id_usuario:number; nombre_rol:string };
 
 export type PostUserResponse = { data:GetUserData; };
 
 export type GetUserResponse = GetUserData[];
 
-export type GetUserByIdResponse = GetUserData;
+export type GetUserByIdResponse = {
+  data:GetUserData;
+}
+
+export type PutUserData = Omit<PostUserData, 'password'> & { id_usuario:number; };

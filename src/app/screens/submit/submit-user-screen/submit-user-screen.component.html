@@ -8,7 +8,7 @@
 
         <form class="v-flex" [formGroup]="registerUserForm" (ngSubmit)="startSubmitUser()">
 
-          <h3 class="c-title">Registro de Usuarios</h3>
+          <h3 class="c-title">{{ currentId === '0' ? 'Registro de Usuario' : 'Editar Usuario' }}</h3>
 
           <div class="v-flex-low-gap">
 
@@ -69,35 +69,39 @@
             <input  
               placeholder="Documento Identidad" 
               pInputText 
-              formControlName="documentoIdentidad"
+              formControlName="documento_identidad"
             />
 
           </div>
   
-          <div class="v-flex-low-gap">
+          @if (currentId === '0') {
+
+            <div class="v-flex-low-gap">
   
-            <label>Contraseña</label>
-
-            <input 
-              [type]="isPasswordVisible ? 'text' : 'password'"
-              placeholder="Contraseña" 
-              pInputText 
-              formControlName="contrasena"
-            />
-
-            <div class="h-flex-align-center-low-gap">
-              
-              <p-checkbox 
-                [binary]="true"
-                [value]="isPasswordVisible"
-                (onChange)="togglePasswordVisibility()"
+              <label>Contraseña</label>
+  
+              <input 
+                [type]="!isPasswordVisible ? 'text' : 'password'"
+                placeholder="Contraseña" 
+                pInputText 
+                formControlName="contrasena"
               />
-
-              <label>¿Es la contraseña visible?</label>
-
+  
+              <div class="h-flex-align-center-low-gap">
+                
+                <p-checkbox 
+                  [binary]="true"
+                  [value]="isPasswordVisible"
+                  (onChange)="togglePasswordVisibility()"
+                />
+  
+                <label>¿Es la contraseña visible?</label>
+  
+              </div>
+            
             </div>
-          
-          </div>
+
+          }
 
           <div class="v-flex-low-gap">
 
@@ -122,7 +126,7 @@
             />
               
             <p-button 
-              label="Registrar" 
+              [label]="(currentId === '0') ? 'Registrar' : 'Editar'"
               size="small"
               type="submit"
               [disabled]="!registerUserForm.valid"

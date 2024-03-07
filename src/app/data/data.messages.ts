@@ -19,6 +19,19 @@ export const getProduccionGeneralByIdSuccessMessage:MessageData = {
   message:'Producción obtenida con éxito',
   body:'Se ha obtenido tu producción con éxito.',
   type:'success'
+}
+
+// Get Single User
+export const getUserByIdErrorMessage:MessageData = {
+  message:'Error al obtener usuario',
+  body:'Revisa que tu usuario exista.',
+  type:'error'
+}
+
+export const getUserByIdSuccessMessage:MessageData = {
+  message:'Usuario obtenido con éxito',
+  body:'Se ha obtenido tu usuario con éxito.',
+  type:'success'
 
 }
 
@@ -31,6 +44,19 @@ export const postUserSuccessMessage:MessageData = {
 
 export const postUserErrorMessage:MessageData = {
   message:'Error al registrar usuario',
+  body:'Revisa que tu correo no se haya repetido antes.',
+  type:'error'
+}
+
+// Put User
+export const putUserSuccessMessage:MessageData = {
+  message:'Usuario actualizado con éxito',
+  body:'Se ha actualizado tu usuario en la plataforma.',
+  type:'success'
+}
+
+export const putUserErrorMessage:MessageData = {
+  message:'Error al actualizar usuario',
   body:'Revisa que tu correo no se haya repetido antes.',
   type:'error'
 }

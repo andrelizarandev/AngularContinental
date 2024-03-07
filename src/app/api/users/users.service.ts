@@ -7,7 +7,12 @@ import { HttpClient } from '@angular/common/http';
 import { apiUrl } from '..';
 
 // Types
-import { GetUserByIdResponse, GetUserResponse, PostUserData } from './users.types';
+import { 
+  GetUserByIdResponse, 
+  GetUserResponse, 
+  PostUserData, 
+  PutUserData 
+} from './users.types';
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +33,13 @@ export class UsersService {
     return lastValueFrom(this.http.delete(`${apiUrl}/usuarios/${id}`));
   }
 
-  getUserByIdApi (id:number) {
+  getUserByIdApi (id:string) {
     return lastValueFrom(this.http.get<GetUserByIdResponse>(`${apiUrl}/usuarios/${id}`));
+  }
+
+  putUserApi (data:PutUserData) {
+    const { id_usuario, ...restData } = data;
+    return lastValueFrom(this.http.put(`${apiUrl}/usuarios/${id_usuario}`, restData));
   }
 
 }
