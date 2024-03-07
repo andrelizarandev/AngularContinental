@@ -50,7 +50,23 @@ export class SubmitProduccionGeneralArchivosScreenComponent {
   currentUnidad:null | string = null;
   currentFiles: File[] = [];
 
+  // Options
   asignaturaOptions:string[] = [];
+
+  modalidadOptions:string[] = [];
+
+  formatoOptions:string[] = [
+    'Formato Semipresencial',
+    'Formato a Distancia',
+    'Formato Presencial',
+  ];
+
+  unidadOptions:string[] = [
+    'Unidad 1',
+    'Unidad 2',
+    'Unidad 3',
+    'Unidad 4'
+  ];
   
   // Breadcrumbs
   breadcrumbItems:MenuItem[] = [];
@@ -84,6 +100,7 @@ export class SubmitProduccionGeneralArchivosScreenComponent {
         } = finalResult;
 
         this.asignaturaOptions = [asignatura]
+        this.modalidadOptions = [modalidad]
 
         return finalResult;
         

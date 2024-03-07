@@ -31,11 +31,13 @@
   
           <span class="text-gray-500">Selecciona una asignatura</span>
   
-          <p-button 
-            label="Asignatura Demo"
-            size="small"
-            (onClick)="setCurrentAsignatura('Asignatura Demo')"
-          />
+          @for (opt of asignaturaOptions; track $index) {
+            <p-button 
+              [label]="opt"
+              size="small"
+              (onClick)="setCurrentAsignatura(opt)"
+            />
+          }
   
         }
   
@@ -43,11 +45,15 @@
   
           <span class="text-gray-500">Selecciona una modalidad</span>
   
-          <p-button 
-            label="Modalidad Demo"
-            size="small"
-            (onClick)="setCurrentModalidad('Modalidad Demo')"
-          />
+          @for (opt of modalidadOptions; track $index) {
+
+            <p-button 
+              [label]="opt"
+              size="small"
+              (onClick)="setCurrentModalidad(opt)"
+            />
+
+          }
   
         }
   
@@ -56,18 +62,16 @@
           <span class="text-gray-500">Selecciona un formato</span>
   
           <div class="flex-wrap">
+
+            @for (opt of formatoOptions; track $index) {
   
-            <p-button 
-              label="Formato Demo 1"
-              size="small"
-              (onClick)="setCurrentFormato('Formato Demo 1')"
-            />
+              <p-button 
+                [label]="opt"
+                size="small"
+                (onClick)="setCurrentFormato(opt)"
+              />
   
-            <p-button 
-              label="Formato Demo 2"
-              size="small"
-              (onClick)="setCurrentFormato('Formato Demo 2')"
-            />
+            }
   
           </div>
   
@@ -79,17 +83,15 @@
   
           <div class="flex-wrap">
   
-            <p-button 
-              label="Unidad Demo 1"
-              size="small"
-              (onClick)="setCurrentUnidad('Unidad Demo 1')"
-            />
+            @for (opt of unidadOptions; track $index) {
   
-            <p-button 
-              label="Unidad Demo 2"
-              size="small"
-              (onClick)="setCurrentUnidad('Unidad Demo 2')"
-            />
+              <p-button 
+                [label]="opt"
+                size="small"
+                (onClick)="setCurrentUnidad(opt)"
+              />
+  
+            }
   
           </div>
         
