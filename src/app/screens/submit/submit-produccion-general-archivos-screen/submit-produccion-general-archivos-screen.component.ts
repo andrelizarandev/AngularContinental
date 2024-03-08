@@ -3,20 +3,24 @@ import { MenuItem } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FileUploadModule } from 'primeng/fileupload';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { injectQuery } from '@tanstack/angular-query-experimental';
 import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 
-
 // Components
+import { CustomBreadcrumbComponent } from '../../../components/custom-breadcrumb/custom-breadcrumb.component';
 import { CardWithSkeletonComponent } from '../../../components/card-with-skeleton/card-with-skeleton.component';
 import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
 
+// Classes
+import BreadcrumbItemsClass from '../../../utils/breadcrumb-items';
+
 // Services
 import { ProduccionService } from '../../../api/produccion/produccion.service';
+import { ModalidadesService } from '../../../api/modalidades/modalidades.service';
 
 @Component({
   selector: 'app-submit-produccion-general-archivos-screen',
@@ -29,19 +33,20 @@ import { ProduccionService } from '../../../api/produccion/produccion.service';
     ReactiveFormsModule,
     BreadcrumbModule,
     MessageModule,
-    FileUploadModule
+    FileUploadModule,
+    CustomBreadcrumbComponent
   ],
   templateUrl: './submit-produccion-general-archivos-screen.component.html',
   styleUrl: './submit-produccion-general-archivos-screen.component.scss'
 })
 export class SubmitProduccionGeneralArchivosScreenComponent {
 
-  // Inject
-  produccionGeneralService = inject(ProduccionService);
-
+  // Props
   @ViewChild('fileInput') fileInput:ElementRef | null = null;
 
-  currentId = this.activatedRow.snapshot.params['id'];
+  // Inject
+  modalidadesService = inject(ModalidadesService);
+  produccionGeneralService = inject(ProduccionService);
 
   // Vars
   currentAsignatura:null | string = null;
@@ -49,18 +54,16 @@ export class SubmitProduccionGeneralArchivosScreenComponent {
   currentFormato:null | string = null;
   currentUnidad:null | string = null;
   currentFiles: File[] = [];
+  currentId = this.activatedRow.snapshot.params['id'];
 
   // Options
   asignaturaOptions:string[] = [];
-
   modalidadOptions:string[] = [];
-
   formatoOptions:string[] = [
     'Formato Semipresencial',
     'Formato a Distancia',
     'Formato Presencial',
   ];
-
   unidadOptions:string[] = [
     'Unidad 1',
     'Unidad 2',
@@ -69,10 +72,20 @@ export class SubmitProduccionGeneralArchivosScreenComponent {
   ];
   
   // Breadcrumbs
-  breadcrumbItems:MenuItem[] = [];
+  breadcrumbItems:MenuItem[] = [
+    BreadcrumbItemsClass.homeItem,
+    BreadcrumbItemsClass.produccionGeneral,
+    BreadcrumbItemsClass.registroProduccionGeneralArchivosItem(this.currentId),
+  ];
 
-  constructor (private activatedRow:ActivatedRoute) {}
+  selectedBreadcrumbItem:MenuItem[] = [];
 
+  constructor (
+    private activatedRow:ActivatedRoute,
+    private router:Router
+  ) {}
+
+  // Queries
   getProductionGeneralByIdQuery = injectQuery(() => ({
 
     queryKey:['get-produccion-general'],
@@ -90,17 +103,11 @@ export class SubmitProduccionGeneralArchivosScreenComponent {
         const { 
           asignatura, 
           modalidad, 
-          nombre_formato_adistancia, 
-          nombre_formato_presencial, 
-          nombre_formato_semipresencial,
-          unidad1,
-          unidad2,
-          unidad3,
-          unidad4,
         } = finalResult;
 
-        this.asignaturaOptions = [asignatura]
-        this.modalidadOptions = [modalidad]
+        this.asignaturaOptions = [asignatura];
+
+        this.getModalidadesQuery.refetch();
 
         return finalResult;
         
@@ -114,29 +121,63 @@ export class SubmitProduccionGeneralArchivosScreenComponent {
 
   }));
 
+  getModalidadesQuery = injectQuery(() => ({
+
+    queryKey:['get-modalidades'],
+
+    queryFn: async () => {
+
+      try {
+
+        const result = await this.modalidadesService.getModalidadesApi();
+
+        const productionGeneralResult = this.getProductionGeneralByIdQuery.data();
+
+        if (productionGeneralResult) {
+
+          const modalidadResult = result.modalidades.find((row) => row.id === Number(productionGeneralResult.modalidad));
+
+          if (modalidadResult) this.modalidadOptions = [modalidadResult.nombre]
+
+        }
+
+        return result.modalidades
+        
+      } catch (error) {
+
+        return null;
+
+      }
+
+    },
+
+    enabled:false
+
+  }));
+
   // Set
   setCurrentAsignatura (asignatura:string) {
     this.currentAsignatura = asignatura;
     const newItem = [{ label:asignatura, command:() => this.cleanTilAsignatura() }];
-    this.breadcrumbItems = [...this.breadcrumbItems, ...newItem];
+    this.selectedBreadcrumbItem = [...this.selectedBreadcrumbItem, ...newItem];
   }
 
   setCurrentModalidad (modalidad:string) {
     this.currentModalidad = modalidad;
     const newItem = [{ label:modalidad, command: () => this.cleanTilModalidad() }];
-    this.breadcrumbItems = [...this.breadcrumbItems, ...newItem];
+    this.selectedBreadcrumbItem = [...this.selectedBreadcrumbItem, ...newItem];
   }
 
   setCurrentFormato (formato:string) {
     this.currentFormato = formato;
     const newItem = [{ label:formato, command: () => this.cleanTilFormato() }];
-    this.breadcrumbItems = [...this.breadcrumbItems, ...newItem];
+    this.selectedBreadcrumbItem = [...this.selectedBreadcrumbItem, ...newItem];
   }
 
   setCurrentUnidad (unidad:string) {
     this.currentUnidad = unidad;
     const newItem = [{ label:unidad, command: () => this.cleanTilUnidad() }];
-    this.breadcrumbItems = [...this.breadcrumbItems, ...newItem];
+    this.selectedBreadcrumbItem = [...this.selectedBreadcrumbItem, ...newItem];
   }
 
   // Clean
@@ -145,25 +186,25 @@ export class SubmitProduccionGeneralArchivosScreenComponent {
     this.currentModalidad = null;
     this.currentFormato = null;
     this.currentUnidad = null;
-    this.breadcrumbItems = this.breadcrumbItems.slice(0, 1);
+    this.selectedBreadcrumbItem = this.selectedBreadcrumbItem.slice(0, 1);
   }
 
   cleanTilModalidad () {
     this.currentModalidad = null;
     this.currentFormato = null;
     this.currentUnidad = null;
-    this.breadcrumbItems = this.breadcrumbItems.slice(0, 2);
+    this.selectedBreadcrumbItem = this.selectedBreadcrumbItem.slice(0, 2);
   }
 
   cleanTilFormato () {
     this.currentFormato = null;
     this.currentUnidad = null;
-    this.breadcrumbItems = this.breadcrumbItems.slice(0, 3);
+    this.selectedBreadcrumbItem = this.selectedBreadcrumbItem.slice(0, 3);
   }
 
   cleanTilUnidad () {
     this.currentUnidad = null;
-    this.breadcrumbItems = this.breadcrumbItems.slice(0, 4);
+    this.selectedBreadcrumbItem = this.selectedBreadcrumbItem.slice(0, 4);
   }
 
   clearCurrentFile () {
@@ -176,6 +217,11 @@ export class SubmitProduccionGeneralArchivosScreenComponent {
     const files = (target.files as FileList).length > 0 ? Array.from(target.files as FileList) : [];
     this.currentFiles = files;
     this.fileInput!!.nativeElement.value = '';
+  }
+
+  // Redirect
+  redirectToProduccionGeneral () {
+    this.router.navigate(['/produccion-general']);
   }
 
 }

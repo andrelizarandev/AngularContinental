@@ -1,8 +1,8 @@
 <app-navigation-container>
 
-  <app-card-with-skeleton>
+  <app-custom-breadcrumb [items]="breadcrumbItems"/>
 
-    <h3 class="c-title">Producción General Singular</h3>
+  <app-card-with-skeleton>
 
     <div class="v-flex pt-1">
 
@@ -16,10 +16,10 @@
         (change)="onFileChange($event)"
       >
   
-      @if (breadcrumbItems.length > 0) {
+      @if (selectedBreadcrumbItem.length > 0) {
 
         <p-breadcrumb 
-          [model]="breadcrumbItems"
+          [model]="selectedBreadcrumbItem"
           class="max-w-full"
         />
 
@@ -31,29 +31,37 @@
   
           <span class="text-gray-500">Selecciona una asignatura</span>
   
-          @for (opt of asignaturaOptions; track $index) {
-            <p-button 
-              [label]="opt"
-              size="small"
-              (onClick)="setCurrentAsignatura(opt)"
-            />
-          }
+          <div class="flex-wrap">
+
+            @for (opt of asignaturaOptions; track $index) {
+              <p-button 
+                [label]="opt"
+                size="small"
+                (onClick)="setCurrentAsignatura(opt)"
+              />
+            }
+
+          </div>
   
         }
   
         @else if (currentModalidad === null) {
   
           <span class="text-gray-500">Selecciona una modalidad</span>
+
+          <div class="flex-wrap">
+
+            @for (opt of modalidadOptions; track $index) {
+
+              <p-button 
+                [label]="opt"
+                size="small"
+                (onClick)="setCurrentModalidad(opt)"
+              />
   
-          @for (opt of modalidadOptions; track $index) {
+            }
 
-            <p-button 
-              [label]="opt"
-              size="small"
-              (onClick)="setCurrentModalidad(opt)"
-            />
-
-          }
+          </div>        
   
         }
   
@@ -70,8 +78,15 @@
                 size="small"
                 (onClick)="setCurrentFormato(opt)"
               />
-  
+
             }
+
+            <p-button 
+              label="Validados"
+              size="small"
+              (onClick)="setCurrentFormato('Validados')"
+              severity="success"
+            />
   
           </div>
   
@@ -149,7 +164,8 @@
         <p-button 
           label="Cancelar" 
           size="small" 
-          severity="secondary"/>
+          severity="secondary"
+          (onClick)="redirectToProduccionGeneral()"/>
     
         <p-button 
           label="Guardar" 

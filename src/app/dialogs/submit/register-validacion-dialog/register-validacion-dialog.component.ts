@@ -31,37 +31,21 @@ export class RegisterValidacionDialogComponent {
 
   // Forms
   submitValidacionForm:FormGroup = this.fb.group ({
-
     fecha_envio_validacion:['', Validators.required],
-    
     porcentaje_real:['', Validators.required],
-    
     carpeta_entregable:['', Validators.required],
-    
     fecha_validacion:['', Validators.required],
-    
     estado_avance_validacion:[null as (OptionData | null), Validators.required],
-
     confirmacion_levantamiento_observaciones:[null as (OptionData | null), Validators.required],
-
     presenta_guia_aprendizaje:[null as (OptionData | null), Validators.required],
-
     resultados_aprendizaje_guia_estudiante:[null as (OptionData | null), Validators.required],
-
     enlaces_e_hipervinculos_para_recursos:[null as (OptionData | null), Validators.required],
-
     actividades_propuestas:[null as (OptionData | null), Validators.required],
-
     foro_formativo:[null as (OptionData | null), Validators.required],
-
     objetos_aprendizaje:[null as (OptionData | null), Validators.required],
-
     observaciones_validador:['', Validators.required],
-
     pasa_implementacion:[null as (OptionData | null), Validators.required],
-
     observacion_scorm:[null as (OptionData | null), Validators.required],
-
   });
 
   constructor (private fb:FormBuilder) {}

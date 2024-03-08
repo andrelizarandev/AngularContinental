@@ -3,7 +3,7 @@ import { MenuItem } from 'primeng/api';
 
 export default class BreadcrumbItemsClass {
 
-  static homeItem:MenuItem = { label:'Inicio', routerLink: '/' };
+  static homeItem:MenuItem = { label:'Inicio', routerLink: '/home' };
 
   static produccionGeneral:MenuItem = { label:'Producción General', routerLink: '/produccion-general' };
 
@@ -29,6 +29,10 @@ export default class BreadcrumbItemsClass {
 
   static registroReportesItem (id:string):MenuItem {
     return { label:'Registro de Reportes', routerLink:`/submit-reportes/${id}` };
+  }
+
+  static registroProduccionGeneralArchivosItem (id:string):MenuItem {
+    return { label:'Registro de Producción General por Archivos', routerLink:`/submit-produccion-general-archivos/${id}` };
   }
 
 }
