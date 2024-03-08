@@ -67,15 +67,13 @@ export class SubmitSeguimientoComponent {
 
         const result = await this.produccionService.getPorcentajesAvanceByProduccionGeneraApi(this.currentId);
 
-        const porcentajes = CalculatePorcentajeAvanceHelper.getPorcentajesAvanceAndFilterOnePerFormatoPerDate(result.resultado);
-
-        const porcentajesDates = porcentajes.map((item) => item.fecha_registro);
+        const porcentajesDates = result.resultado.map((item) => item.fecha_registro);
 
         const uniqueDates = [...new Set(porcentajesDates)];
 
         this.porcentajeDates = uniqueDates;
 
-        return porcentajes;
+        return result.resultado;
 
       } catch (error) {
 
@@ -105,9 +103,6 @@ export class SubmitSeguimientoComponent {
   getSeguimientoColumns (idFormato:number) {
 
     const data = this.porcentajesAvanceQuery.data();
-
-    console.log(data, this.porcentajeDates);
-
 
     if (!data) return [];
 

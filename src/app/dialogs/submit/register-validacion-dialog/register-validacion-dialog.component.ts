@@ -1,12 +1,24 @@
 // Modules
+import { Store } from '@ngrx/store';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { injectMutation } from '@tanstack/angular-query-experimental';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
+// Actions
+import { setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
+
+// Data
+import { completarValidacionSuccessMessage } from '../../../data/data.messages';
+
+// Services
+import { ValidacionService } from '../../../api/validacion/validacion.service';
+
 // Types
+import { PostCompletarValidacionData } from '../../../api/validacion/validacion.types';
 import { OptionData, OptionDataIdNumber } from '../../../screens/submit/submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
 
 @Component({
@@ -29,6 +41,37 @@ export class RegisterValidacionDialogComponent {
   @Input() isDialogOpen = false;
   @Output() closeDialogEmitter = new EventEmitter();
 
+  // Inject
+  validacionService = inject(ValidacionService);
+
+  postCompletarValidacionMutation = injectMutation(() => ({
+
+    mutationFn: (data:PostCompletarValidacionData) => this.validacionService.postCompletarValidacionApi(data),
+
+    onSuccess: () => {
+
+      this.store.dispatch(setMessageFromUiDataAction({ message:completarValidacionSuccessMessage }));
+
+      this.closeAndCleanDialog();
+
+    }
+
+  }));
+
+  // Options
+  estadoAvanceValidacionOptions:OptionDataIdNumber[] = [
+    { id:1, label:'25%-1U,' },
+    { id:2, label:'50%-2U,' },
+    { id:3, label:'75%-3U,' },
+    { id:4, label:'100%-4U,' },
+  ]
+
+  siNoObservacionOptions:OptionDataIdNumber[] = [
+    { id:1, label:'Si' },
+    { id:2, label:'No' },
+    { id:3, label:'Observación' },
+  ]
+
   // Forms
   submitValidacionForm:FormGroup = this.fb.group ({
     fecha_envio_validacion:['', Validators.required],
@@ -48,24 +91,11 @@ export class RegisterValidacionDialogComponent {
     observacion_scorm:[null as (OptionData | null), Validators.required],
   });
 
-  constructor (private fb:FormBuilder) {}
+  constructor (private fb:FormBuilder, private store:Store) {}
 
-
-  estadoAvanceValidacionOptions:OptionDataIdNumber[] = [
-    { id:1, label:'25%-1U,' },
-    { id:2, label:'50%-2U,' },
-    { id:3, label:'75%-3U,' },
-    { id:4, label:'100%-4U,' },
-  ]
-
-  siNoObservacionOptions:OptionDataIdNumber[] = [
-    { id:1, label:'Si' },
-    { id:2, label:'No' },
-    { id:3, label:'Observación' },
-  ]
-
-  closeDialog () {
+  closeAndCleanDialog () {
     this.closeDialogEmitter.emit();
+    this.submitValidacionForm.reset();
   }
 
 }

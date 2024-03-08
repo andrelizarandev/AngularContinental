@@ -56,6 +56,7 @@ export default class CalculatePorcentajeAvanceHelper {
   
   }
 
+  // deprecated
   public static getPorcentajesAvanceAndFilterOnePerFormatoPerDate (data: GetPorcentajesAvanceByProduccionGeneralData[]) {
 
     var resultadoHelper:GetPorcentajesAvanceByProduccionGeneralData[] = [];

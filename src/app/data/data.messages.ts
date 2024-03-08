@@ -214,3 +214,10 @@ export const formErrorMessage:MessageData = {
   body:'Revisa que todos los campos estén correctamente llenos.',
   type:'error'
 }
+
+// Post
+export const completarValidacionSuccessMessage:MessageData = {
+  message:'Validación completada con éxito',
+  body:'Se ha completado tu validación en la plataforma.',
+  type:'success'
+}

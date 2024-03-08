@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { apiUrl } from '..';
 
 // Types
-import { GetValidacionResponse } from './validacion.types';
+import { GetValidacionResponse, PostCompletarValidacionData } from './validacion.types';
 
 @Injectable({
   providedIn: 'root'
@@ -23,4 +23,9 @@ export class ValidacionService {
   putValidacionApi (id:number) {
     return lastValueFrom(this.http.post(`${apiUrl}/validacion/${id}`, {}));
   }
+
+  postCompletarValidacionApi (data:PostCompletarValidacionData) {
+    return lastValueFrom(this.http.post(`${apiUrl}/validacion`, data));
+  }
+
 }

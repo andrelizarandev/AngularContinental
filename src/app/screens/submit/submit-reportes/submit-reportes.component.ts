@@ -29,7 +29,6 @@ import { ModalidadesService } from '../../../api/modalidades/modalidades.service
 
 // Types
 import { GetFacultadData, GetMetodoData } from '../../../api/reportes/reportes.types';
-import { GetPorcentajesAvanceByProduccionGeneralData } from '../../../api/produccion/produccion.types';
 import { OptionDataIdNumber } from '../submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
 import CalculatePorcentajeAvanceHelper, { DataForCalculatePorcentajeAvance } from '../../../helpers/calculate-porcentaje-avance-helper';
 
@@ -197,11 +196,9 @@ export class SubmitReportesComponent {
 
         const nonRepeatedFormatos = [...new Set(formatos)];
 
-        const finalResult = CalculatePorcentajeAvanceHelper.getPorcentajesAvanceAndFilterOnePerFormatoPerDate(data);
-
         const datasets = nonRepeatedFormatos.map((row1, key) => {
 
-          const selectedRows = finalResult.filter((row2) => row2.formato === row1);
+          const selectedRows = result.resultado.filter((row2) => row2.formato === row1);
 
           const percentage = selectedRows.map((row2) => row2.porcentaje); 
 

@@ -38,6 +38,7 @@
                 [label]="opt"
                 size="small"
                 (onClick)="setCurrentAsignatura(opt)"
+                icon="pi pi-folder"
               />
             }
 
@@ -57,6 +58,7 @@
                 [label]="opt"
                 size="small"
                 (onClick)="setCurrentModalidad(opt)"
+                icon="pi pi-folder"
               />
   
             }
@@ -77,6 +79,7 @@
                 [label]="opt"
                 size="small"
                 (onClick)="setCurrentFormato(opt)"
+                icon="pi pi-folder"
               />
 
             }
@@ -86,6 +89,7 @@
               size="small"
               (onClick)="setCurrentFormato('Validados')"
               severity="success"
+              icon="pi pi-folder"
             />
   
           </div>
@@ -104,6 +108,7 @@
                 [label]="opt"
                 size="small"
                 (onClick)="setCurrentUnidad(opt)"
+                icon="pi pi-folder"
               />
   
             }
@@ -141,7 +146,7 @@
 
           @if (currentFiles.length > 0) {
 
-            <span class="c-title">Archivos Cargados</span>
+            <span class="c-title pt-2">Archivos Cargados</span>
 
             <div class="v-flex-low-gap">
 
