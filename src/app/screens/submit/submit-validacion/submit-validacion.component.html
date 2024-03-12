@@ -94,7 +94,7 @@
             <p-button
               label="Completar"
               size="small"
-              (onClick)="toggleIsSubmitValidationDialogOpen()"
+              (onClick)="toggleIsSubmitValidationDialogOpen(validacion.validacion)"
             />
           </td>
 
@@ -118,6 +118,7 @@
 </app-navigation-container>
 
 <app-register-validacion-dialog
+  [selectedRow]="selectedRow"
   [isDialogOpen]="isSubmitValidationDialogOpen"
   (closeDialogEmitter)="toggleIsSubmitValidationDialogOpen()"
 />

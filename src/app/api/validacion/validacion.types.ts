@@ -26,20 +26,46 @@ export type GetValidacionResponse = {
   datos:GetValidacionData
 }
 
+export type GetCompletarValidacionResponse = {
+  data:GetCompletarValidacionData[]
+}
+
+export type GetCompletarValidacionData = PostCompletarValidacionData;
+
 export type PostCompletarValidacionData = {
+  
+  id_produccion_general:string;
+
   fecha_envio_validacion:string;
-  porcentaje_real:string;
+  porcentaje_real:number;
   carpeta_entregable:string;
   fecha_validacion:string;
-  estado_avance_validacion:string;
-  confirmacion_levantamiento_observaciones:string;
-  presenta_guia_aprendizaje:string;
-  resultados_aprendizaje_guia_estudiante:string;
-  enlaces_e_hipervinculos_para_recursos:string;
-  actividades_propuestas:string;
-  foro_formativo:string;
-  objetos_aprendizaje:string;
-  observaciones_validador:string;
-  pasa_implementacion:string;
-  observacion_scorm:string;
+
+  estado_avance_validacion:number;
+
+  confirmacion_levantamiento:number;
+  observacion_confirmacion_levantamiento:string;
+
+  presenta_guia_aprendizaje:number;
+  observacion_presenta_guia_aprendizaje:string;
+
+  resultados_aprendizaje_guia_estudiante:number;
+  observacion_resultados_aprendizaje_guia_estudiante:string;
+
+  enlaces_e_hipervinculos_para_recursos:number;
+  observacion_enlaces_e_hipervinculos_para_recursos:string;
+
+  actividades_propuestas:number;
+  observacion_actividades_propuestas:string;
+
+  foro_formativo:number;
+  observacion_foro_formativo:string;
+
+  objetos_aprendizaje:number;
+  observacion_objetos_aprendizaje:string;
+  
+  observaciones_validador:number;
+  pasa_implementacion:number;
+  observacion_scorm:number;
+
 }

@@ -7,7 +7,11 @@ import { HttpClient } from '@angular/common/http';
 import { apiUrl } from '..';
 
 // Types
-import { GetValidacionResponse, PostCompletarValidacionData } from './validacion.types';
+import { 
+  GetCompletarValidacionResponse, 
+  GetValidacionResponse, 
+  PostCompletarValidacionData 
+} from './validacion.types';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +24,17 @@ export class ValidacionService {
     return lastValueFrom(this.http.get<GetValidacionResponse>(`${apiUrl}/validacion/${id}`))
   }
 
+  getConfirmarValidacionApi (id:string) {
+    return lastValueFrom(this.http.get<GetCompletarValidacionResponse>(`${apiUrl}/validaciones/${id}`));
+  }
+
   putValidacionApi (id:number) {
     return lastValueFrom(this.http.post(`${apiUrl}/validacion/${id}`, {}));
   }
 
   postCompletarValidacionApi (data:PostCompletarValidacionData) {
-    return lastValueFrom(this.http.post(`${apiUrl}/validacion`, data));
+    const { id_produccion_general, ...restData } = data;
+    return lastValueFrom(this.http.patch(`${apiUrl}/validaciones/${id_produccion_general}`, restData));
   }
 
 }

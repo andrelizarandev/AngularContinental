@@ -6,9 +6,10 @@
   [modal]="true" 
   [closable]="false"
   [draggable]="false"
+  (onShow)="getValidacionByIdQuery.refetch()"
 >
 
- <form class="pt-1 v-flex" [formGroup]="submitValidacionForm">
+ <form class="pt-1 v-flex" [formGroup]="submitConfirmValidacionForm" (ngSubmit)="startPostCompletarValidacionMutation()">
 
     <div class="v-flex-low-gap">
       <label>Fecha de Envío a Validación</label>
@@ -27,7 +28,7 @@
 
     <div class="v-flex-low-gap">
       <label>Fecha de Validación</label>
-      <input type="text" pInputText formControlName="fecha_validacion"/>
+      <input type="date" pInputText formControlName="fecha_validacion"/>
     </div>
 
     <div class="v-flex-low-gap">
@@ -42,15 +43,26 @@
     </div>
 
     <div class="v-flex-low-gap">
-      <label>Confirmación de Levantamiento de Observaciones.</label>
+      <label>Confirmación de Levantamiento.</label>
       <p-dropdown 
         [options]="siNoObservacionOptions" 
         placeholder="Seleccione" 
         [style]="{'width':'100%'}"
         optionLabel="label"
-        formControlName="confirmacion_levantamiento_observaciones"
+        formControlName="confirmacion_levantamiento"
       />
     </div>
+
+    @if (currentFormValue.confirmacion_levantamiento?.id === 3) {
+      <div class="v-flex-low-gap">
+        <label>Observación Confirmación de Levantamiento</label>
+        <input 
+          pInputText 
+          type="text" 
+          formControlName="observacion_confirmacion_levantamiento"
+        />
+      </div>
+    }
 
     <div class="v-flex-low-gap">
       <label>Presenta la Guía de Aprendizaje.</label>
@@ -63,6 +75,17 @@
       />
     </div>
 
+    @if (currentFormValue.presenta_guia_aprendizaje?.id === 3) {
+      <div class="v-flex-low-gap">
+        <label>Observación Guía de Aprendizaje</label>
+        <input 
+          pInputText 
+          type="text" 
+          formControlName="observacion_presenta_guia_aprendizaje"
+        />
+      </div>
+    }
+
     <div class="v-flex-low-gap">
       <label>Resultados de Aprendizaje en el Guía del Estudiante</label>
       <p-dropdown 
@@ -74,8 +97,19 @@
       />
     </div>
 
+    @if (currentFormValue.resultados_aprendizaje_guia_estudiante?.id === 3) {
+      <div class="v-flex-low-gap">
+        <label>Observación Resultados de Aprendizaje en el Guía del Estudiante</label>
+        <input 
+          pInputText 
+          type="text" 
+          formControlName="observacion_resultados_aprendizaje_guia_estudiante"
+        />
+      </div>
+    }
+
     <div class="v-flex-low-gap">
-      <label>Enlaces e Hipervínculos para que los Recursos Funcionen</label>
+      <label>Enlaces e Hipervínculos para Recursos</label>
       <p-dropdown 
         [options]="siNoObservacionOptions" 
         placeholder="Seleccione" 
@@ -84,6 +118,18 @@
         formControlName="enlaces_e_hipervinculos_para_recursos"
       />
     </div>
+
+    @if (currentFormValue.resultados_aprendizaje_guia_estudiante?.id === 3) {
+      <div class="v-flex-low-gap">
+        <label>Observación Enlaces e Hipervínculos para Recursos</label>
+        <input 
+          pInputText 
+          type="text" 
+          formControlName="observacion_enlaces_e_hipervinculos_para_recursos"
+        />
+      </div>
+    }
+
 
     <div class="v-flex-low-gap">
       <label>Actividades Propuestas</label>
@@ -96,6 +142,17 @@
       />
     </div>
 
+    @if (currentFormValue.actividades_propuestas?.id === 3) {
+      <div class="v-flex-low-gap">
+        <label>Observación Actividades Propuestas</label>
+        <input 
+          pInputText 
+          type="text" 
+          formControlName="observacion_actividades_propuestas"
+        />
+      </div>
+    }
+
     <div class="v-flex-low-gap">
       <label>Foro Formativo</label>
       <p-dropdown 
@@ -106,6 +163,17 @@
         formControlName="foro_formativo"
       />
     </div>
+
+    @if (currentFormValue.foro_formativo?.id === 3) {
+      <div class="v-flex-low-gap">
+        <label>Observación Foro Formativo</label>
+        <input 
+          pInputText 
+          type="text" 
+          formControlName="observacion_foro_formativo"
+        />
+      </div>
+    }
 
     <div class="v-flex-low-gap">
       <label>Objectos de Aprendizaje</label>
@@ -118,10 +186,16 @@
       />
     </div>
 
-    <div class="v-flex-low-gap">
-      <label>Observaciones Validador</label>
-      <input type="text" pInputText formControlName="observaciones_validador"/>
-    </div>
+    @if (currentFormValue.objetos_aprendizaje?.id === 3) {
+      <div class="v-flex-low-gap">
+        <label>Observación Objectos de Aprendizaje</label>
+        <input 
+          pInputText 
+          type="text" 
+          formControlName="observacion_objetos_aprendizaje"
+        />
+      </div>
+    }
 
     <div class="v-flex-low-gap">
       <label>Pasa a Implementación</label>
@@ -135,14 +209,13 @@
     </div>
 
     <div class="v-flex-low-gap">
+      <label>Observaciones Validador</label>
+      <input type="text" pInputText formControlName="observaciones_validador"/>
+    </div>
+
+    <div class="v-flex-low-gap">
       <label>Observación SCORM</label>
-      <p-dropdown 
-        [options]="siNoObservacionOptions" 
-        placeholder="Seleccione" 
-        [style]="{'width':'100%'}"
-        optionLabel="label"
-        formControlName="observacion_scorm"
-      />
+      <input type="text" pInputText formControlName="observacion_scorm"/>
     </div>
 
     <div class="h-flex">
@@ -157,6 +230,7 @@
       <p-button
         size="small"
         label="Guardar"
+        type="submit"
       />
 
     </div>

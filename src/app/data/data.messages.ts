@@ -221,3 +221,9 @@ export const completarValidacionSuccessMessage:MessageData = {
   body:'Se ha completado tu validación en la plataforma.',
   type:'success'
 }
+
+export const getCompletarValidacionSuccessMessage:MessageData = {
+  message:'Validación obtenida con éxito',
+  body:'Se ha obtenido tu validación con éxito.',
+  type:'success'
+}

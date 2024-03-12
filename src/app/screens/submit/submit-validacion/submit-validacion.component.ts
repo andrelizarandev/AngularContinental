@@ -52,6 +52,7 @@ export class SubmitValidacionComponent {
   isValidated = false;
   isSubmitValidationDialogOpen = false;
   currentId = this.activatedRoute.snapshot.params['id'];
+  selectedRow: number | null = null;
 
   // Breadcrumbs
   breadcrumbItems:MenuItem[] = [
@@ -126,7 +127,9 @@ export class SubmitValidacionComponent {
     this.store.dispatch(setMessageFromUiDataAction({ message:alreadyConfirmedMessage }));
   }
 
-  toggleIsSubmitValidationDialogOpen () {
+  // Toggle
+  toggleIsSubmitValidationDialogOpen (id:number | null = null) {
+    this.selectedRow = id;
     this.isSubmitValidationDialogOpen = !this.isSubmitValidationDialogOpen;
   }
 
