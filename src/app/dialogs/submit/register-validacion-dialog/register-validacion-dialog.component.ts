@@ -171,7 +171,7 @@ export class RegisterValidacionDialogComponent {
       this.submitConfirmValidacionForm.enable();
 
     }
-    
+
   }));
 
   constructor (
@@ -247,8 +247,6 @@ export class RegisterValidacionDialogComponent {
       
       fecha_envio_validacion,
       
-      porcentaje_real,
-      
       carpeta_entregable,
       
       fecha_validacion,
@@ -283,6 +281,16 @@ export class RegisterValidacionDialogComponent {
       observacion_scorm,
 
     } = this.submitConfirmValidacionForm.value;
+
+    const porcentaje_real = this.calculatePorcentajeReal(
+      (confirmacion_levantamiento!.id === 1) ? 1 : 0,
+      (presenta_guia_aprendizaje!.id === 1) ? 1 : 0,
+      (resultados_aprendizaje_guia_estudiante!.id === 1) ? 1 : 0,
+      (enlaces_e_hipervinculos_para_recursos!.id === 1) ? 1 : 0,
+      (actividades_propuestas!.id === 1) ? 1 : 0,
+      (foro_formativo!.id === 1) ? 1 : 0,
+      (objetos_aprendizaje!.id === 1) ? 1 : 0
+    );
 
     const payload:PostCompletarValidacionData = {
 
@@ -327,8 +335,6 @@ export class RegisterValidacionDialogComponent {
 
     }
 
-    console.log('payload', payload);
-
     this.postCompletarValidacionMutation.mutate(payload)
 
   }
@@ -348,8 +354,34 @@ export class RegisterValidacionDialogComponent {
     return this.estadoAvanceValidacionOptions[id-1];
   }
 
+  // Calculate
+  calculatePorcentajeReal (
+    confirmacion_levantamiento:number,
+    presenta_guia_aprendizaje:number,
+    resultados_aprendizaje_guia_estudiante:number,
+    enlaces_e_hipervinculos_para_recursos:number,
+    actividades_propuestas:number,
+    foro_formativo:number,
+    objetos_aprendizaje:number
+  ) {
+  
+    const total = 
+      confirmacion_levantamiento + 
+      presenta_guia_aprendizaje + 
+      resultados_aprendizaje_guia_estudiante + 
+      enlaces_e_hipervinculos_para_recursos + 
+      actividades_propuestas + 
+      foro_formativo + 
+      objetos_aprendizaje;
+  
+    return (total * 100) / 7;
+
+  }
+
+  // Getters
   get currentFormValue () { 
     return this.submitConfirmValidacionForm.value;
+    
   }
 
 }

@@ -9,7 +9,8 @@
   (onShow)="getValidacionByIdQuery.refetch()"
 >
 
- <form class="pt-1 v-flex" [formGroup]="submitConfirmValidacionForm" (ngSubmit)="startPostCompletarValidacionMutation()">
+ <form 
+  class="pt-1 v-flex" [formGroup]="submitConfirmValidacionForm" (ngSubmit)="startPostCompletarValidacionMutation()">
 
     <div class="v-flex-low-gap">
       <label>Fecha de Envío a Validación</label>
@@ -18,7 +19,7 @@
 
     <div class="v-flex-low-gap">
       <label>Porcentaje Real</label>
-      <input type="text" pInputText formControlName="porcentaje_real"/>
+      <input type="text" pInputText formControlName="porcentaje_real" [disabled]="true"/>
     </div>
 
     <div class="v-flex-low-gap">
