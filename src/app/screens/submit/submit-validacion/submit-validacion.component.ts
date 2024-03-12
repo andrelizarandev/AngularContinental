@@ -1,4 +1,5 @@
 // Modules
+import { Store } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -24,9 +25,6 @@ import { alreadyConfirmedMessage, putValidacionSuccessMessage } from '../../../d
 // Services
 import { ValidacionService } from '../../../api/validacion/validacion.service';
 import { ModalidadesService } from '../../../api/modalidades/modalidades.service';
-
-// Types
-import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-submit-validacion',
@@ -117,9 +115,9 @@ export class SubmitValidacionComponent {
 
   // Get
   getIsTableConfirmed () {
-    const result =  this.validationQuery.data()
+    const result = this.validationQuery.data()
     if (!result) return 0;
-    return result[0].validacion
+    return (result[0].validacion === 1) || this.isValidated;
   }
 
   // Show
@@ -127,7 +125,6 @@ export class SubmitValidacionComponent {
     this.store.dispatch(setMessageFromUiDataAction({ message:alreadyConfirmedMessage }));
   }
 
-  // Toggle
   toggleIsSubmitValidationDialogOpen (id:number | null = null) {
     this.selectedRow = id;
     this.isSubmitValidationDialogOpen = !this.isSubmitValidationDialogOpen;

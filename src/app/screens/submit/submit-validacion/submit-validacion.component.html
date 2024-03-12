@@ -100,10 +100,10 @@
 
           <td>
             <p-button 
-              [severity]="(getIsTableConfirmed() === 1) ? 'success' : 'primary'"
-              [label]="(getIsTableConfirmed() === 1) ? 'Confirmado' : 'Confirmar'"
+              [severity]="getIsTableConfirmed() ? 'success' : 'primary'"
+              [label]="getIsTableConfirmed() ? 'Confirmado' : 'Confirmar'"
               size="small" 
-              (onClick)="(getIsTableConfirmed() === 1) ? showAlreadyConfirmedMessage() : confirmValidacion()"
+              (onClick)="getIsTableConfirmed() ? showAlreadyConfirmedMessage() : confirmValidacion()"
             />
           </td>
           
