@@ -27,7 +27,7 @@ import DateHelper from '../../../helpers/date-helper';
 import { ValidacionService } from '../../../api/validacion/validacion.service';
 
 // Types
-import { PostCompletarValidacionData } from '../../../api/validacion/validacion.types';
+import { PostCompletarValidacionData, PostEmailWhenGotSomeObservationsData } from '../../../api/validacion/validacion.types';
 import { OptionData, OptionDataIdNumber } from '../../../screens/submit/submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
 
 @Component({
@@ -170,18 +170,37 @@ export class RegisterValidacionDialogComponent {
     mutationFn: (data:PostCompletarValidacionData) => this.validacionService.postCompletarValidacionApi(data),
 
     onSuccess: () => {
+
       if (this.validateHasAnyObservacion()) {
+
+        this.postEmailWhenGotSomeObservationsMutation.mutate({});
+
         this.store.dispatch(setMessageFromUiDataAction({ message:completedValidacionWithAtLeastOneObservationMessage }));
+
       } else {
+
         this.store.dispatch(setMessageFromUiDataAction({ message:completarValidacionSuccessMessage }));
+
       }
+
       this.closeAndCleanDialog();
+
       this.submitConfirmValidacionForm.enable();
+
     },
 
     onError: () => {
+
       this.submitConfirmValidacionForm.enable();
+
     }
+
+  }));
+
+  postEmailWhenGotSomeObservationsMutation = injectMutation(() => ({
+
+    mutationFn: (data:PostEmailWhenGotSomeObservationsData) => 
+      this.validacionService.postEmailWhenGotSomeObservations(data),
 
   }));
 

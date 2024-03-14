@@ -2,7 +2,7 @@
 import { GetModalidadesData } from '../api/modalidades/modalidades.types';
 import { OptionDataIdNumber } from '../screens/submit/submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
 
-export class MatchHelper {
+export default class MatchHelper {
 
   static matchIdWithOptionDataIdNumber(id:number, optionDataIdNumber:OptionDataIdNumber[]) {
     return optionDataIdNumber.find(option => option.id === id)?.label || 'NO ESPECIFICADO';

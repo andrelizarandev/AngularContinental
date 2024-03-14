@@ -1,10 +1,12 @@
 // Modules
 import { MenuItem } from 'primeng/api';
 import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
 import { ActivatedRoute } from '@angular/router';
 import { Component, inject } from '@angular/core';
 import { DropdownModule } from 'primeng/dropdown';
 import { injectQuery } from '@tanstack/angular-query-experimental';
+
 // Classes
 import BreadcrumbItemsClass from '../../../utils/breadcrumb-items';
 
@@ -15,6 +17,8 @@ import { NavigationContainerComponent } from '../../../components/navigation-con
 
 // Helpers
 import DateHelper from '../../../helpers/date-helper';
+import MatchHelper from '../../../helpers/match-helper';
+
 
 // Services
 import { ModalidadesService } from '../../../api/modalidades/modalidades.service';
@@ -23,7 +27,6 @@ import { ImplementacionService } from '../../../api/implementacion/implementacio
 // Types
 import { GetImplementacionByIdData } from '../../../api/implementacion/implementacion.types';
 import { OptionDataIdNumber } from '../submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
-import { MatchHelper } from '../../../helpers/match-helper';
 
 @Component({
   selector: 'app-submit-implementacion',
@@ -31,6 +34,7 @@ import { MatchHelper } from '../../../helpers/match-helper';
   imports: [
     TableModule,
     DropdownModule,
+    ButtonModule,
     CustomBreadcrumbComponent,
     CardWithSkeletonComponent,
     NavigationContainerComponent,
