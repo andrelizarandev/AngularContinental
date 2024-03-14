@@ -28,7 +28,7 @@ import { RegisterPeriodoGeneralDialogComponent } from '../../../dialogs/submit/r
 import { UploadSilaboDialogComponent } from '../../../dialogs/submit/upload-silabo-dialog/upload-silabo.component';
 
 // Helpers
-import HandleDates from '../../../helpers/handle-dates';
+import DateHelper from '../../../helpers/date-helper';
 
 // Messages
 import { getProduccionGeneralByIdSuccessMessage, putProduccionGeneralSuccessMessage } from '../../../data/data.messages';
@@ -436,7 +436,7 @@ export class SubmitProduccionGeneralComponent {
   formatDate (date:string) {
     const slicedDate = date.slice(0, 10);
     const restDate = date.slice(11, 16);
-    return HandleDates.parseDateFormat1ToFormat2(slicedDate, 'YYYY-MM-DD', 'DD/MM/YYYY') + ' ' + restDate;
+    return DateHelper.parseDateFormat1ToFormat2(slicedDate, 'YYYY-MM-DD', 'DD/MM/YYYY') + ' ' + restDate;
   }
 
 }

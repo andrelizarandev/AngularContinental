@@ -12,7 +12,7 @@ import { CardWithSkeletonComponent } from '../../../components/card-with-skeleto
 import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
 
 // Helpers
-import HandleDates from '../../../helpers/handle-dates';
+import DateHelper from '../../../helpers/date-helper';
 
 // Services
 import { FormatosService } from '../../../api/formatos/formatos.service';
@@ -117,7 +117,7 @@ export class SubmitSeguimientoComponent {
   }
 
   getParsedDates () {
-    return this.porcentajeDates.map((date) => HandleDates.parseDateFormat1ToFormat2(date, 'YYYY-MM-DD HH:mm:ss', 'DD/MM/YYYY HH:mm:ss'));
+    return this.porcentajeDates.map((date) => DateHelper.parseDateFormat1ToFormat2(date, 'YYYY-MM-DD HH:mm:ss', 'DD/MM/YYYY HH:mm:ss'));
   }
 
   // Match 

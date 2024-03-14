@@ -2,6 +2,7 @@
 import { Store } from '@ngrx/store';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
+import { DividerModule } from 'primeng/divider';
 import { ActivatedRoute } from '@angular/router';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
@@ -13,7 +14,14 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { setMessageFromUiDataAction } from '../../../state/actions/ui-actions';
 
 // Data
-import { completarValidacionSuccessMessage, getCompletarValidacionSuccessMessage } from '../../../data/data.messages';
+import { 
+  completarValidacionSuccessMessage, 
+  completedValidacionWithAtLeastOneObservationMessage, 
+  getCompletarValidacionSuccessMessage 
+} from '../../../data/data.messages';
+
+// Helpers
+import DateHelper from '../../../helpers/date-helper';
 
 // Services
 import { ValidacionService } from '../../../api/validacion/validacion.service';
@@ -30,7 +38,8 @@ import { OptionData, OptionDataIdNumber } from '../../../screens/submit/submit-s
     ButtonModule, 
     InputTextModule,
     ReactiveFormsModule,
-    DropdownModule
+    DropdownModule,
+    DividerModule
   ],
   templateUrl: './register-validacion-dialog.component.html',
   styleUrl: './register-validacion-dialog.component.scss'
@@ -161,19 +170,17 @@ export class RegisterValidacionDialogComponent {
     mutationFn: (data:PostCompletarValidacionData) => this.validacionService.postCompletarValidacionApi(data),
 
     onSuccess: () => {
-
-      this.store.dispatch(setMessageFromUiDataAction({ message:completarValidacionSuccessMessage }));
-
+      if (this.validateHasAnyObservacion()) {
+        this.store.dispatch(setMessageFromUiDataAction({ message:completedValidacionWithAtLeastOneObservationMessage }));
+      } else {
+        this.store.dispatch(setMessageFromUiDataAction({ message:completarValidacionSuccessMessage }));
+      }
       this.closeAndCleanDialog();
-
       this.submitConfirmValidacionForm.enable();
-
     },
 
     onError: () => {
-
       this.submitConfirmValidacionForm.enable();
-
     }
 
   }));
@@ -346,6 +353,8 @@ export class RegisterValidacionDialogComponent {
 
     const porcentaje_real = this.getPorcentajeReal();
 
+    const currentDate = DateHelper.getCurrentDateWithFormat('YYYY-MM-DD');
+
     const payload:PostCompletarValidacionData = {
 
       id_produccion_general:this.currentProductionGeneralId!,
@@ -356,7 +365,7 @@ export class RegisterValidacionDialogComponent {
       
       carpeta_entregable,
       
-      fecha_validacion,
+      fecha_validacion: (porcentaje_real === 100) ? currentDate : fecha_validacion,
       
       estado_avance_validacion:estado_avance_validacion!!.id,
       
@@ -442,6 +451,30 @@ export class RegisterValidacionDialogComponent {
     return (result === 100);
   }
 
+  validateHasAnyObservacion () {
+
+    const {
+      confirmacion_levantamiento,
+      presenta_guia_aprendizaje,
+      resultados_aprendizaje_guia_estudiante,
+      enlaces_e_hipervinculos_para_recursos,
+      actividades_propuestas,
+      foro_formativo,
+      objetos_aprendizaje,
+    } = this.submitConfirmValidacionForm.value;
+
+    return (
+      (confirmacion_levantamiento!.id === 2 || confirmacion_levantamiento!.id === 4) ||
+      (presenta_guia_aprendizaje!.id === 2 || presenta_guia_aprendizaje!.id === 4) ||
+      (resultados_aprendizaje_guia_estudiante!.id === 2 || resultados_aprendizaje_guia_estudiante!.id === 4) ||
+      (enlaces_e_hipervinculos_para_recursos!.id === 2 || enlaces_e_hipervinculos_para_recursos!.id === 4) ||
+      (actividades_propuestas!.id === 2 || actividades_propuestas!.id === 4) ||
+      (foro_formativo!.id === 2 || foro_formativo!.id === 4) ||
+      (objetos_aprendizaje!.id === 2 || objetos_aprendizaje!.id === 4)
+    );
+
+  }
+
   // Calculate
   calculatePorcentajeReal (
     confirmacion_levantamiento:number,
@@ -462,14 +495,13 @@ export class RegisterValidacionDialogComponent {
       foro_formativo + 
       objetos_aprendizaje;
   
-    return (total * 100) / 7;
+    return ((total * 100) / 7);
 
   }
 
   // Getters
   get currentFormValue () { 
     return this.submitConfirmValidacionForm.value;
-    
   }
 
 }

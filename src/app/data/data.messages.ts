@@ -233,3 +233,9 @@ export const getCompletarValidacionSuccessMessage:MessageData = {
   body:'Se ha obtenido tu validación con éxito.',
   type:'success'
 }
+
+export const completedValidacionWithAtLeastOneObservationMessage:MessageData = {
+  message:'Validación completada con observaciones',
+  body:'Se ha completado tu validación con observaciones.',
+  type:'info'
+}

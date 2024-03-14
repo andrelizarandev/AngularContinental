@@ -19,7 +19,7 @@ import { CardWithSkeletonComponent } from '../../../components/card-with-skeleto
 import { NavigationContainerComponent } from '../../../components/navigation-container/navigation-container.component';
 
 // Helpers
-import HandleDates from '../../../helpers/handle-dates';
+import DateHelper from '../../../helpers/date-helper';
 
 // Services
 import { ReportesService } from '../../../api/reportes/reportes.service';
@@ -210,7 +210,7 @@ export class SubmitReportesComponent {
 
         });
 
-        const parsedDates = nonRepeatedDates.map((date) => HandleDates.parseDateFormat1ToFormat2(date, 'YYYY-MM-DD', 'DD/MM/YYYY'));
+        const parsedDates = nonRepeatedDates.map((date) => DateHelper.parseDateFormat1ToFormat2(date, 'YYYY-MM-DD', 'DD/MM/YYYY'));
 
         this.barData = {
           labels:parsedDates,
@@ -445,7 +445,7 @@ export class SubmitReportesComponent {
   }
 
   parseInitDate (date:string) {
-    return HandleDates.parseDateFormat1ToFormat2(date, 'YYYY-MM-DD', 'DD/MM/YYYY');
+    return DateHelper.parseDateFormat1ToFormat2(date, 'YYYY-MM-DD', 'DD/MM/YYYY');
   }
 
 }
