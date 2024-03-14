@@ -27,7 +27,7 @@ import DateHelper from '../../../helpers/date-helper';
 import { ValidacionService } from '../../../api/validacion/validacion.service';
 
 // Types
-import { PostCompletarValidacionData, PostEmailWhenGotSomeObservationsData } from '../../../api/validacion/validacion.types';
+import { PossibleObservationsData, PostCompletarValidacionData, PostEmailWhenGotSomeObservationsData } from '../../../api/validacion/validacion.types';
 import { OptionData, OptionDataIdNumber } from '../../../screens/submit/submit-solicitud-diseno-screen/submit-solicitud-diseno-curso.component';
 
 @Component({
@@ -173,7 +173,7 @@ export class RegisterValidacionDialogComponent {
 
       if (this.validateHasAnyObservacion()) {
 
-        this.postEmailWhenGotSomeObservationsMutation.mutate({});
+        this.postEmailWhenGotSomeObservationsMutation.mutate({ curso:'Curso Demo', observaciones:this.getPossibleObservations() });
 
         this.store.dispatch(setMessageFromUiDataAction({ message:completedValidacionWithAtLeastOneObservationMessage }));
 
@@ -200,7 +200,7 @@ export class RegisterValidacionDialogComponent {
   postEmailWhenGotSomeObservationsMutation = injectMutation(() => ({
 
     mutationFn: (data:PostEmailWhenGotSomeObservationsData) => 
-      this.validacionService.postEmailWhenGotSomeObservations(data),
+      this.validacionService.postEmailWhenGotSomeObservations(data)
 
   }));
 
@@ -324,6 +324,32 @@ export class RegisterValidacionDialogComponent {
 
     );
     
+  }
+
+  getPossibleObservations () {
+
+    const {
+      observacion_confirmacion_levantamiento,
+      observacion_presenta_guia_aprendizaje,
+      observacion_resultados_aprendizaje_guia_estudiante,
+      observacion_enlaces_e_hipervinculos_para_recursos,
+      observacion_actividades_propuestas,
+      observacion_foro_formativo,
+      observacion_objetos_aprendizaje
+    } = this.submitConfirmValidacionForm.value;
+
+    const object:PossibleObservationsData = {
+      observacion_confirmacion_levantamiento,
+      observacion_presenta_guia_aprendizaje,
+      observacion_resultados_aprendizaje_guia_estudiante,
+      observacion_enlaces_e_hipervinculos_para_recursos,
+      observacion_actividades_propuestas,
+      observacion_foro_formativo,
+      observacion_objetos_aprendizaje
+    }
+
+    return JSON.stringify(object);
+
   }
 
   // Start

@@ -39,7 +39,7 @@ export class ValidacionService {
   }
 
   postEmailWhenGotSomeObservations (data:PostEmailWhenGotSomeObservationsData) {
-    return lastValueFrom(this.http.post(`${apiUrl}/validacion/`, data));
+    return lastValueFrom(this.http.post(`${apiUrl}/observacionesvalidacion-correo`, data));
   }
 
 }

@@ -71,5 +71,16 @@ export type PostCompletarValidacionData = {
 }
 
 export type PostEmailWhenGotSomeObservationsData = {
-  
+  curso:string;
+  observaciones:string;
+}
+
+export type PossibleObservationsData = {
+  observacion_confirmacion_levantamiento:string;
+  observacion_presenta_guia_aprendizaje:string;
+  observacion_resultados_aprendizaje_guia_estudiante:string;
+  observacion_enlaces_e_hipervinculos_para_recursos:string;
+  observacion_actividades_propuestas:string;
+  observacion_foro_formativo:string;
+  observacion_objetos_aprendizaje:string;
 }
