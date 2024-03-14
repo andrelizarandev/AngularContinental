@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { ActivatedRoute } from '@angular/router';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
 
@@ -19,6 +19,7 @@ import { RatingValue, ratingOptions } from '../../../data/data.options';
 import { 
   getMetodoSuccessMessage, 
   noMetodoAlreadySavedMessage, 
+  porcentajeRealWasCompleteAtTheBeginningMessageButNotNow, 
   postMetodoErrorMessage,
   postMetodoEveryRegisterIsAt100PercentSuccessMessage, 
   postMetodoEveryRegisterIsNotAt100PercentSuccessMessage, 
@@ -57,6 +58,7 @@ export class RegisterPeriodoGeneralDialogComponent {
   @Output() closeDialogEmitter = new EventEmitter(); 
 
   // Vars
+  wasCurrentFormatCompleteAtTheBeginning = false;
   currentProduccionGeneralId = this.activatedRoute.snapshot.params['id'];
 
   // Injects
@@ -110,11 +112,11 @@ export class RegisterPeriodoGeneralDialogComponent {
 
     onSuccess: () => {
 
-      this.showMessageIfEveryRegisterIsAt100Percentage();
-
       this.formatoForm.enable();
 
       this.closeRegister();
+
+      this.showMessageIfFormatoWasCompleteAtTheBeginning();
 
     },
 
@@ -217,6 +219,10 @@ export class RegisterPeriodoGeneralDialogComponent {
         
       });
 
+      this.wasCurrentFormatCompleteAtTheBeginning = this.validateWasFormatCompletedAtTheBeginning();
+
+      console.log('wasCurrentFormatCompleteAtTheBeginning', this.wasCurrentFormatCompleteAtTheBeginning);
+
       this.store.dispatch(setMessageFromUiDataAction({ message:getMetodoSuccessMessage }));
 
       return result.data[0];
@@ -240,9 +246,13 @@ export class RegisterPeriodoGeneralDialogComponent {
 
   // Start
   startSubmitMetodo () {
+
     this.formatoForm.disable();
+
     const payload = this.getFormValue();
+
     this.postMetodoMutation.mutate(payload);
+
   }
 
   // Parse
@@ -348,6 +358,16 @@ export class RegisterPeriodoGeneralDialogComponent {
       : this.store.dispatch(setMessageFromUiDataAction({ message:postMetodoEveryRegisterIsNotAt100PercentSuccessMessage }));
   }
 
+  showMessageIfFormatoWasCompleteAtTheBeginning () {
+
+    const formValue = this.getFormValue();
+
+    if (formValue.porcentaje !== 100 && this.wasCurrentFormatCompleteAtTheBeginning) 
+
+      this.store.dispatch(setMessageFromUiDataAction({ message:porcentajeRealWasCompleteAtTheBeginningMessageButNotNow }));
+
+  }
+
   // Validate
   validateIsEveryRegisterAt100PercentagePost () {
 
@@ -363,6 +383,11 @@ export class RegisterPeriodoGeneralDialogComponent {
 
     return (formatosAndPercentages.length === 0) && (porcentaje === 100);
 
+  }
+
+  validateWasFormatCompletedAtTheBeginning () {
+    const result = this.getFormValue();
+    return (result.porcentaje === 100)
   }
   
 }

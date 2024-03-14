@@ -9,18 +9,7 @@
   (onShow)="getValidacionByIdQuery.refetch()"
 >
 
- <form 
-  class="pt-1 v-flex" [formGroup]="submitConfirmValidacionForm" (ngSubmit)="startPostCompletarValidacionMutation()">
-
-    <div class="v-flex-low-gap">
-      <label>Fecha de Envío a Validación</label>
-      <input type="date" pInputText formControlName="fecha_envio_validacion"/>
-    </div>
-
-    <div class="v-flex-low-gap">
-      <label>Porcentaje Real</label>
-      <input type="text" pInputText formControlName="porcentaje_real" [disabled]="true"/>
-    </div>
+  <form class="pt-1 v-flex" [formGroup]="submitConfirmValidacionForm" (ngSubmit)="startPostCompletarValidacionMutation()">
 
     <div class="v-flex-low-gap">
       <label>Carpeta Entregable</label>
@@ -31,6 +20,18 @@
       <label>Fecha de Validación</label>
       <input type="date" pInputText formControlName="fecha_validacion"/>
     </div>
+
+    <div class="v-flex-low-gap">
+      <label>Porcentaje Real</label>
+      <input type="text" pInputText formControlName="porcentaje_real" [disabled]="true"/>
+    </div>
+
+    @if (validateCanShowFechaEnvioValidacionInput()) {
+      <div class="v-flex-low-gap">
+        <label>Fecha de Envío a Validación</label>
+        <input type="date" pInputText formControlName="fecha_envio_validacion"/>
+      </div>
+    }
 
     <div class="v-flex-low-gap">
       <label>Estado de Avance de Validación.</label>
@@ -54,7 +55,10 @@
       />
     </div>
 
-    @if (currentFormValue.confirmacion_levantamiento?.id === 3) {
+    @if (
+      (currentFormValue.confirmacion_levantamiento?.id === 2) ||
+      (currentFormValue.confirmacion_levantamiento?.id === 4)
+    ) {
       <div class="v-flex-low-gap">
         <label>Observación Confirmación de Levantamiento</label>
         <input 
@@ -76,7 +80,10 @@
       />
     </div>
 
-    @if (currentFormValue.presenta_guia_aprendizaje?.id === 3) {
+    @if (
+      (currentFormValue.presenta_guia_aprendizaje?.id === 2) ||
+      (currentFormValue.presenta_guia_aprendizaje?.id === 4)
+    ) {
       <div class="v-flex-low-gap">
         <label>Observación Guía de Aprendizaje</label>
         <input 
@@ -98,7 +105,10 @@
       />
     </div>
 
-    @if (currentFormValue.resultados_aprendizaje_guia_estudiante?.id === 3) {
+    @if (
+      (currentFormValue.resultados_aprendizaje_guia_estudiante?.id === 2) ||
+      (currentFormValue.resultados_aprendizaje_guia_estudiante?.id === 4)
+    ) {
       <div class="v-flex-low-gap">
         <label>Observación Resultados de Aprendizaje en el Guía del Estudiante</label>
         <input 
@@ -120,7 +130,10 @@
       />
     </div>
 
-    @if (currentFormValue.resultados_aprendizaje_guia_estudiante?.id === 3) {
+    @if (
+      (currentFormValue.enlaces_e_hipervinculos_para_recursos?.id === 2) ||
+      (currentFormValue.enlaces_e_hipervinculos_para_recursos?.id === 4)
+    ) {
       <div class="v-flex-low-gap">
         <label>Observación Enlaces e Hipervínculos para Recursos</label>
         <input 
@@ -130,7 +143,6 @@
         />
       </div>
     }
-
 
     <div class="v-flex-low-gap">
       <label>Actividades Propuestas</label>
@@ -143,7 +155,10 @@
       />
     </div>
 
-    @if (currentFormValue.actividades_propuestas?.id === 3) {
+    @if (
+      (currentFormValue.actividades_propuestas?.id === 2) ||
+      (currentFormValue.actividades_propuestas?.id === 4)
+    ) {
       <div class="v-flex-low-gap">
         <label>Observación Actividades Propuestas</label>
         <input 
@@ -165,7 +180,10 @@
       />
     </div>
 
-    @if (currentFormValue.foro_formativo?.id === 3) {
+    @if (
+      (currentFormValue.foro_formativo?.id === 2) ||
+      (currentFormValue.foro_formativo?.id === 4)
+    ) {
       <div class="v-flex-low-gap">
         <label>Observación Foro Formativo</label>
         <input 
@@ -187,7 +205,10 @@
       />
     </div>
 
-    @if (currentFormValue.objetos_aprendizaje?.id === 3) {
+    @if (
+      (currentFormValue.objetos_aprendizaje?.id === 2) ||
+      (currentFormValue.objetos_aprendizaje?.id === 4)
+    ) {
       <div class="v-flex-low-gap">
         <label>Observación Objectos de Aprendizaje</label>
         <input 
@@ -236,7 +257,6 @@
 
     </div>
 
- </form>
-
+  </form>
 
 </p-dialog>

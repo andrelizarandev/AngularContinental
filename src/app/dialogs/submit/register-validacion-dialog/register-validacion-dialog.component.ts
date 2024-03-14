@@ -5,8 +5,8 @@ import { DialogModule } from 'primeng/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
-import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 // Actions
@@ -136,6 +136,10 @@ export class RegisterValidacionDialogComponent {
 
         });
 
+        this.submitConfirmValidacionForm.controls['porcentaje_real'].disable();
+
+        if (this.getPorcentajeReal() === 100) this.submitConfirmValidacionForm.controls['fecha_validacion'].disable();  
+
         this.store.dispatch(setMessageFromUiDataAction({ message:getCompletarValidacionSuccessMessage }));
 
         return result.data[0];
@@ -190,8 +194,9 @@ export class RegisterValidacionDialogComponent {
 
   siNoObservacionOptions:OptionDataIdNumber[] = [
     { id:1, label:'Sí' },
-    { id:2, label:'No' },
-    { id:3, label:'Observación' },
+    { id:2, label:'Sí, con Observación' },
+    { id:3, label:'No' },
+    { id:4, label:'Observación' },
   ]
 
   // Forms
@@ -238,6 +243,63 @@ export class RegisterValidacionDialogComponent {
 
   });
 
+  // Get
+  getPorcentajeReal () {
+
+    const { 
+      confirmacion_levantamiento, 
+      presenta_guia_aprendizaje, 
+      resultados_aprendizaje_guia_estudiante, 
+      enlaces_e_hipervinculos_para_recursos, 
+      actividades_propuestas, 
+      foro_formativo, 
+      objetos_aprendizaje 
+    } = this.submitConfirmValidacionForm.value;
+
+    if (
+      (confirmacion_levantamiento == null) &&  
+      (presenta_guia_aprendizaje == null) &&  
+      (resultados_aprendizaje_guia_estudiante == null) &&  
+      (enlaces_e_hipervinculos_para_recursos == null) &&  
+      (actividades_propuestas == null) &&  
+      (foro_formativo == null) &&  
+      (objetos_aprendizaje == null) 
+    ) return 0;
+
+    return this.calculatePorcentajeReal(
+
+      (confirmacion_levantamiento!.id === 1 || confirmacion_levantamiento!.id === 2) 
+        ? 1 
+        : 0,
+
+      (presenta_guia_aprendizaje!.id === 1 || presenta_guia_aprendizaje!.id === 2)
+        ? 1 
+        : 0,
+
+      (resultados_aprendizaje_guia_estudiante!.id === 1 || resultados_aprendizaje_guia_estudiante!.id === 2) 
+        ? 1 
+        : 0,
+
+      (enlaces_e_hipervinculos_para_recursos!.id === 1 || enlaces_e_hipervinculos_para_recursos!.id === 2) 
+        ? 1 
+        : 0,
+
+      (actividades_propuestas!.id === 1 || actividades_propuestas!.id === 2) 
+        ? 1 
+        : 0,
+
+      (foro_formativo!.id === 1 || foro_formativo!.id === 2) 
+        ? 1 
+        : 0,
+
+      (objetos_aprendizaje!.id === 1 || objetos_aprendizaje!.id === 2) 
+        ? 1 
+        : 0
+
+    );
+    
+  }
+
   // Start
   startPostCompletarValidacionMutation () {
 
@@ -282,15 +344,7 @@ export class RegisterValidacionDialogComponent {
 
     } = this.submitConfirmValidacionForm.value;
 
-    const porcentaje_real = this.calculatePorcentajeReal(
-      (confirmacion_levantamiento!.id === 1) ? 1 : 0,
-      (presenta_guia_aprendizaje!.id === 1) ? 1 : 0,
-      (resultados_aprendizaje_guia_estudiante!.id === 1) ? 1 : 0,
-      (enlaces_e_hipervinculos_para_recursos!.id === 1) ? 1 : 0,
-      (actividades_propuestas!.id === 1) ? 1 : 0,
-      (foro_formativo!.id === 1) ? 1 : 0,
-      (objetos_aprendizaje!.id === 1) ? 1 : 0
-    );
+    const porcentaje_real = this.getPorcentajeReal();
 
     const payload:PostCompletarValidacionData = {
 
@@ -307,25 +361,53 @@ export class RegisterValidacionDialogComponent {
       estado_avance_validacion:estado_avance_validacion!!.id,
       
       confirmacion_levantamiento:confirmacion_levantamiento!!.id,
-      observacion_confirmacion_levantamiento:(confirmacion_levantamiento!!.id === 3) ? observacion_confirmacion_levantamiento : '',
+
+      observacion_confirmacion_levantamiento: 
+        (confirmacion_levantamiento!!.id === 2 || confirmacion_levantamiento!!.id === 4) 
+          ? observacion_confirmacion_levantamiento 
+          : '',
       
       presenta_guia_aprendizaje:presenta_guia_aprendizaje!!.id,
-      observacion_presenta_guia_aprendizaje:(presenta_guia_aprendizaje!!.id === 3) ? observacion_presenta_guia_aprendizaje : '',
+
+      observacion_presenta_guia_aprendizaje: 
+        (presenta_guia_aprendizaje!!.id === 2 || presenta_guia_aprendizaje!!.id === 4) 
+          ? observacion_presenta_guia_aprendizaje 
+          : '',
       
       resultados_aprendizaje_guia_estudiante:resultados_aprendizaje_guia_estudiante!!.id,
-      observacion_resultados_aprendizaje_guia_estudiante:(resultados_aprendizaje_guia_estudiante!!.id === 3) ? observacion_resultados_aprendizaje_guia_estudiante : '',
+
+      observacion_resultados_aprendizaje_guia_estudiante: 
+        (resultados_aprendizaje_guia_estudiante!!.id === 2 || resultados_aprendizaje_guia_estudiante!!.id === 4)
+          ? observacion_resultados_aprendizaje_guia_estudiante 
+          : '',
       
       enlaces_e_hipervinculos_para_recursos:enlaces_e_hipervinculos_para_recursos!!.id,
-      observacion_enlaces_e_hipervinculos_para_recursos:(enlaces_e_hipervinculos_para_recursos!!.id === 3) ? observacion_enlaces_e_hipervinculos_para_recursos : '',
+
+      observacion_enlaces_e_hipervinculos_para_recursos: 
+        (enlaces_e_hipervinculos_para_recursos!!.id === 2 || enlaces_e_hipervinculos_para_recursos!!.id === 4)
+          ? observacion_enlaces_e_hipervinculos_para_recursos 
+          : '',
       
       actividades_propuestas:actividades_propuestas!!.id,
-      observacion_actividades_propuestas:(actividades_propuestas!!.id === 3) ? observacion_actividades_propuestas : '',
+
+      observacion_actividades_propuestas: 
+        (actividades_propuestas!!.id === 2 || actividades_propuestas!!.id === 4)
+          ? observacion_actividades_propuestas 
+          : '',
       
       foro_formativo:foro_formativo!!.id,
-      observacion_foro_formativo:(foro_formativo!!.id === 3) ? observacion_foro_formativo : '',
+
+      observacion_foro_formativo: 
+        (foro_formativo!!.id === 2 || foro_formativo!!.id === 4)
+          ? observacion_foro_formativo 
+          : '',
       
       objetos_aprendizaje:objetos_aprendizaje!!.id,
-      observacion_objetos_aprendizaje:(objetos_aprendizaje!!.id === 3) ? observacion_objetos_aprendizaje : '',
+
+      observacion_objetos_aprendizaje:
+        (objetos_aprendizaje!!.id === 2 || objetos_aprendizaje!!.id === 4)
+          ? observacion_objetos_aprendizaje 
+          : '',
       
       pasa_implementacion:pasa_implementacion!!.id,
 
@@ -352,6 +434,12 @@ export class RegisterValidacionDialogComponent {
 
   matchidWithEstadoAvanceValidacionOption (id:number) {
     return this.estadoAvanceValidacionOptions[id-1];
+  }
+
+  // Validate
+  validateCanShowFechaEnvioValidacionInput () {
+    const result = this.getPorcentajeReal();
+    return (result === 100);
   }
 
   // Calculate

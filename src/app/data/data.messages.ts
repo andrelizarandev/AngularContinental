@@ -194,6 +194,12 @@ export const postMetodoEveryRegisterIsNotAt100PercentSuccessMessage:MessageData 
   type:'info'
 }
 
+export const porcentajeRealWasCompleteAtTheBeginningMessageButNotNow:MessageData = {
+  message:'Porcentaje Real',
+  body:'El porcentaje real estaba completo al principio, pero ya no lo está.',
+  type:'info'
+}
+
 // Put Validación
 export const putValidacionSuccessMessage:MessageData = {
   message:'Validación actualizada con éxito',
