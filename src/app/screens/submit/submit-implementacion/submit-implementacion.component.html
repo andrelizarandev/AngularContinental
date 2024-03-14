@@ -2,11 +2,11 @@
 
   <app-custom-breadcrumb [items]="breadcrumbItems"/>
 
-  <app-card-with-skeleton>
+  <app-card-with-skeleton [isLoading]="getImplementacionByIdQuery.isLoading()">
 
     <h3 class="c-title">Implementación</h3>
 
-    <p-table [value]="[]">
+    <p-table [value]="implementacionRows">
   
       <ng-template pTemplate="header">
   
@@ -44,35 +44,54 @@
   
       </ng-template>
   
-      <ng-template pTemplate="body" let-validacion>
+      <ng-template pTemplate="body" let-imp>
   
         <tr>
 
-          <td></td>
+          <td>{{ imp.codigo }}</td>
+
+          <td>{{ imp.asignatura }}</td>
+
+          <td>{{ imp.ciclo }}</td>
+
+          <td>{{ parseIdModalidad(imp.modalidad) }}</td>
+
+          <td>-</td>
+
+          <td class="py-2">
+
+            <p-dropdown 
+              placeholder="Seleccione" 
+              [options]="responsableImplementacionOptions"
+            />
+
+          </td>
 
           <td></td>
 
-          <td></td>
+          <td>{{ imp.numero_formatos }}</td>
 
-          <td></td>
+          <td>
+            <a [href]="getSilabosByIndex(0)" target="_blank">
+              {{ getSilabosByIndex(0) }}
+            </a>
+          </td>
 
-          <td></td>
+          <td>
+            <a [href]="getSilabosByIndex(1)" target="_blank">
+              {{ getSilabosByIndex(1) }}
+            </a>
+          </td>
 
-          <td></td>
+          <td>
+            <a [href]="getSilabosByIndex(2)" target="_blank">
+              {{ getSilabosByIndex(2) }}
+            </a>
+          </td>
 
-          <td></td>
+          <td>{{ parseDateYMDtoDMY(imp.fecha_validacion) }}</td>
 
-          <td></td>
-
-          <td></td>
-
-          <td></td>
-
-          <td></td>
-
-          <td></td>
-
-          <td></td>
+          <td>{{ imp.carpeta_entregable }}</td>
 
           <td></td>
           

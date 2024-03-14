@@ -100,3 +100,8 @@ export type GetPorcentajesAvanceByProduccionGeneralData = {
 export type GetPorcentajesAvanceByProduccionGeneraResponse = {
   resultado:GetPorcentajesAvanceByProduccionGeneralData[];
 }
+
+export type GetGenerateEmailWhenFormatoWasCompletedButAlreadyNotData = {
+  curso:string;
+  porcentaje:number;
+}

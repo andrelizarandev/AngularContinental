@@ -8,6 +8,7 @@ import { apiUrl } from '..';
 
 // Types
 import { 
+  GetGenerateEmailWhenFormatoWasCompletedButAlreadyNotData,
   GetPorcentajesAvanceByProduccionGeneraResponse,
   GetProduccionGeneralData, 
   GetProduccionGeneralDataById, 
@@ -61,6 +62,10 @@ export class ProduccionService {
 
   getPorcentajesAvanceByProduccionGeneraApi (id:string) {
     return lastValueFrom(this.http.get<GetPorcentajesAvanceByProduccionGeneraResponse>(`${apiUrl}/porcentaje/${id}`));
+  }
+
+  generateEmailWhenFormatoWasCompletedButAlreadyNotApi (data:GetGenerateEmailWhenFormatoWasCompletedButAlreadyNotData) {
+    return lastValueFrom(this.http.post(`${apiUrl}/cambioporcentaje-correo`, data));
   }
 
 }

@@ -27,9 +27,11 @@ import {
 
 // Services
 import { MetodoService } from '../../../api/metodo/metodo.service';
+import { ProduccionService } from '../../../api/produccion/produccion.service';
 
 // Types
 import { GetAllMetodosData, PostMetodoWithCalculoData } from '../../../api/metodo/metodo.types';
+import { GetGenerateEmailWhenFormatoWasCompletedButAlreadyNotData } from '../../../api/produccion/produccion.types';
 import CalculatePorcentajeAvanceHelper, { DataForCalculatePorcentajeAvance } from '../../../helpers/calculate-porcentaje-avance-helper';
 
 @Component({
@@ -63,6 +65,7 @@ export class RegisterPeriodoGeneralDialogComponent {
 
   // Injects
   metodoServices = inject(MetodoService);
+  produccionServices = inject(ProduccionService);
 
   constructor (
     private fb:FormBuilder, 
@@ -112,11 +115,23 @@ export class RegisterPeriodoGeneralDialogComponent {
 
     onSuccess: () => {
 
-      this.formatoForm.enable();
+      const result = this.validateOnSuccessFormatoWasCompleteAtTheBeginning();
+
+      if (result) {
+
+        this.showMessageIfFormatoWasCompleteAtTheBeginning();
+
+        this.startSubmitGenerateEmailWhenFormatoWasCompletedButAlreadyNot();
+
+      } else {
+
+        
+
+      }
+
+      this.formatoForm.enable();  
 
       this.closeRegister();
-
-      this.showMessageIfFormatoWasCompleteAtTheBeginning();
 
     },
 
@@ -127,6 +142,12 @@ export class RegisterPeriodoGeneralDialogComponent {
       this.store.dispatch(setMessageFromUiDataAction({ message:postMetodoErrorMessage }));
 
     }
+
+  }));
+
+  postGenerateEmailWhenFormatoWasCompletedButAlreadyNotMutation = injectMutation(() => ({
+
+    mutationFn: (data:GetGenerateEmailWhenFormatoWasCompletedButAlreadyNotData) => this.produccionServices.generateEmailWhenFormatoWasCompletedButAlreadyNotApi(data),
 
   }));
 
@@ -221,8 +242,6 @@ export class RegisterPeriodoGeneralDialogComponent {
 
       this.wasCurrentFormatCompleteAtTheBeginning = this.validateWasFormatCompletedAtTheBeginning();
 
-      console.log('wasCurrentFormatCompleteAtTheBeginning', this.wasCurrentFormatCompleteAtTheBeginning);
-
       this.store.dispatch(setMessageFromUiDataAction({ message:getMetodoSuccessMessage }));
 
       return result.data[0];
@@ -239,11 +258,6 @@ export class RegisterPeriodoGeneralDialogComponent {
     this.formatoForm.reset();
   }
 
-  // Getters
-  public get ratingOptions() {
-    return ratingOptions;
-  }
-
   // Start
   startSubmitMetodo () {
 
@@ -252,6 +266,14 @@ export class RegisterPeriodoGeneralDialogComponent {
     const payload = this.getFormValue();
 
     this.postMetodoMutation.mutate(payload);
+
+  }
+
+  startSubmitGenerateEmailWhenFormatoWasCompletedButAlreadyNot () {
+
+    const formValues = this.getFormValue();
+
+    this.postGenerateEmailWhenFormatoWasCompletedButAlreadyNotMutation.mutate({ curso:'Curso', porcentaje:formValues.porcentaje });
 
   }
 
@@ -265,7 +287,7 @@ export class RegisterPeriodoGeneralDialogComponent {
     }
   }
 
-  // Get Value
+  // Get
   getFormValue () {
 
     const { 
@@ -387,7 +409,17 @@ export class RegisterPeriodoGeneralDialogComponent {
 
   validateWasFormatCompletedAtTheBeginning () {
     const result = this.getFormValue();
-    return (result.porcentaje === 100)
+    return (result.porcentaje === 100);
   }
-  
+
+  validateOnSuccessFormatoWasCompleteAtTheBeginning () {
+    const result = this.getFormValue();
+    return (result.porcentaje !== 100) && this.wasCurrentFormatCompleteAtTheBeginning;
+  }
+
+  // Getters
+  public get ratingOptions() {
+    return ratingOptions;
+  }
+
 }
