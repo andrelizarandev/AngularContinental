@@ -76,6 +76,8 @@ export class ProduccionComponent {
 
   redirectToProduccionGeneralByRowArchivos = (id:string) => this.router.navigate([`/submit-produccion-general-archivos/${id}`]);
 
+  redirectToImplementacion = (id:string) => this.router.navigate([`/submit-implementacion/${id}`]);
+
   // Open Dialog
   toggleIsDialogOpen = () => this.isDialogOpen = !this.isDialogOpen;
 

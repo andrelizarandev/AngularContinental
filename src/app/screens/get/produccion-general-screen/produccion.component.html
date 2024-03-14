@@ -18,101 +18,114 @@
   
     </div>
   
-    <p-table [value]="getProduccionGeneralQuery.data() || []">
+    <div>
+
+      <p-table [value]="getProduccionGeneralQuery.data() || []" [tableStyle]="{'min-width': '25rem'}">
   
-      <ng-template pTemplate="header">
+        <ng-template pTemplate="header">
+    
+          <tr>
   
-        <tr>
-
-          <th>Plan</th>
-
-          <th>Asignatura</th>
-
-          <th>Asesor</th>
-
-          <th>Decano</th>
-
-          <th>Modalidad</th>
-
-          <th>Acciones</th>
-
-        </tr>
+            <th>Plan</th>
   
-      </ng-template>
+            <th>Asignatura</th>
   
-      <ng-template pTemplate="body" let-produccion>
+            <th>Asesor</th>
   
-        <tr>
-
-          <td>
-            {{ produccion.plan }}
-          </td>
-
-          <td>
-            {{ produccion.asignatura }}
-          </td>
-
-          <td>
-            {{ produccion.asesor }}
-          </td>
-
-          <td>
-            {{ produccion.decano }}
-          </td>
-
-          <td>
-            {{ matchModalidad(produccion.modalidad) }}
-          </td>
-
-          <td>
-            <div class="h-flex-align-center">
-
-              <p-button 
-                label="Ver" 
-                size="small" 
-                icon="pi pi-eye"
-                (onClick)="redirectToProductionForm(produccion.id)"
-              />
-
-              <p-button 
-                label="Seguimiento" 
-                size="small" 
-                (onClick)="redirectToSeguimiento(produccion.id, produccion.modalidad)"
-                icon="pi pi-angle-double-right"
-                severity="secondary"
-              />
-
-              <p-button 
-                label="Validación" 
-                size="small" 
-                (onClick)="redirectToValidacion(produccion.id)"
-                icon="pi pi-check"
-                severity="warning"
-              />
-
-              <p-button 
-                label="Reportes" 
-                size="small" 
-                (onClick)="redirectToReportes(produccion.id)"
-                icon="pi pi-book"
-                severity="danger"
-              />
-
-              <p-button 
-                label="Subir Archivo" 
-                size="small" 
-                (onClick)="redirectToProduccionGeneralByRowArchivos(produccion.id)"
-                icon="pi pi-upload"
-                severity="success"
-              />
-
-            </div>
-          </td>
-        </tr>
-        
-      </ng-template>
+            <th>Decano</th>
   
-    </p-table>
+            <th>Modalidad</th>
+  
+            <th>Acciones</th>
+  
+          </tr>
+    
+        </ng-template>
+    
+        <ng-template pTemplate="body" let-produccion>
+    
+          <tr>
+  
+            <td>
+              {{ produccion.plan }}
+            </td>
+  
+            <td>
+              {{ produccion.asignatura }}
+            </td>
+  
+            <td>
+              {{ produccion.asesor }}
+            </td>
+  
+            <td>
+              {{ produccion.decano }}
+            </td>
+  
+            <td>
+              {{ matchModalidad(produccion.modalidad) }}
+            </td>
+  
+            <td>
+
+              <div class="h-flex-align-center">
+  
+                <p-button 
+                  label="Ver" 
+                  size="small" 
+                  icon="pi pi-eye"
+                  (onClick)="redirectToProductionForm(produccion.id)"
+                />
+  
+                <p-button 
+                  label="Seguimiento" 
+                  size="small" 
+                  (onClick)="redirectToSeguimiento(produccion.id, produccion.modalidad)"
+                  icon="pi pi-angle-double-right"
+                  severity="secondary"
+                />
+  
+                <p-button 
+                  label="Validación" 
+                  size="small" 
+                  (onClick)="redirectToValidacion(produccion.id)"
+                  icon="pi pi-check-square"
+                  severity="warning"
+                />
+
+                <p-button 
+                  label="Implementación" 
+                  size="small" 
+                  (onClick)="redirectToImplementacion(produccion.id)"
+                  icon="pi pi-wrench"
+                  severity="info"
+                />
+  
+                <p-button 
+                  label="Reportes" 
+                  size="small" 
+                  (onClick)="redirectToReportes(produccion.id)"
+                  icon="pi pi-book"
+                  severity="danger"
+                />
+  
+                <p-button 
+                  label="Subir Archivo" 
+                  size="small" 
+                  (onClick)="redirectToProduccionGeneralByRowArchivos(produccion.id)"
+                  icon="pi pi-upload"
+                  severity="success"
+                />
+  
+              </div>
+            </td>
+          </tr>
+          
+        </ng-template>
+    
+      </p-table>
+
+    </div>
 
   </app-card-with-skeleton>
 

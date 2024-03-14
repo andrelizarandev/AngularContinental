@@ -35,4 +35,8 @@ export default class BreadcrumbItemsClass {
     return { label:'Registro de Producción General por Archivos', routerLink:`/submit-produccion-general-archivos/${id}` };
   }
 
+  static registroImplementacionItem (id:string):MenuItem {
+    return { label:'Registro de Implementación', routerLink:`/submit-implementacion/${id}` };
+  }
+
 }
